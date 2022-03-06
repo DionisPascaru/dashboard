@@ -4,7 +4,9 @@
             <sidebar></sidebar>
         </el-aside>
         <el-container>
-            <router-view />
+            <div class="view-content">
+                <router-view />
+            </div>
         </el-container>
     </el-container>
 </template>
@@ -20,3 +22,10 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+.view-content {
+    width: calc(100% - 40px);
+    padding: 20px;
+}
+</style>

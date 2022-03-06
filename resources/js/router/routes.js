@@ -1,8 +1,9 @@
 import Login from '../view/auth/Login';
-import ExampleComponent from "../components/ExampleComponent";
-import Dashboard from "../view/Dashboard";
-import Home from "../view/Home";
-import Error from "../view/Error";
+import ExampleComponent from '../components/ExampleComponent';
+import Dashboard from '../view/Dashboard';
+import Home from '../view/Home';
+import Users from '../view/users/Users';
+import Error from '../view/Error';
 
 export default [
     {
@@ -37,6 +38,14 @@ export default [
                 path: '/example',
                 component: ExampleComponent,
                 name: 'ExampleComponent',
+                meta: {
+                    guard: 'auth'
+                }
+            },
+            {
+                path: '/users',
+                component: Users,
+                name: 'Users',
                 meta: {
                     guard: 'auth'
                 }
