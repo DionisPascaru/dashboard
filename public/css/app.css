@@ -1,1 +1,10 @@
+@import url(https://fonts.googleapis.com/css?family=Nunito);
+body {
+  margin: 0;
+  font-family: "Nunito", sans-serif;
+}
+
+.view-title {
+  border-bottom: 3px solid #000;
+}
 
