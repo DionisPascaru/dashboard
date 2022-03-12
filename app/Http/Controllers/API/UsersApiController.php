@@ -27,7 +27,7 @@ class UsersApiController extends BaseController
     {
         $user = User::find($id);
 
-        return UserCollection::collection($user);
+        return new UserCollection($user);
     }
 
     /**
