@@ -3,7 +3,17 @@ body {
     font-family: $font-family-sans-serif;
 }
 
+aside {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
 .view-title {
     border-bottom: 3px solid #000;
+}
+
+.table {
+    min-height: calc(100vh - 120px);
 }
 

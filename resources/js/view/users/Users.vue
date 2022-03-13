@@ -5,7 +5,9 @@
         </div>
         <div class="view-content">
             <el-table
-                :data="tableData"
+                class="table"
+                :data="users"
+                v-loading="loading"
                 style="width: 100%">
                 <el-table-column
                     prop="name"
@@ -17,9 +19,25 @@
                     label="Email">
                 </el-table-column>
                 <el-table-column
-                    prop="phone"
-                    label="Phone"
+                    prop="role"
+                    label="Role"
                     width="180">
+                </el-table-column>
+                <el-table-column
+                    label="Actions"
+                    width="180">
+                    <template slot-scope="scope">
+                        <div class="d-flex">
+                            <router-link :to="{ name: 'UserDetails', params: { id: scope.row.id }}">
+                                <el-button type="primary">
+                                    View
+                                </el-button>
+                            </router-link>
+                            <el-button type="danger" @click="deleteUser(scope.row)">
+                                Delete
+                            </el-button>
+                        </div>
+                    </template>
                 </el-table-column>
             </el-table>
         </div>
@@ -30,29 +48,60 @@
 <script>
 export default {
     name: 'Users',
-    data(){
+    data() {
         return {
-            tableData: [
+            loading: true
+        }
+    },
+    computed: {
+        users() {
+            return this.$store.getters['user/getUsers'];
+        }
+    },
+    mounted() {
+        this.search();
+    },
+    methods: {
+        search() {
+            this.$store.dispatch('user/loadUsers')
+                .then(() => {
+                    this.loading = false;
+                })
+        },
+        deleteUser(user) {
+            this.$confirm(
+                `Are you sure you want to delete user ${user.name}?`,
                 {
-                    id: 1,
-                    name: 'Jhon Smith',
-                    email: 'john@gmail.com',
-                    phone: '078787878'
-                },
-                {
-                    id: 2,
-                    name: 'David Backhem',
-                    email: 'david@gmail.com',
-                    phone: '0555551115'
-                },
-                {
-                    id: 3,
-                    name: 'Andrew Ryal',
-                    email: 'andrew@gmail.com',
-                    phone: '0989898888'
+                    title: 'Delete user',
+                    confirmButtonText: "OK",
+                    cancelButtonText: "Cancel",
+                    type: "warning"
                 }
-            ]
+            )
+                .then(() => {
+                    this.$store.dispatch('user/deleteUser', user.id)
+                        .then(() => {
+                            this.$notify({
+                                title: 'Success',
+                                type: 'success',
+                                message: `The ${user.name} successfully deleted!`
+                            });
+                            this.search();
+                        })
+                        .catch(e => {
+                            this.$notify.error({
+                                title: 'Error',
+                                message: e
+                            });
+                        });
+                })
         }
     }
 }
 </script>
+
+<style lang="scss" scoped>
+.d-flex {
+    display: flex;
+}
+</style>
