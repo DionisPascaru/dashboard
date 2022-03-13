@@ -3,7 +3,7 @@
         <el-aside>
             <sidebar></sidebar>
         </el-aside>
-        <el-container>
+        <el-container class="view-container">
             <div class="view-content">
                 <router-view />
             </div>
@@ -27,5 +27,9 @@ export default {
 .view-content {
     width: calc(100% - 40px);
     padding: 20px;
+}
+
+.view-container {
+    margin-left: 300px;
 }
 </style>
