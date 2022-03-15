@@ -16,16 +16,16 @@ class CreateRolesTable extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->string('role')->unique();
+            $table->string('name')->unique();
         });
 
         DB::table('roles')->insert(
             array(
                 [
-                    'role' => 'Administrator',
+                    'name' => 'Administrator',
                 ],
                 [
-                    'role' => 'Teacher',
+                    'name' => 'Teacher',
                 ],
             )
         );
