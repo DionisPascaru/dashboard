@@ -21,7 +21,7 @@
 <script>
 export default {
     name: 'Login',
-    data(){
+    data() {
         return {
             login: {
                 email: '',
@@ -51,16 +51,25 @@ export default {
         }
     },
     methods: {
-        submitForm(formName){
+        submitForm(formName) {
             this.$refs[formName].validate((valid) => {
-                if (valid){
+                if (valid) {
                     this.$store.dispatch('auth/login', this.login)
-                        .then(()=>{
-
-                            this.$router.push({name: 'ExampleComponent'})
+                        .then((response) => {
+                            console.log(response)
+                            this.$router.push({name: 'ExampleComponent'});
+                            this.$notify({
+                                title: 'Login!',
+                                type: 'success',
+                                message: 'User sign in!'
+                            });
                         })
-                        .catch(e => {
-                            console.log(e);
+                        .catch((e) => {
+                            this.$notify({
+                                title: 'Login!',
+                                type: 'error',
+                                message: e.message
+                            });
                         })
                 } else {
                     return false;

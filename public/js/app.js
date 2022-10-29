@@ -7258,12 +7258,24 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$refs[formName].validate(function (valid) {
         if (valid) {
-          _this.$store.dispatch('auth/login', _this.login).then(function () {
+          _this.$store.dispatch('auth/login', _this.login).then(function (response) {
+            console.log(response);
+
             _this.$router.push({
               name: 'ExampleComponent'
             });
+
+            _this.$notify({
+              title: 'Login!',
+              type: 'success',
+              message: 'User sign in!'
+            });
           })["catch"](function (e) {
-            console.log(e);
+            _this.$notify({
+              title: 'Login!',
+              type: 'error',
+              message: e.message
+            });
           });
         } else {
           return false;
