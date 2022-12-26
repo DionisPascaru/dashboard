@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->group( function () {
 
     Route::group(['prefix' => 'user'], function (){
         Route::get('/{id}', [UsersApiController::class, 'show']);
+        Route::post('', [UsersApiController::class, 'create']);
         Route::delete('/{id}', [UsersApiController::class, 'delete']);
     });
 });
