@@ -56,11 +56,18 @@ export default {
                 if (valid){
                     this.$store.dispatch('auth/login', this.login)
                         .then(()=>{
-
                             this.$router.push({name: 'ExampleComponent'})
+                            this.$notify({
+                                title: 'Success',
+                                type: 'success',
+                                message: `Log in successfully!`
+                            });
                         })
                         .catch(e => {
-                            console.log(e);
+                            this.$notify.error({
+                                title: 'Error',
+                                message: e
+                            });
                         })
                 } else {
                     return false;
@@ -77,6 +84,6 @@ export default {
 <style scoped lang="scss">
 .auth-form {
     max-width: 300px;
-    margin: auto;
+    margin: 60px auto;
 }
 </style>

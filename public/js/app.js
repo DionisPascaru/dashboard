@@ -7262,8 +7262,19 @@ __webpack_require__.r(__webpack_exports__);
             _this.$router.push({
               name: 'ExampleComponent'
             });
+
+            _this.$notify({
+              title: 'Success',
+              type: 'success',
+              message: "Log in successfully!"
+            });
           })["catch"](function (e) {
-            console.log(e);
+            console.error(e);
+
+            _this.$notify.error({
+              title: 'Error',
+              message: e
+            });
           });
         } else {
           return false;
@@ -14963,7 +14974,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".auth-form[data-v-0f1707be] {\n  max-width: 300px;\n  margin: auto;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".auth-form[data-v-0f1707be] {\n  max-width: 300px;\n  margin: 60px auto;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
