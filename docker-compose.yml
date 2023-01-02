@@ -6,7 +6,7 @@ services:
         volumes:
             - "./data:/var/lib/mysql"
         ports:
-            - "8080:3306"
+            - "8888:3307"
         environment:
             - MYSQL_ROOT_PASSWORD=root
         networks:
