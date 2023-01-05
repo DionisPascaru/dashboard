@@ -3,10 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UserCreateApiRequest extends FormRequest
+class UserUpdateApiRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -18,7 +18,8 @@ class UserCreateApiRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'unique:users|required',
-            'password' => 'required'
+            'password' => 'required',
+            'role_id' => 'number'
         ];
     }
 

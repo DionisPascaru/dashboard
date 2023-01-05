@@ -4,14 +4,16 @@ namespace App\Http\Controllers\API;
 
 use App\Enums\UserRolesEnum;
 use App\Http\Requests\UserCreateApiRequest;
+use App\Http\Requests\UserUpdateApiRequest;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UsersCollection;
 use App\Models\User;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Validation\ValidationException;
 
-class UsersApiController extends BaseController
+class UsersApiController
 {
     /** @var RestResponseFactory $restResponseFactory */
     private $restResponseFactory;
@@ -36,41 +38,86 @@ class UsersApiController extends BaseController
     }
 
     /**
+     * Read user by id.
+     *
      * @param $id
      * @return JsonResponse
      */
     public function show($id): JsonResponse
     {
         try {
-            $user = new UserCollection(User::find($id));
+            $user = new UserCollection(User::findOrFail($id));
 
             return $this->restResponseFactory->ok($user);
+        } catch (ModelNotFoundException $exception) {
+            return $this->restResponseFactory->badRequest($exception->getMessage());
         } catch (Exception $exception) {
-            return $this->restResponseFactory->serverError($exception);
+            return $this->restResponseFactory->serverError($exception->getMessage());
         }
     }
 
-    public function create(UserCreateApiRequest $request): JsonResource
+    /**
+     * Create user
+     *
+     * @param UserCreateApiRequest $request
+     * @return JsonResponse
+     */
+    public function create(UserCreateApiRequest $request): JsonResponse
     {
-        $input = $request->validated();
+        try {
+            $input = $request->validated();
 
-        $input['password'] = bcrypt($input['password']);
-        $input['role_id'] = UserRolesEnum::TEACHER;
+            $input['password'] = bcrypt($input['password']);
+            $input['role_id'] = UserRolesEnum::TEACHER;
 
-        $user = User::create($input);
+            $user = User::create($input);
 
-        return new UserCollection($user);
+            return $this->restResponseFactory->created(new UserCollection($user));
+        } catch (ValidationException $exception) {
+            return $this->restResponseFactory->badRequest($exception->getMessage());
+        } catch (Exception $exception) {
+            return $this->restResponseFactory->serverError($exception->getMessage());
+        }
     }
 
     /**
+     * Update user.
+     *
+     * @param UserUpdateApiRequest $request
+     * @return JsonResponse
+     */
+    public function update(UserUpdateApiRequest $request): JsonResponse
+    {
+        try {
+            $input = $request->validated();
+
+            $input['password'] = bcrypt($input['password']);
+
+            User::where('id', $request->id)->update($input);
+
+            return $this->restResponseFactory->ok(['message' => 'User successfully updated!']);
+        } catch (Exception $exception) {
+            return $this->restResponseFactory->serverError($exception->getMessage());
+        }
+    }
+
+    /**
+     * Delete user.
+     *
      * @param $id
      * @return JsonResponse
      */
     public function delete($id): JsonResponse
     {
-        $user = User::find($id);
-        $user->delete();
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
 
-        return $this->sendResponse(null, 'User ' . $user->name . ' successfully deleted.');
+            return $this->restResponseFactory->noContent();
+        } catch (ModelNotFoundException $exception) {
+            return $this->restResponseFactory->badRequest($exception->getMessage());
+        } catch (Exception $exception) {
+            return $this->restResponseFactory->serverError($exception->getMessage());
+        }
     }
 }

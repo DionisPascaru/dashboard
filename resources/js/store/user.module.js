@@ -26,7 +26,7 @@ const actions = {
     async loadUser({commit}, userId){
         try {
             const response = await loadUser(userId);
-            commit('LOAD_USER', response.data);
+            commit('LOAD_USER', response);
         } catch (e) {
             throw e;
         }

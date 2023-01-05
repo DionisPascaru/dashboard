@@ -63,8 +63,17 @@ export default {
     },
     methods: {
         search() {
+            this.loading = true;
+
             this.$store.dispatch('user/loadUsers')
-                .then(() => {
+                .then(() => {})
+                .catch((e) => {
+                    this.$notify.error({
+                        title: 'Error',
+                        message: e
+                    });
+                })
+                .finally(() => {
                     this.loading = false;
                 })
         },
