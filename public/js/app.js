@@ -7269,8 +7269,6 @@ __webpack_require__.r(__webpack_exports__);
               message: "Log in successfully!"
             });
           })["catch"](function (e) {
-            console.error(e);
-
             _this.$notify.error({
               title: 'Error',
               message: e
@@ -7366,7 +7364,13 @@ __webpack_require__.r(__webpack_exports__);
     search: function search() {
       var _this = this;
 
-      this.$store.dispatch('user/loadUsers').then(function () {
+      this.loading = true;
+      this.$store.dispatch('user/loadUsers').then(function () {})["catch"](function (e) {
+        _this.$notify.error({
+          title: 'Error',
+          message: e
+        });
+      })["finally"](function () {
         _this.loading = false;
       });
     },
@@ -8024,7 +8028,7 @@ var actions = {
 
             case 4:
               response = _context2.sent;
-              commit('LOAD_USER', response.data);
+              commit('LOAD_USER', response);
               _context2.next = 11;
               break;
 
