@@ -4,6 +4,7 @@
             <h1>Users</h1>
         </div>
         <div class="view-content">
+            <user-create-component></user-create-component>
             <el-table
                 class="table"
                 :data="users"
@@ -41,13 +42,17 @@
                 </el-table-column>
             </el-table>
         </div>
-
     </div>
 </template>
 
 <script>
+import UserCreateComponent from "../../components/users/UserCreateComponent";
+
 export default {
     name: 'Users',
+    components: {
+      UserCreateComponent
+    },
     data() {
         return {
             loading: true

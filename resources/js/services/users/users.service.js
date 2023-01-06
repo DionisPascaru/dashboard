@@ -8,6 +8,10 @@ const loadUser = (id) => {
     return httpRequest.get(`/user/${id}`);
 }
 
+const createUser = (user) => {
+    return httpRequest.post('/user', user);
+}
+
 const deleteUser = (id) => {
     return httpRequest.delete(`/user/${id}`);
 }
@@ -15,5 +19,6 @@ const deleteUser = (id) => {
 export {
     loadUsers,
     loadUser,
+    createUser,
     deleteUser
 }
