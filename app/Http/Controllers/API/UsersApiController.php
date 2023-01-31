@@ -8,6 +8,7 @@ use App\Http\Resources\UserCollection;
 use App\Http\Resources\UsersCollection;
 use App\Models\User;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -42,11 +43,13 @@ class UsersApiController extends BaseController
     public function show($id): JsonResponse
     {
         try {
-            $user = new UserCollection(User::find($id));
+            $user = new UserCollection(User::findOrFail($id));
 
             return $this->restResponseFactory->ok($user);
+        } catch (ModelNotFoundException $exception) {
+            return $this->restResponseFactory->notFound($exception->getMessage());
         } catch (Exception $exception) {
-            return $this->restResponseFactory->serverError($exception);
+            return $this->restResponseFactory->serverError($exception->getMessage());
         }
     }
 
