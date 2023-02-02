@@ -7880,7 +7880,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 var httpRequest = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
-  baseURL: 'http://localhost:88/api/',
+  baseURL: "/api",
   headers: {
     Accept: "application/json;charset=UTF-8",
     "Content-Type": "application/json;charset=UTF-8"
