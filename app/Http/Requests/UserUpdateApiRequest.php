@@ -18,7 +18,6 @@ class UserUpdateApiRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'unique:users|required',
-            'password' => 'required',
             'role_id' => 'number'
         ];
     }

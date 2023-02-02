@@ -12,9 +12,14 @@ aside {
 
 .view-title {
   border-bottom: 3px solid #000;
+  margin: 10px auto;
 }
 
 .table {
   min-height: calc(100vh - 120px);
+}
+
+.flex-gap {
+  gap: 10px;
 }
 

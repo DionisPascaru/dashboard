@@ -3,8 +3,8 @@
         <div class="view-title">
             <h1>Users</h1>
         </div>
+        <user-create-component></user-create-component>
         <div class="view-content">
-            <user-create-component></user-create-component>
             <el-table
                 class="table"
                 :data="users"
@@ -26,14 +26,15 @@
                 </el-table-column>
                 <el-table-column
                     label="Actions"
-                    width="180">
+                    width="280">
                     <template slot-scope="scope">
-                        <div class="d-flex">
+                        <div class="d-flex flex-gap">
                             <router-link :to="{ name: 'UserDetails', params: { id: scope.row.id }}">
-                                <el-button type="primary">
+                                <el-button type="info">
                                     View
                                 </el-button>
                             </router-link>
+                            <user-edit-component :user-id="scope.row.id"></user-edit-component>
                             <el-button type="danger" @click="deleteUser(scope.row)">
                                 Delete
                             </el-button>
@@ -47,11 +48,13 @@
 
 <script>
 import UserCreateComponent from "../../components/users/UserCreateComponent";
+import UserEditComponent from "../../components/users/UserEditComponent";
 
 export default {
     name: 'Users',
     components: {
-      UserCreateComponent
+        UserCreateComponent,
+        UserEditComponent
     },
     data() {
         return {
@@ -71,7 +74,8 @@ export default {
             this.loading = true;
 
             this.$store.dispatch('user/loadUsers')
-                .then(() => {})
+                .then(() => {
+                })
                 .catch((e) => {
                     this.$notify.error({
                         title: 'Error',
