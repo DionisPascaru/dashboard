@@ -1,8 +1,40 @@
 version: "3"
 services:
-    backend-db:
+    dashboard_app:
+        container_name: dashboard_app
+        build:
+            context: .
+            dockerfile: ./docker/php/Dockerfile
+        expose:
+            - 9000
+        volumes:
+            - .:/usr/src/app
+            - ./public:/usr/src/app/public
+        depends_on:
+            - dashboard_db
+        networks:
+            - app_network
+
+    dashboard_nginx:
+        container_name: dashboard_nginx
+        build:
+            context: .
+            dockerfile: ./docker/nginx/Dockerfile
+        volumes:
+            - ./public:/usr/src/app/public
+        ports:
+            - "8000:80"
+        depends_on:
+            - dashboard_app
+        environment:
+            NGINX_FPM_HOST: dashboard_app
+            NGINX_ROOT: /usr/src/app/public
+        networks:
+            - app_network
+
+    dashboard_db:
         image: mariadb:10.5
-        container_name: backend-db
+        container_name: dashboard_db
         volumes:
             - "./data:/var/lib/mysql"
         ports:
@@ -10,44 +42,17 @@ services:
         environment:
             - MYSQL_ROOT_PASSWORD=root
         networks:
-            - backend
+            - app_network
         restart: unless-stopped
 
-    backend-api:
-        image: amoraresco/it-academy-project:latest
-        container_name: backend-api
-        links:
-            - backend-db
-            - backend-redis
+    dashboard_redis:
+        container_name: dashboard_redis
+        image: redis:latest
         ports:
-            - "88:80"
-            - "882:22"
-        volumes:
-            - "./:/var/www/html"
+            - "6379:6379"
         networks:
-            - backend
-        restart: unless-stopped
-
-    backend-mailhog:
-        image: mailhog/mailhog
-        container_name: backend-mailhog
-        ports:
-            - "8825:8025"
-            - "8125:1025"
-        networks:
-            - backend
-
-    backend-redis:
-        image: redis:3.0
-        container_name: backend-redis
-        volumes:
-            - "./data/redis/cache/data:/data"
-        ports:
-            - "8379:6379"
-        restart: unless-stopped
-        networks:
-            - backend
+            - app_network
 
 networks:
-    backend:
+    app_network:
         driver: bridge
