@@ -8,5 +8,6 @@ namespace App\Enums;
 class UserRolesEnum
 {
     public const ADMINISTRATOR = 1;
-    public const TEACHER = 2;
+    public const EDITOR = 2;
+    public const AUTHOR = 3;
 }
