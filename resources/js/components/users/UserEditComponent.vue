@@ -23,7 +23,7 @@
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">Cancel</el-button>
-                <el-button type="primary" @click="">Update</el-button>
+                <el-button type="primary" @click="update(userId, user)">Update</el-button>
               </span>
         </el-dialog>
     </div>
@@ -57,6 +57,25 @@ export default {
 
             this.$store.dispatch('user/loadUser', id);
         },
+        update(id, user) {
+            this.$store.dispatch('user/updateUser', {id, user})
+                .then(() => {
+                    this.$notify({
+                        title: 'Success',
+                        type: 'success',
+                        message: `The ${user.name} successfully updated!`
+                    });
+
+                    this.$store.dispatch('user/loadUsers');
+
+                    this.dialogFormVisible = false;
+                }).catch((e) => {
+                this.$notify.error({
+                    title: 'Error',
+                    message: e
+                });
+            });
+        }
     }
 }
 </script>

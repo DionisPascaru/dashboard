@@ -7173,6 +7173,29 @@ __webpack_require__.r(__webpack_exports__);
     loadUser: function loadUser(id) {
       this.dialogFormVisible = true;
       this.$store.dispatch('user/loadUser', id);
+    },
+    update: function update(id, user) {
+      var _this = this;
+
+      this.$store.dispatch('user/updateUser', {
+        id: id,
+        user: user
+      }).then(function () {
+        _this.$notify({
+          title: 'Success',
+          type: 'success',
+          message: "The ".concat(user.name, " successfully updated!")
+        });
+
+        _this.$store.dispatch('user/loadUsers');
+
+        _this.dialogFormVisible = false;
+      })["catch"](function (e) {
+        _this.$notify.error({
+          title: 'Error',
+          message: e
+        });
+      });
     }
   }
 });
@@ -7331,6 +7354,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Sidebar",
+  computed: {
+    activeIndex: function activeIndex() {
+      return this.$route.name;
+    }
+  },
   methods: {
     logout: function logout() {
       var _this = this;
@@ -7667,7 +7695,10 @@ __webpack_require__.r(__webpack_exports__);
   label: 'Administrator'
 }, {
   id: 2,
-  label: 'Teacher'
+  label: 'Editor'
+}, {
+  id: 3,
+  label: 'Author'
 }]);
 
 /***/ }),
@@ -7920,6 +7951,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "loadUsers": () => (/* binding */ loadUsers),
 /* harmony export */   "loadUser": () => (/* binding */ loadUser),
 /* harmony export */   "createUser": () => (/* binding */ createUser),
+/* harmony export */   "updateUser": () => (/* binding */ updateUser),
 /* harmony export */   "deleteUser": () => (/* binding */ deleteUser)
 /* harmony export */ });
 /* harmony import */ var _httpRequest__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../httpRequest */ "./resources/js/services/httpRequest.js");
@@ -7935,6 +7967,10 @@ var loadUser = function loadUser(id) {
 
 var createUser = function createUser(user) {
   return _httpRequest__WEBPACK_IMPORTED_MODULE_0__["default"].post('/user', user);
+};
+
+var updateUser = function updateUser(id, user) {
+  return _httpRequest__WEBPACK_IMPORTED_MODULE_0__["default"].put("/user/".concat(id), user);
 };
 
 var deleteUser = function deleteUser(id) {
@@ -8262,34 +8298,66 @@ var actions = {
       }, _callee3, null, [[1, 8]]);
     }))();
   },
-  deleteUser: function deleteUser(_ref4, userId) {
+  updateUser: function updateUser(_ref4, _ref5) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-      var commit;
+      var commit, id, user, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
               commit = _ref4.commit;
-              _context4.prev = 1;
-              _context4.next = 4;
-              return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_1__.deleteUser)(userId);
+              id = _ref5.id, user = _ref5.user;
+              _context4.prev = 2;
+              _context4.next = 5;
+              return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_1__.updateUser)(id, user);
 
-            case 4:
-              commit('REMOVE_USER', userId);
-              _context4.next = 10;
+            case 5:
+              response = _context4.sent;
+              commit('UPDATE_USER', response);
+              _context4.next = 12;
               break;
 
-            case 7:
-              _context4.prev = 7;
-              _context4.t0 = _context4["catch"](1);
+            case 9:
+              _context4.prev = 9;
+              _context4.t0 = _context4["catch"](2);
               throw _context4.t0;
 
-            case 10:
+            case 12:
             case "end":
               return _context4.stop();
           }
         }
-      }, _callee4, null, [[1, 7]]);
+      }, _callee4, null, [[2, 9]]);
+    }))();
+  },
+  deleteUser: function deleteUser(_ref6, userId) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              commit = _ref6.commit;
+              _context5.prev = 1;
+              _context5.next = 4;
+              return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_1__.deleteUser)(userId);
+
+            case 4:
+              commit('REMOVE_USER', userId);
+              _context5.next = 10;
+              break;
+
+            case 7:
+              _context5.prev = 7;
+              _context5.t0 = _context5["catch"](1);
+              throw _context5.t0;
+
+            case 10:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5, null, [[1, 7]]);
     }))();
   }
 };
@@ -8302,6 +8370,15 @@ var mutations = {
   },
   CREATE_USER: function CREATE_USER(state, user) {
     state.users.push(user);
+  },
+  UPDATE_USER: function UPDATE_USER(state, user) {
+    var index = state.users.findIndex(function (item) {
+      return item.id === user.id;
+    });
+
+    if (index !== -1) {
+      state.users.splice(index, 1, user);
+    }
   },
   REMOVE_USER: function REMOVE_USER(state, userId) {
     var index = state.users.findIndex(function (user) {
@@ -95430,7 +95507,11 @@ var render = function () {
                 "el-button",
                 {
                   attrs: { type: "primary" },
-                  on: { click: function ($event) {} },
+                  on: {
+                    click: function ($event) {
+                      return _vm.update(_vm.userId, _vm.user)
+                    },
+                  },
                 },
                 [_vm._v("Update")]
               ),
@@ -95593,7 +95674,7 @@ var render = function () {
         {
           staticClass: "el-menu-vertical-demo",
           attrs: {
-            "default-active": "2",
+            "default-active": _vm.activeIndex,
             "background-color": "transparent",
             "text-color": "#fff",
             "active-text-color": "#ffd04b",
@@ -95603,13 +95684,18 @@ var render = function () {
         [
           _c(
             "el-menu-item",
-            { attrs: { index: "1", route: { name: "ExampleComponent" } } },
+            {
+              attrs: {
+                index: "ExampleComponent",
+                route: { name: "ExampleComponent" },
+              },
+            },
             [_c("span", [_vm._v("Example")])]
           ),
           _vm._v(" "),
           _c(
             "el-menu-item",
-            { attrs: { index: "2", route: { name: "Users" } } },
+            { attrs: { index: "Users", route: { name: "Users" } } },
             [_c("span", [_vm._v("Users")])]
           ),
         ],
