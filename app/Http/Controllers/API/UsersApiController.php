@@ -68,7 +68,7 @@ class UsersApiController
             $input = $request->validated();
 
             $input['password'] = bcrypt($input['password']);
-            $input['role_id'] = UserRolesEnum::TEACHER;
+            $input['role_id'] = UserRolesEnum::EDITOR;
 
             $user = User::create($input);
 
@@ -91,11 +91,11 @@ class UsersApiController
         try {
             $input = $request->validated();
 
-            $input['password'] = bcrypt($input['password']);
+            User::where('id', $request['id'])->update($input);
 
-            User::where('id', $request->id)->update($input);
+            $user = User::findOrFail($request['id']);
 
-            return $this->restResponseFactory->ok(['message' => 'User successfully updated!']);
+            return $this->restResponseFactory->ok(new UserCollection($user));
         } catch (Exception $exception) {
             return $this->restResponseFactory->serverError($exception->getMessage());
         }

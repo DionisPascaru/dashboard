@@ -1,17 +1,17 @@
 <template>
     <div class="sidebar">
         <el-menu
-            default-active="2"
+            :default-active="activeIndex"
             class="el-menu-vertical-demo"
             background-color="transparent"
             text-color="#fff"
             active-text-color="#ffd04b"
             :router="true"
         >
-            <el-menu-item index="1" :route="{ name: 'ExampleComponent' }">
+            <el-menu-item index="ExampleComponent" :route="{ name: 'ExampleComponent' }">
                 <span>Example</span>
             </el-menu-item>
-            <el-menu-item index="2" :route="{ name: 'Users' }">
+            <el-menu-item index="Users" :route="{ name: 'Users' }">
                 <span>Users</span>
             </el-menu-item>
         </el-menu>
@@ -25,12 +25,17 @@
 <script>
 export default {
     name: "Sidebar",
+    computed: {
+        activeIndex() {
+            return this.$route.name;
+        }
+    },
     methods: {
         logout() {
             this.$store.dispatch('auth/logout').then(() => {
                 this.$router.push({name: 'Home'});
             })
-        }
+        },
     }
 };
 </script>

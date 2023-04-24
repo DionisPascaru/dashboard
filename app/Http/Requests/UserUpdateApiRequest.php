@@ -17,7 +17,7 @@ class UserUpdateApiRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'unique:users|required',
+            'email' => 'required',
             'role_id' => 'number'
         ];
     }

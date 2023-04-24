@@ -5,6 +5,10 @@ export default [
     },
     {
         id: 2,
-        label: 'Teacher'
+        label: 'Editor'
+    },
+    {
+        id: 3,
+        label: 'Author'
     }
 ]
