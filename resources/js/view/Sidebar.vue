@@ -6,13 +6,15 @@
             background-color="transparent"
             text-color="#fff"
             active-text-color="#ffd04b"
-            :router="true"
-        >
+            :router="true">
             <el-menu-item index="ExampleComponent" :route="{ name: 'ExampleComponent' }">
                 <span>Example</span>
             </el-menu-item>
             <el-menu-item index="Users" :route="{ name: 'Users' }">
                 <span>Users</span>
+            </el-menu-item>
+            <el-menu-item index="Projects" :route="{ name: 'Projects' }">
+                <span>Projects</span>
             </el-menu-item>
         </el-menu>
         <div>

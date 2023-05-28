@@ -65,7 +65,11 @@ class ProjectsApiController
         try {
              $input = $request->validated();
 
-             $input['cover'] = $request->file('cover')->store('public/images');
+             $file = $request->file('cover');
+             $extension = $file->getClientOriginalExtension();
+             $filename = time() . '.' . $extension;
+             $file->move('files/images', $filename);
+             $input['cover'] = $filename;
 
              $project = Project::create($input);
 
