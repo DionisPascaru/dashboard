@@ -4,6 +4,7 @@ import Dashboard from '../view/Dashboard';
 import Home from '../view/Home';
 import Users from '../view/users/Users';
 import UserDetails from '../components/users/UserDetailsComponent';
+import Projects from '../view/projects/Projects';
 import Error from '../view/Error';
 
 export default [
@@ -55,6 +56,14 @@ export default [
                 path: '/user/:id/details',
                 component: UserDetails,
                 name: 'UserDetails',
+                meta: {
+                    guard: 'auth'
+                }
+            },
+            {
+                path: '/projects',
+                component: Projects,
+                name: 'Projects',
                 meta: {
                     guard: 'auth'
                 }
