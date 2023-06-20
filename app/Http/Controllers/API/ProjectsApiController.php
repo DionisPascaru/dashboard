@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\ProjectCreateApiRequest;
 use App\Http\Requests\ProjectUpdateApiRequest;
 use App\Models\Project;
+use App\Traits\FileManager;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
@@ -12,6 +13,8 @@ use Illuminate\Validation\ValidationException;
 
 class ProjectsApiController
 {
+    use FileManager;
+
     /** @var RestResponseFactory $restResponseFactory */
     private $restResponseFactory;
 
@@ -63,15 +66,15 @@ class ProjectsApiController
     public function create(ProjectCreateApiRequest $request): JsonResponse
     {
         try {
-             $input = $request->validated();
+            $input = $request->validated();
 
-             $file = $request->file('cover');
-             $extension = $file->getClientOriginalExtension();
-             $filename = time() . '.' . $extension;
-             $file->move('files/images', $filename);
-             $input['cover'] = $filename;
+            $file = $request->file('cover');
 
-             $project = Project::create($input);
+            if (!empty($input['cover'])) {
+                $input['cover'] = $this->upload($file, 'publicFiles');
+            }
+
+            $project = Project::create($input);
 
             return $this->restResponseFactory->created($project);
         } catch (ValidationException $exception) {

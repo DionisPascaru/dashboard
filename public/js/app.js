@@ -7581,6 +7581,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _components_projects_ProjectCreateComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/projects/ProjectCreateComponent */ "./resources/js/components/projects/ProjectCreateComponent.vue");
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../config */ "./resources/js/config.js");
 //
 //
 //
@@ -7626,6 +7627,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Projects',
   components: {
@@ -7633,7 +7635,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      loading: true
+      loading: true,
+      path: _config__WEBPACK_IMPORTED_MODULE_1__["default"].path
     };
   },
   computed: {
@@ -7899,6 +7902,23 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/config.js":
+/*!********************************!*\
+  !*** ./resources/js/config.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  path: "http://localhost:8000/resources/publicFiles"
+});
 
 /***/ }),
 
@@ -96410,7 +96430,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "header" }, [
-      _c("span", [_vm._v("WOW Dashboard")]),
+      _c("span", [_vm._v("Dashboard")]),
     ])
   },
 ]
@@ -96697,9 +96717,7 @@ var render = function () {
                         _c("el-image", {
                           staticStyle: { width: "100px", height: "100px" },
                           attrs: {
-                            src:
-                              "http://localhost:8000/files/images/" +
-                              scope.row.cover,
+                            src: _vm.path + "/" + scope.row.cover,
                             fit: "fit",
                           },
                         }),

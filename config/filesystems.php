@@ -53,6 +53,11 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
         ],
 
+        'backend' => [
+            'driver' => 'local',
+            'root' => public_path() . '/resources',
+        ]
+
     ],
 
     /*
@@ -69,5 +74,4 @@ return [
     'links' => [
         public_path('storage') => storage_path('app/public'),
     ],
-
 ];
