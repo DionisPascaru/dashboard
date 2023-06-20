@@ -17,7 +17,7 @@
                     <template slot-scope="scope">
                         <el-image
                             style="width: 100px; height: 100px"
-                            :src="`http://localhost:8000/files/images/${scope.row.cover}`"
+                            :src="`${path}/${scope.row.cover}`"
                             fit="fit">
                         </el-image>
                     </template>
@@ -44,6 +44,7 @@
 
 <script>
 import ProjectCreateComponent from "../../components/projects/ProjectCreateComponent";
+import config from "../../config";
 
 export default {
     name: 'Projects',
@@ -52,7 +53,8 @@ export default {
     },
     data() {
         return {
-            loading: true
+            loading: true,
+            path: config.path
         }
     },
     computed: {
