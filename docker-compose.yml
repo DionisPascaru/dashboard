@@ -14,6 +14,7 @@ services:
             - dashboard_db
         networks:
             - app_network
+        restart: unless-stopped
 
     dashboard_nginx:
         container_name: dashboard_nginx
@@ -31,6 +32,7 @@ services:
             NGINX_ROOT: /usr/src/app/public
         networks:
             - app_network
+        restart: unless-stopped
 
     dashboard_db:
         image: mariadb:10.5
@@ -53,6 +55,7 @@ services:
             - "6379:6379"
         networks:
             - app_network
+        restart: unless-stopped
 
 networks:
     app_network:

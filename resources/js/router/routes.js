@@ -5,6 +5,7 @@ import Home from '../view/Home';
 import Users from '../view/users/Users';
 import UserDetails from '../components/users/UserDetailsComponent';
 import Projects from '../view/projects/Projects';
+import ProjectCreateComponent from '../components/projects/ProjectCreateComponent';
 import Error from '../view/Error';
 
 export default [
@@ -67,7 +68,15 @@ export default [
                 meta: {
                     guard: 'auth'
                 }
-            }
+            },
+            {
+                path: '/projects/create',
+                component: ProjectCreateComponent,
+                name: 'ProjectCreateComponent',
+                meta: {
+                    guard: 'auth'
+                }
+            },
         ]
     },
     {
