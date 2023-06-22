@@ -3,7 +3,9 @@
         <div class="view-title">
             <h1>Projects</h1>
         </div>
-        <project-create-component></project-create-component>
+        <router-link :to="{ name: 'ProjectCreateComponent'}">
+            <el-button>Add project</el-button>
+        </router-link>
         <div class="view-content">
             <el-table
                 class="table"
@@ -43,14 +45,10 @@
 </template>
 
 <script>
-import ProjectCreateComponent from "../../components/projects/ProjectCreateComponent";
 import config from "../../config";
 
 export default {
     name: 'Projects',
-    components: {
-      ProjectCreateComponent
-    },
     data() {
         return {
             loading: true,
@@ -83,7 +81,6 @@ export default {
                 })
         },
         deleteProject(project) {
-            console.log(project);
             this.$confirm(
                 `Are you sure you want to delete project ${project.title}?`,
                 {
