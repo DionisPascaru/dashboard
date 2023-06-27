@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\ProjectCreateApiRequest;
 use App\Http\Requests\ProjectUpdateApiRequest;
 use App\Models\Project;
+use App\Models\ProjectImage;
 use App\Traits\FileManager;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -67,16 +68,29 @@ class ProjectsApiController
     {
         try {
             $input = $request->validated();
+            $project = new Project();
+            $projectImage = new ProjectImage();
 
-            $file = $request->file('cover');
-
+            $cover = $request->file('cover');
             if (!empty($input['cover'])) {
-                $input['cover'] = $this->upload($file, 'publicFiles');
+                $input['cover'] = $this->upload($cover, 'publicFiles');
             }
 
-            $project = Project::create($input);
+            $newProject = $project->create($input);
 
-            return $this->restResponseFactory->created($project);
+            if ($newProject->id) {
+                $data = [];
+                $images = $request->file('images');
+                foreach ($images as $image) {
+                    $data[] = [
+                        'path' => $this->upload($image, 'publicFiles'),
+                        'project_id' => $newProject->id
+                    ];
+                }
+                $projectImage->insert($data);
+            }
+
+            return $this->restResponseFactory->created($newProject);
         } catch (ValidationException $exception) {
             return $this->restResponseFactory->badRequest($exception->getMessage());
         } catch (Exception $exception) {

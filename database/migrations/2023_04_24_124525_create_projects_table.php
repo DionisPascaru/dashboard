@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 class CreateProjectsTable extends Migration
 {
     public const PROJECTS_TABLE = 'projects';
-    public const PROJECTS_CATEGORIES_TABLE = 'projects_categories';
+    public const PROJECT_CATEGORIES_TABLE = 'project_categories';
 
     /**
      * Run the migrations.
@@ -21,8 +21,7 @@ class CreateProjectsTable extends Migration
             $table->string('title');
             $table->string('cover')->nullable();
             $table->string('video')->nullable();
-            $table->unsignedBigInteger('category_id')->nullable();
-            $table->foreign('category_id')->references('id')->on(self::PROJECTS_CATEGORIES_TABLE);
+            $table->integer('category_id');
             $table->timestamps();
         });
     }
