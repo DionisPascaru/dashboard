@@ -18,6 +18,8 @@ class ProjectCreateApiRequest extends FormRequest
         return [
             'title' => 'required',
             'cover' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'images' => 'array',
+            'images.*' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'category_id' => 'integer'
         ];
     }

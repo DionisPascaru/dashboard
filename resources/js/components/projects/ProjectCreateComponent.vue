@@ -23,6 +23,16 @@
                             <i class="el-icon-plus"></i>
                         </el-upload>
                     </el-form-item>
+                    <el-form-item label="Images">
+                        <el-upload
+                            action="#"
+                            list-type="picture-card"
+                            :multiple="true"
+                            :auto-upload="false"
+                            :on-change="handleImagesUpload">
+                            <i class="el-icon-plus"></i>
+                        </el-upload>
+                    </el-form-item>
                 </el-col>
             </el-row>
         </el-form>
@@ -40,7 +50,8 @@ export default {
         return {
             project: {
                 title: '',
-                video: '',
+                cover: '',
+                images: [],
                 category_id: ''
             },
         }
@@ -49,11 +60,18 @@ export default {
         handleUpload(file) {
             this.project.cover = file;
         },
+        handleImagesUpload(file) {
+            this.project.images.push(file);
+        },
         create() {
             const formData = new FormData();
             formData.append('title', this.project.title);
             formData.append('cover', this.project.cover.raw, this.project.cover.name);
             formData.append('category_id', this.project.category_id);
+
+            this.project.images.forEach(image => {
+               formData.append('images[]', image.raw, image.name);
+            });
 
             this.$store.dispatch('project/createProject', formData)
                 .then(() => {

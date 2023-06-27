@@ -7036,13 +7036,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'ProjectCreateComponent',
   data: function data() {
     return {
       project: {
         title: '',
-        video: '',
+        cover: '',
+        images: [],
         category_id: ''
       }
     };
@@ -7051,6 +7062,9 @@ __webpack_require__.r(__webpack_exports__);
     handleUpload: function handleUpload(file) {
       this.project.cover = file;
     },
+    handleImagesUpload: function handleImagesUpload(file) {
+      this.project.images.push(file);
+    },
     create: function create() {
       var _this = this;
 
@@ -7058,6 +7072,9 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('title', this.project.title);
       formData.append('cover', this.project.cover.raw, this.project.cover.name);
       formData.append('category_id', this.project.category_id);
+      this.project.images.forEach(function (image) {
+        formData.append('images[]', image.raw, image.name);
+      });
       this.$store.dispatch('project/createProject', formData).then(function () {
         _this.$notify({
           title: 'Success',
@@ -95956,6 +95973,27 @@ var render = function () {
                             limit: 1,
                             "auto-upload": false,
                             "on-change": _vm.handleUpload,
+                          },
+                        },
+                        [_c("i", { staticClass: "el-icon-plus" })]
+                      ),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "Images" } },
+                    [
+                      _c(
+                        "el-upload",
+                        {
+                          attrs: {
+                            action: "#",
+                            "list-type": "picture-card",
+                            multiple: true,
+                            "auto-upload": false,
+                            "on-change": _vm.handleImagesUpload,
                           },
                         },
                         [_c("i", { staticClass: "el-icon-plus" })]

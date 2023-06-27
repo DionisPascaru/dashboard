@@ -5,9 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProjectsCategoriesTable extends Migration
+class CreateProjectCategoriesTable extends Migration
 {
-    public const PROJECTS_CATEGORIES_TABLE = 'projects_categories';
+    public const PROJECT_CATEGORIES_TABLE = 'project_categories';
 
     /**
      * Run the migrations.
@@ -16,13 +16,13 @@ class CreateProjectsCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create(self::PROJECTS_CATEGORIES_TABLE, function (Blueprint $table) {
+        Schema::create(self::PROJECT_CATEGORIES_TABLE, function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
             $table->timestamps();
         });
 
-        DB::table(self::PROJECTS_CATEGORIES_TABLE)->insert(
+        DB::table(self::PROJECT_CATEGORIES_TABLE)->insert(
             array(
                 [
                     'name' => 'Identities',
@@ -41,6 +41,6 @@ class CreateProjectsCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(self::PROJECTS_CATEGORIES_TABLE);
+        Schema::dropIfExists(self::PROJECT_CATEGORIES_TABLE);
     }
 }
