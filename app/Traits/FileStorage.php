@@ -7,7 +7,7 @@ use Illuminate\Http\UploadedFile;
 /**
  * File manager.
  */
-trait FileManager
+trait FileStorage
 {
     /**
      * @param UploadedFile $file
@@ -16,7 +16,7 @@ trait FileManager
      *
      * @return string
      */
-    public function upload(UploadedFile $file, string $folder, string $disk = 'backend'): string
+    public function store(UploadedFile $file, string $folder, string $disk = 'backend'): string
     {
         $extension = $file->getClientOriginalExtension();
         $filename = time() . '.' . $extension;

@@ -7046,6 +7046,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'ProjectCreateComponent',
   data: function data() {
@@ -7055,45 +7066,101 @@ __webpack_require__.r(__webpack_exports__);
         cover: '',
         images: [],
         category_id: ''
+      },
+      rules: {
+        title: [{
+          required: true,
+          message: "Title is required",
+          trigger: ["blur", "change"]
+        }],
+        cover: [{
+          required: true,
+          message: "Cover is required",
+          trigger: ["blur", "change"]
+        }],
+        category_id: [{
+          required: true,
+          message: "Category is required",
+          trigger: ["blur", "change"]
+        }]
       }
     };
   },
+  computed: {
+    projectCategories: function projectCategories() {
+      return this.$store.getters['projectCategories/getProjectCategories'];
+    }
+  },
+  mounted: function mounted() {
+    this.$store.dispatch('projectCategories/loadProjectCategories');
+  },
   methods: {
-    handleUpload: function handleUpload(file) {
+    handleCoverUpload: function handleCoverUpload(file) {
       this.project.cover = file;
     },
     handleImagesUpload: function handleImagesUpload(file) {
       this.project.images.push(file);
     },
-    create: function create() {
+    onCoverRemoved: function onCoverRemoved() {
+      this.project.cover = '';
+    },
+    onImagesRemoved: function onImagesRemoved(file) {
+      var index = this.project.images.findIndex(function (item) {
+        return item.uid === file.uid;
+      });
+
+      if (index !== -1) {
+        this.project.images.splice(index, 1);
+      }
+    },
+    create: function create(formName) {
       var _this = this;
 
+      this.$refs[formName].validate(function (valid) {
+        if (valid) {
+          var input = _this.processProject();
+
+          _this.$store.dispatch('project/createProject', input).then(function () {
+            _this.$notify({
+              title: 'Success',
+              type: 'success',
+              message: "The ".concat(_this.project.title, " successfully created!")
+            });
+
+            _this.resetForm();
+          })["catch"](function (e) {
+            _this.$notify.error({
+              title: 'Error',
+              message: e
+            });
+          });
+        }
+      });
+    },
+    processProject: function processProject() {
       var formData = new FormData();
       formData.append('title', this.project.title);
-      formData.append('cover', this.project.cover.raw, this.project.cover.name);
       formData.append('category_id', this.project.category_id);
-      this.project.images.forEach(function (image) {
-        formData.append('images[]', image.raw, image.name);
-      });
-      this.$store.dispatch('project/createProject', formData).then(function () {
-        _this.$notify({
-          title: 'Success',
-          type: 'success',
-          message: "The ".concat(_this.project.title, " successfully created!")
-        });
 
-        _this.resetForm();
-      })["catch"](function (e) {
-        _this.$notify.error({
-          title: 'Error',
-          message: e
+      if (this.project.cover) {
+        formData.append('cover', this.project.cover.raw, this.project.cover.name);
+      }
+
+      if (this.project.images) {
+        this.project.images.forEach(function (image) {
+          formData.append('images[]', image.raw, image.name);
         });
-      });
+      }
+
+      return formData;
     },
     resetForm: function resetForm() {
       this.project.title = '';
       this.project.cover = '';
       this.project.category_id = '';
+      this.project.images = [];
+      this.$refs.uploadCover.clearFiles();
+      this.$refs.uploadImages.clearFiles();
     }
   }
 });
@@ -8205,6 +8272,28 @@ httpRequest.interceptors.response.use(responseInterceptor);
 
 /***/ }),
 
+/***/ "./resources/js/services/project-categories/project-categories.service.js":
+/*!********************************************************************************!*\
+  !*** ./resources/js/services/project-categories/project-categories.service.js ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "loadProjectCategories": () => (/* binding */ loadProjectCategories)
+/* harmony export */ });
+/* harmony import */ var _httpRequest__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../httpRequest */ "./resources/js/services/httpRequest.js");
+
+
+var loadProjectCategories = function loadProjectCategories() {
+  return _httpRequest__WEBPACK_IMPORTED_MODULE_0__["default"].get('/project-categories');
+};
+
+
+
+/***/ }),
+
 /***/ "./resources/js/services/projects/projects.service.js":
 /*!************************************************************!*\
   !*** ./resources/js/services/projects/projects.service.js ***!
@@ -8452,24 +8541,108 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _auth_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./auth.module */ "./resources/js/store/auth.module.js");
 /* harmony import */ var _user_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./user.module */ "./resources/js/store/user.module.js");
 /* harmony import */ var _project_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./project.module */ "./resources/js/store/project.module.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var _project_categories_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./project-categories.module */ "./resources/js/store/project-categories.module.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 
 
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_3__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_4__["default"]);
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_4__["default"].Store({
+
+vue__WEBPACK_IMPORTED_MODULE_4__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_5__["default"]);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_5__["default"].Store({
   modules: {
     auth: _auth_module__WEBPACK_IMPORTED_MODULE_0__["default"],
     user: _user_module__WEBPACK_IMPORTED_MODULE_1__["default"],
-    project: _project_module__WEBPACK_IMPORTED_MODULE_2__["default"]
+    project: _project_module__WEBPACK_IMPORTED_MODULE_2__["default"],
+    projectCategories: _project_categories_module__WEBPACK_IMPORTED_MODULE_3__["default"]
   }
 }));
+
+/***/ }),
+
+/***/ "./resources/js/store/project-categories.module.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/store/project-categories.module.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _services_project_categories_project_categories_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/project-categories/project-categories.service */ "./resources/js/services/project-categories/project-categories.service.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+var state = function state() {
+  return {
+    projectCategories: []
+  };
+};
+
+var getters = {
+  getProjectCategories: function getProjectCategories(state) {
+    return state.projectCategories;
+  }
+};
+var actions = {
+  loadProjectCategories: function loadProjectCategories(_ref) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              commit = _ref.commit;
+              _context.prev = 1;
+              _context.next = 4;
+              return (0,_services_project_categories_project_categories_service__WEBPACK_IMPORTED_MODULE_1__.loadProjectCategories)();
+
+            case 4:
+              response = _context.sent;
+              commit('LOAD_PROJECT_CATEGORIES', response);
+              _context.next = 11;
+              break;
+
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context["catch"](1);
+              throw _context.t0;
+
+            case 11:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[1, 8]]);
+    }))();
+  }
+};
+var mutations = {
+  LOAD_PROJECT_CATEGORIES: function LOAD_PROJECT_CATEGORIES(state, projectCategories) {
+    state.projectCategories = projectCategories;
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
+  state: state,
+  getters: getters,
+  actions: actions,
+  mutations: mutations
+});
 
 /***/ }),
 
@@ -95916,7 +96089,10 @@ var render = function () {
       _vm._v(" "),
       _c(
         "el-form",
-        { attrs: { model: _vm.project } },
+        {
+          ref: "createProjectForm",
+          attrs: { model: _vm.project, rules: _vm.rules },
+        },
         [
           _c(
             "el-row",
@@ -95928,7 +96104,7 @@ var render = function () {
                 [
                   _c(
                     "el-form-item",
-                    { attrs: { label: "Title" } },
+                    { attrs: { label: "Title", prop: "title" } },
                     [
                       _c("el-input", {
                         model: {
@@ -95945,34 +96121,47 @@ var render = function () {
                   _vm._v(" "),
                   _c(
                     "el-form-item",
-                    { attrs: { label: "Category" } },
+                    { attrs: { label: "Category", prop: "category_id" } },
                     [
-                      _c("el-input", {
-                        model: {
-                          value: _vm.project.category_id,
-                          callback: function ($$v) {
-                            _vm.$set(_vm.project, "category_id", $$v)
+                      _c(
+                        "el-select",
+                        {
+                          attrs: { placeholder: "Select" },
+                          model: {
+                            value: _vm.project.category_id,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.project, "category_id", $$v)
+                            },
+                            expression: "project.category_id",
                           },
-                          expression: "project.category_id",
                         },
-                      }),
+                        _vm._l(this.projectCategories, function (item) {
+                          return _c("el-option", {
+                            key: item.id,
+                            attrs: { label: item.name, value: item.id },
+                          })
+                        }),
+                        1
+                      ),
                     ],
                     1
                   ),
                   _vm._v(" "),
                   _c(
                     "el-form-item",
-                    { attrs: { label: "Cover" } },
+                    { attrs: { label: "Cover", prop: "cover" } },
                     [
                       _c(
                         "el-upload",
                         {
+                          ref: "uploadCover",
                           attrs: {
                             action: "#",
                             "list-type": "picture-card",
                             limit: 1,
                             "auto-upload": false,
-                            "on-change": _vm.handleUpload,
+                            "on-change": _vm.handleCoverUpload,
+                            "on-remove": _vm.onCoverRemoved,
                           },
                         },
                         [_c("i", { staticClass: "el-icon-plus" })]
@@ -95988,12 +96177,14 @@ var render = function () {
                       _c(
                         "el-upload",
                         {
+                          ref: "uploadImages",
                           attrs: {
                             action: "#",
                             "list-type": "picture-card",
                             multiple: true,
                             "auto-upload": false,
                             "on-change": _vm.handleImagesUpload,
+                            "on-remove": _vm.onImagesRemoved,
                           },
                         },
                         [_c("i", { staticClass: "el-icon-plus" })]
@@ -96023,7 +96214,14 @@ var render = function () {
           _vm._v(" "),
           _c(
             "el-button",
-            { attrs: { type: "primary" }, on: { click: _vm.create } },
+            {
+              attrs: { type: "primary" },
+              on: {
+                click: function ($event) {
+                  return _vm.create("createProjectForm")
+                },
+              },
+            },
             [_vm._v("Create")]
           ),
         ],
@@ -96788,7 +96986,7 @@ var render = function () {
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: { prop: "category", label: "Category" },
+                attrs: { prop: "category.name", label: "Category" },
               }),
               _vm._v(" "),
               _c("el-table-column", {
