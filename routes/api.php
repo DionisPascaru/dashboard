@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\ProjectCategoriesApiController;
 use App\Http\Controllers\API\ProjectsApiController;
 use App\Http\Controllers\API\UsersApiController;
 use Illuminate\Support\Facades\Route;
@@ -37,4 +38,7 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::post('/{id}', [ProjectsApiController::class, 'update']);
         Route::delete('/{id}', [ProjectsApiController::class, 'delete']);
     });
+
+    // Project categories
+    Route::get('/project-categories', [ProjectCategoriesApiController::class, 'index']);
 });

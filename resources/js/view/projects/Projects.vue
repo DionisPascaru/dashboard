@@ -29,7 +29,7 @@
                     label="Title">
                 </el-table-column>
                 <el-table-column
-                    prop="category"
+                    prop="category.name"
                     label="Category">
                 </el-table-column>
                 <el-table-column label="Actions">

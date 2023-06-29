@@ -5,8 +5,9 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\ProjectCreateApiRequest;
 use App\Http\Requests\ProjectUpdateApiRequest;
 use App\Models\Project;
-use App\Models\ProjectImage;
-use App\Traits\FileManager;
+use App\Models\ProjectCategory;
+use App\Services\Supervisors\ProjectSupervisor;
+use App\Traits\FileStorage;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
@@ -14,13 +15,24 @@ use Illuminate\Validation\ValidationException;
 
 class ProjectsApiController
 {
-    use FileManager;
+    use FileStorage;
+
+    /** @var ProjectSupervisor $projectSupervisor */
+    private $projectSupervisor;
 
     /** @var RestResponseFactory $restResponseFactory */
     private $restResponseFactory;
 
-    public function __construct(RestResponseFactory $restResponseFactory)
+    /**
+     * @param ProjectSupervisor $projectSupervisor
+     * @param RestResponseFactory $restResponseFactory
+     */
+    public function __construct(
+        ProjectSupervisor $projectSupervisor,
+        RestResponseFactory $restResponseFactory
+    )
     {
+        $this->projectSupervisor = $projectSupervisor;
         $this->restResponseFactory = $restResponseFactory;
     }
 
@@ -32,7 +44,19 @@ class ProjectsApiController
     public function index(): JsonResponse
     {
         try {
-            return $this->restResponseFactory->ok(Project::all());
+            $projects = array_map(function ($project) {
+                return [
+                    'id' => $project['id'],
+                    'title' => $project['title'],
+                    'cover' => $project['cover'],
+                    'category' => $this->processProjectCategory($project['category_id']),
+                    'video' => $project['video'],
+                    'created_at' => $project['created_at'],
+                    'updated_at' => $project['updated_at'],
+                ];
+            }, Project::all()->toArray());
+
+            return $this->restResponseFactory->ok($projects);
         } catch (Exception $exception) {
             return $this->restResponseFactory->serverError($exception);
         }
@@ -68,29 +92,10 @@ class ProjectsApiController
     {
         try {
             $input = $request->validated();
-            $project = new Project();
-            $projectImage = new ProjectImage();
+            $input['cover'] = $request->file('cover');
+            $input['images'] = $request->file('images');
 
-            $cover = $request->file('cover');
-            if (!empty($input['cover'])) {
-                $input['cover'] = $this->upload($cover, 'publicFiles');
-            }
-
-            $newProject = $project->create($input);
-
-            if ($newProject->id) {
-                $data = [];
-                $images = $request->file('images');
-                foreach ($images as $image) {
-                    $data[] = [
-                        'path' => $this->upload($image, 'publicFiles'),
-                        'project_id' => $newProject->id
-                    ];
-                }
-                $projectImage->insert($data);
-            }
-
-            return $this->restResponseFactory->created($newProject);
+            return $this->restResponseFactory->created($this->projectSupervisor->create($input));
         } catch (ValidationException $exception) {
             return $this->restResponseFactory->badRequest($exception->getMessage());
         } catch (Exception $exception) {
@@ -131,5 +136,17 @@ class ProjectsApiController
         } catch (Exception $exception) {
             return $this->restResponseFactory->serverError($exception->getMessage());
         }
+    }
+
+    /**
+     * Process project category.
+     *
+     * @param int $categoryId
+     *
+     * @return ProjectCategory
+     */
+    private function processProjectCategory(int $categoryId): ProjectCategory
+    {
+        return ProjectCategory::findOrFail($categoryId);
     }
 }
