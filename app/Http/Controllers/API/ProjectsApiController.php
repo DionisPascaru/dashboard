@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Requests\ProjectCreateApiRequest;
+use App\Http\Requests\ProjectFileUploadRequest;
 use App\Http\Requests\ProjectUpdateApiRequest;
 use App\Models\Project;
 use App\Models\ProjectCategory;
+use App\Models\ProjectImage;
 use App\Services\Supervisors\ProjectSupervisor;
 use App\Traits\FileStorage;
 use Exception;
@@ -74,6 +76,8 @@ class ProjectsApiController
         try {
             $project = Project::findOrFail($id);
 
+            $project['images'] = ProjectImage::where('project_id', $id)->get('path');
+
             return $this->restResponseFactory->ok($project);
         } catch (ModelNotFoundException $exception) {
             return $this->restResponseFactory->badRequest($exception->getMessage());
@@ -114,16 +118,20 @@ class ProjectsApiController
         try {
             $input = $request->validated();
 
-            Project::where('id', $request['id'])->update($input);
-
-            $project = Project::findOrFail($request['id']);
-
-            return $this->restResponseFactory->ok($project);
+            return $this->restResponseFactory->ok(
+                $this->projectSupervisor->update($input)
+            );
         } catch (Exception $exception) {
             return $this->restResponseFactory->serverError($exception->getMessage());
         }
     }
 
+    /**
+     * Delete project.
+     *
+     * @param $id
+     * @return JsonResponse
+     */
     public function delete($id): JsonResponse
     {
         try {

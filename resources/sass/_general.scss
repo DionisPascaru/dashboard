@@ -21,3 +21,7 @@ aside {
 .flex-gap {
     gap: 10px;
 }
+
+.el-upload-list__item {
+    transition: none!important;
+}
