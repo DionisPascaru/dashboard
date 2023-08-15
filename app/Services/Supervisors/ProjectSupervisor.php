@@ -5,10 +5,21 @@ namespace App\Services\Supervisors;
 use App\Models\Project;
 use App\Models\ProjectImage;
 use App\Traits\FileStorage;
+use Illuminate\Support\Facades\DB;
 
 class ProjectSupervisor
 {
     use FileStorage;
+
+    const TABLE_NAME = 'projects';
+
+    /** @var DB $queryBuilder */
+    private $queryBuilder;
+
+    public function __construct()
+    {
+        $this->queryBuilder = DB::table(self::TABLE_NAME);
+    }
 
     /**
      * Create a project.
@@ -32,6 +43,13 @@ class ProjectSupervisor
         }
 
         return $newProject;
+    }
+
+    public function update(array $input): Project
+    {
+        Project::where('id', $input['id'])->update($input);
+
+        return Project::findOrFail($input['id']);
     }
 
     /**

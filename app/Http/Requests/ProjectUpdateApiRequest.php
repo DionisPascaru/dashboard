@@ -16,10 +16,9 @@ class ProjectUpdateApiRequest extends FormRequest
     public function rules()
     {
         return [
+            'id' => 'required',
             'title' => 'required',
-            'cover' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'video' => 'string',
-            'category_id' => 'integer'
+            'category_id' => 'integer',
         ];
     }
 

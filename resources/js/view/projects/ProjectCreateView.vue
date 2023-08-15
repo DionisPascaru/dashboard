@@ -128,7 +128,7 @@ export default {
                                 message: `The ${this.project.title} successfully created!`
                             });
 
-                            this.resetForm();
+                            this.$router.push({ name: 'Projects'});
                         })
                         .catch((e) => {
                             this.$notify.error({

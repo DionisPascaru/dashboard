@@ -3,7 +3,7 @@
         <div class="view-title">
             <h1>Projects</h1>
         </div>
-        <router-link :to="{ name: 'ProjectCreateComponent'}">
+        <router-link :to="{ name: 'ProjectCreateView'}">
             <el-button>Add project</el-button>
         </router-link>
         <div class="view-content">
@@ -34,6 +34,9 @@
                 </el-table-column>
                 <el-table-column label="Actions">
                     <template slot-scope="scope">
+                        <router-link :to="{ name: 'ProjectUpdateView', params: { id: scope.row.id } }">
+                            <el-button>Update project</el-button>
+                        </router-link>
                         <el-button type="danger" @click="deleteProject(scope.row)">
                             Delete
                         </el-button>
@@ -52,7 +55,7 @@ export default {
     data() {
         return {
             loading: true,
-            path: config.path
+            path: config.path,
         }
     },
     computed: {

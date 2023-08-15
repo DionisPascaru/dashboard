@@ -1,4 +1,4 @@
-import {loadProject, loadProjects, createProject, deleteProject} from "../services/projects/projects.service";
+import {loadProject, loadProjects, createProject, updateProject, deleteProject} from "../services/projects/projects.service";
 
 const state = () => ({
     projects: [],
@@ -39,6 +39,14 @@ const actions = {
             throw e;
         }
     },
+    async updateProject({commit}, {id, project}) {
+        try {
+            const response = await updateProject(id, project);
+            commit('UPDATE_PROJECT', response);
+        } catch (e) {
+            throw e;
+        }
+    },
     async deleteProject({commit}, projectId) {
         try {
             await deleteProject(projectId);
@@ -58,6 +66,13 @@ const mutations = {
     },
     CREATE_PROJECT(state, project) {
         state.projects.push(project);
+    },
+    UPDATE_PROJECT(state, project) {
+      const index = state.projects.findIndex(item => item.id === project.id);
+
+      if (index !== -1) {
+          state.projects.splice(index, 1, project);
+      }
     },
     DELETE_PROJECT(state, projectId) {
         const index = state.projects.findIndex((project) => project.id === projectId);

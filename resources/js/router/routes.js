@@ -5,7 +5,8 @@ import Home from '../view/Home';
 import Users from '../view/users/Users';
 import UserDetails from '../components/users/UserDetailsComponent';
 import Projects from '../view/projects/Projects';
-import ProjectCreateComponent from '../components/projects/ProjectCreateComponent';
+import ProjectCreateView from '../view/projects/ProjectCreateView.vue';
+import ProjectUpdateView from "../view/projects/ProjectUpdateView.vue";
 import Error from '../view/Error';
 
 export default [
@@ -71,8 +72,16 @@ export default [
             },
             {
                 path: '/projects/create',
-                component: ProjectCreateComponent,
-                name: 'ProjectCreateComponent',
+                component: ProjectCreateView,
+                name: 'ProjectCreateView',
+                meta: {
+                    guard: 'auth'
+                }
+            },
+            {
+                path: '/projects/:id/update',
+                component: ProjectUpdateView,
+                name: 'ProjectUpdateView',
                 meta: {
                     guard: 'auth'
                 }
