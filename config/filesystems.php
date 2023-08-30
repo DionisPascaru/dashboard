@@ -56,6 +56,7 @@ return [
         'backend' => [
             'driver' => 'local',
             'root' => public_path() . '/resources',
+            'path' => env('MIX_BACKEND_PUBLIC_FILES'),
         ]
 
     ],

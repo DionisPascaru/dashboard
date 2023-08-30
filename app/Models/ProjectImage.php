@@ -16,6 +16,7 @@ class ProjectImage extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'path',
         'project_id',
     ];

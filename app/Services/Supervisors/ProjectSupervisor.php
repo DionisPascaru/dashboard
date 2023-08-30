@@ -5,6 +5,7 @@ namespace App\Services\Supervisors;
 use App\Models\Project;
 use App\Models\ProjectImage;
 use App\Traits\FileStorage;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 
 class ProjectSupervisor
@@ -38,13 +39,15 @@ class ProjectSupervisor
 
         $newProject = $project->create($input);
 
-        if ($input['images']) {
-            $this->insertProjectImages($input['images'], $newProject->id);
-        }
-
         return $newProject;
     }
 
+    /**
+     * Update project.
+     *
+     * @param array $input
+     * @return Project
+     */
     public function update(array $input): Project
     {
         Project::where('id', $input['id'])->update($input);
@@ -53,25 +56,39 @@ class ProjectSupervisor
     }
 
     /**
-     * Insert project images.
+     * Upload project file.
      *
-     * @param array $images
-     * @param int $projectId
-     *
-     * @return void
+     * @param array $input
      */
-    private function insertProjectImages(array $images, int $projectId): void
+    public function fileUpdate(array $input): void
     {
-        $data = [];
-
-        foreach ($images as $image) {
-            $data[] = [
-                'path' => $this->store($image, 'publicFiles'),
-                'project_id' => $projectId
-            ];
+        if (!empty($input['cover'])) {
+            $input['cover'] = $this->store($input['cover'], 'publicFiles');
         }
+
+        Project::findOrFail($input['id'])->update($input);
+    }
+
+    /**
+     * Project image upload.
+     *
+     * @param int $projectId
+     * @param UploadedFile $image
+     */
+    public function imageUpload(int $projectId, UploadedFile $image): void
+    {
+        $data = [
+            'path' => $this->store($image, 'publicFiles'),
+            'project_id' => $projectId
+        ];
 
         $projectImage = new ProjectImage();
         $projectImage->insert($data);
+    }
+
+    public function removeImage(int $id): void
+    {
+        $projectImage = new ProjectImage();
+        $projectImage->findOrFail($id)->delete();
     }
 }

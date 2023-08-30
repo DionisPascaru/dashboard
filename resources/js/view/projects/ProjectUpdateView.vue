@@ -27,7 +27,8 @@
                     </el-form-item>
                     <el-form-item label="Images">
                         <multiple-files-upload-component :files.sync="this.files"
-                                                         @upload-callback="updateFiles">
+                                                         @upload-callback="updateFiles"
+                                                         @remove-callback="removeFiles">
                         </multiple-files-upload-component>
                     </el-form-item>
                 </el-col>
@@ -41,7 +42,6 @@
 </template>
 
 <script>
-import config from "../../config";
 import FileUploadComponent from "../../components/core/FileUploadComponent.vue";
 import MultipleFilesUploadComponent from "../../components/core/MultipleFilesUploadComponent.vue";
 
@@ -56,7 +56,6 @@ export default {
             dialogImageUrl: '',
             dialogVisible: false,
             disabled: false,
-            path: config.path,
             file: {},
             files: [],
             rules: {
@@ -87,17 +86,9 @@ export default {
     },
     mounted() {
         this.$store.dispatch('project/loadProject', this.$route.params.id).then(() => {
-            this.file = {
-                name: this.project.cover,
-                url: `${this.path}/${this.project.cover}`
-            };
+            this.file = this.project.cover;
 
-            this.files = this.project.images.map((file) => {
-                return {
-                    name: file.path,
-                    url: `${this.path}/${file.path}`
-                }
-            });
+            this.files = this.project.images;
         });
 
         this.$store.dispatch('projectCategories/loadProjectCategories');
@@ -127,10 +118,63 @@ export default {
         },
         updateFile(file) {
             this.file = file;
+
+            const formData = new FormData();
+            formData.append('id', this.project.id);
+            formData.append('cover', this.file.raw ?? '');
+
+            this.$store.dispatch('project/fileUpload', {id: this.project.id, payload: formData})
+                .then(() => {
+                    this.$notify({
+                        title: 'Success',
+                        type: 'success',
+                        message: `The File successfully updated!`
+                    });
+                })
+                .catch(() => {
+                    this.$notify.error({
+                        title: 'Error',
+                        message: e
+                    });
+                });
         },
-        updateFiles(files) {
-            this.files = files;
+        updateFiles(file) {
+            const formData = new FormData();
+            formData.append('image', file.raw ?? '');
+
+            this.$store.dispatch('project/imageUpload', {id: this.project.id, payload: formData})
+                .then(() => {
+                    this.$notify({
+                        title: 'Success',
+                        type: 'success',
+                        message: `The Image successfully updated!`
+                    });
+                })
+                .catch(() => {
+                    this.$notify.error({
+                        title: 'Error',
+                        message: e
+                    });
+                });
         },
+        removeFiles(file) {
+            const imageId = file.id;
+
+            this.$store.dispatch('project/imageRemove', imageId)
+                .then(() => {
+                    this.$notify({
+                        title: 'Success',
+                        type: 'success',
+                        message: `The Image successfully removed!`
+                    });
+                })
+                .catch(() => {
+                    this.$notify.error({
+                        title: 'Error',
+                        message: e
+                    });
+                })
+        }
     }
 }
 </script>
