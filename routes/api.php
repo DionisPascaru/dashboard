@@ -37,6 +37,9 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::post('', [ProjectsApiController::class, 'create']);
         Route::post('/{id}', [ProjectsApiController::class, 'update']);
         Route::delete('/{id}', [ProjectsApiController::class, 'delete']);
+        Route::post('/{id}/file-upload', [ProjectsApiController::class, 'fileUpload']);
+        Route::post('/{id}/image-upload', [ProjectsApiController::class, 'imageUpload']);
+        Route::delete('/{id}/image-remove', [ProjectsApiController::class, 'imageRemove']);
     });
 
     // Project categories

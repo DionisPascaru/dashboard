@@ -1,5 +1,4 @@
 import httpRequest from "../httpRequest";
-import id from "element-ui/src/locale/lang/id";
 
 const loadProjects = () => {
     return httpRequest.get('/projects');
@@ -21,10 +20,25 @@ const deleteProject = (id) => {
     return httpRequest.delete(`/project/${id}`);
 }
 
+const fileUpload = (id, payload) => {
+    return httpRequest.post(`/project/${id}/file-upload`, payload);
+}
+
+const imageUpload = (id, payload) => {
+    return httpRequest.post(`/project/${id}/image-upload`, payload)
+}
+
+const imageRemove = (id) => {
+    return httpRequest.delete(`/project/${id}/image-remove`);
+}
+
 export {
     loadProjects,
     loadProject,
     createProject,
     updateProject,
     deleteProject,
+    fileUpload,
+    imageUpload,
+    imageRemove,
 }

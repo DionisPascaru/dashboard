@@ -1,4 +1,14 @@
-import {loadProject, loadProjects, createProject, updateProject, deleteProject} from "../services/projects/projects.service";
+import {
+    loadProject,
+    loadProjects,
+    createProject,
+    updateProject,
+    deleteProject,
+    fileUpload,
+    imageUpload,
+    imageRemove,
+} from "../services/projects/projects.service";
+import ca from "element-ui/src/locale/lang/ca";
 
 const state = () => ({
     projects: [],
@@ -52,6 +62,27 @@ const actions = {
             await deleteProject(projectId);
             commit('DELETE_PROJECT', projectId);
         }catch (e) {
+            throw e;
+        }
+    },
+    async fileUpload({commit}, {id, payload}) {
+        try {
+            await fileUpload(id, payload);
+        } catch (e) {
+            throw e;
+        }
+    },
+    async imageUpload({commit}, {id, payload}) {
+        try {
+            await imageUpload(id, payload);
+        } catch (e) {
+            throw e;
+        }
+    },
+    async imageRemove({commit}, imageId) {
+        try {
+            await imageRemove(imageId);
+        } catch (e) {
             throw e;
         }
     }

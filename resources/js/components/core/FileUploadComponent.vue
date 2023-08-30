@@ -8,7 +8,7 @@
             :auto-upload="false"
             :on-change="handleUpload"
             :on-remove="onRemoved"
-            :file-list="[this.file]">
+            :file-list="this.fileList">
             <i class="el-icon-plus"></i>
         </el-upload>
     </div>
@@ -20,7 +20,7 @@ export default {
     props: ['file'],
     computed: {
         fileList() {
-            return [this.file];
+            return this.file ? [this.file] : [];
         }
     },
     methods: {

@@ -24,22 +24,17 @@ export default {
       }
     },
     methods: {
-        uploadEvent() {
-            this.$emit('upload-callback', this.fileList);
+        uploadEvent(file) {
+            this.$emit('upload-callback', file);
+        },
+        removeEvent(file) {
+            this.$emit('remove-callback', file);
         },
         handleUpload(file) {
-            this.fileList.push(file);
-
-            this.uploadEvent();
+            this.uploadEvent(file);
         },
         onRemoved(file) {
-            const index = this.fileList.findIndex(item => item.uid === file.uid);
-
-            if (index !== -1) {
-                this.fileList.splice(index, 1);
-            }
-
-            this.uploadEvent();
+            this.removeEvent(file);
         },
     }
 }
