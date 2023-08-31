@@ -1,7 +1,5 @@
 <template>
-    <div>
-        <router-view />
-    </div>
+    <div>Hello from App!</div>
 </template>
 
 <script>
