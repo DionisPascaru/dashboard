@@ -20,16 +20,6 @@ RUN curl -fsSL https://deb.nodesource.com/setup_19.x | bash -  \
     && npm --version \
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        libz-dev \
-        libpq-dev \
-        libjpeg-dev \
-        libpng-dev \
-        libssl-dev \
-        libzip-dev \
-        unzip \
-        zip \
-        nodejs \
     && apt-get clean \
     && pecl install redis \
     && docker-php-ext-configure gd \
