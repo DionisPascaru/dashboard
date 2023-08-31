@@ -16,6 +16,7 @@ Vue.component('app', require('./App').default);
  */
 
 import Vue from 'vue';
+import App from "./App.vue";
 import ElementUi from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/en';
@@ -24,6 +25,7 @@ import Vuex from 'vuex';
 import router from './router';
 import store from './store';
 
+Vue.use(App);
 Vue.use(VueRouter);
 Vue.use(ElementUi, locale);
 Vue.use(Vuex);

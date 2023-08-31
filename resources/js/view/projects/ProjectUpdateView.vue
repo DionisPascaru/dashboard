@@ -131,7 +131,7 @@ export default {
                         message: `The File successfully updated!`
                     });
                 })
-                .catch(() => {
+                .catch((e) => {
                     this.$notify.error({
                         title: 'Error',
                         message: e
@@ -150,7 +150,7 @@ export default {
                         message: `The Image successfully updated!`
                     });
                 })
-                .catch(() => {
+                .catch((e) => {
                     this.$notify.error({
                         title: 'Error',
                         message: e
@@ -168,7 +168,7 @@ export default {
                         message: `The Image successfully removed!`
                     });
                 })
-                .catch(() => {
+                .catch((e) => {
                     this.$notify.error({
                         title: 'Error',
                         message: e
