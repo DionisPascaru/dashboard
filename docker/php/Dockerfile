@@ -15,7 +15,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Install nodejs
 RUN curl -fsSL https://deb.nodesource.com/setup_19.x | bash -  \
     && apt-get install -y nodejs \
-    && npm install -g npm@latest \
+    && npm install -g npm@9.8.1 \
     && node --version \
     && npm --version \
 
