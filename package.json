@@ -27,9 +27,5 @@
         "vue-router": "^3.5.3",
         "vue-template-compiler": "^2.6.12",
         "vuex": "^3.6.2"
-    },
-    "dependencies": {
-        "@babel/core": "^7.22.6",
-        "@babel/preset-env": "^7.22.6"
     }
 }
