@@ -15,11 +15,21 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Install nodejs
 RUN curl -fsSL https://deb.nodesource.com/setup_19.x | bash -  \
     && apt-get install -y nodejs \
-    && npm install -g npm@9.8.1 \
+    && npm install -g npm@9.7.2 \
     && node --version \
     && npm --version \
 
 RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        libz-dev \
+        libpq-dev \
+        libjpeg-dev \
+        libpng-dev \
+        libssl-dev \
+        libzip-dev \
+        unzip \
+        zip \
+        nodejs \
     && apt-get clean \
     && pecl install redis \
     && docker-php-ext-configure gd \
