@@ -30,8 +30,8 @@ Vue.use(VueRouter);
 Vue.use(ElementUi, locale);
 Vue.use(Vuex);
 
-const app = new Vue({
-    el: '#app',
+new Vue({
     router,
-    store
-});
+    store,
+    render: h => h(App)
+}).$mount("#app");
