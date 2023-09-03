@@ -1,7 +1,7 @@
 {
     "$schema": "https://railway.app/railway.schema.json",
     "build": {
-        "builder": "nixpacks",
+        "builder": "DOCKERFILE",
         "buildCommand": "echo building!"
     },
     "deploy": {
