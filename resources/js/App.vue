@@ -1,5 +1,5 @@
 <template>
-    <div>Hello from App!</div>
+    <router-view />
 </template>
 
 <script>
