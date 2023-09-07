@@ -1,7 +1,11 @@
 import axios from "axios";
 
+const instance = {
+    baseURL: process.env.MIX_BASE_URL
+};
+
 const httpRequest = axios.create({
-    baseURL: `/api`,
+    baseURL: `${instance.baseURL}/api`,
     headers: {
         Accept: "application/json;charset=UTF-8",
         "Content-Type": "application/json;charset=UTF-8",
