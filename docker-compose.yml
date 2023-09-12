@@ -29,7 +29,7 @@ services:
             - dashboard_app
         environment:
             NGINX_FPM_HOST: dashboard_app
-            NGINX_ROOT: /usr/src/app/public
+            NGINX_ROOT: .:/usr/src/app/public
         networks:
             - app_network
         restart: unless-stopped
