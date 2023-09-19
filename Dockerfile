@@ -1,11 +1,6 @@
-FROM richarvey/nginx-php-fpm:1.7.2
+FROM richarvey/nginx-php-fpm:latest
 
 COPY . .
-
-# Install Composer
-ENV COMPOSER_VERSION 2.1.5
-
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=$COMPOSER_VERSION
 
 # Image config
 ENV SKIP_COMPOSER 1
