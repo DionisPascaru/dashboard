@@ -5,22 +5,43 @@ namespace App\Http\Controllers\API;
 use App\Enums\UserRolesEnum;
 use App\Http\Requests\UserCreateApiRequest;
 use App\Http\Requests\UserUpdateApiRequest;
-use App\Http\Resources\UserCollection;
-use App\Http\Resources\UsersCollection;
-use App\Models\User;
+use App\Services\Serializers\UserSerializer;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use Psr\Log\LoggerInterface;
 
+/**
+ * Users API controller.
+ */
 class UsersApiController
 {
+    /** @var UserSerializer $userSerialize */
+    private $userSerialize;
+
     /** @var RestResponseFactory $restResponseFactory */
     private $restResponseFactory;
 
-    public function __construct(RestResponseFactory $restResponseFactory)
-    {
+    /** @var LoggerInterface $logger */
+    private $logger;
+
+    /**
+     * Constructor.
+     *
+     * @param UserSerializer $userSerialize
+     * @param RestResponseFactory $restResponseFactory
+     * @param LoggerInterface $logger
+     */
+    public function __construct(
+        UserSerializer $userSerialize,
+        RestResponseFactory $restResponseFactory,
+        LoggerInterface $logger
+    ) {
+        $this->userSerialize = $userSerialize;
         $this->restResponseFactory = $restResponseFactory;
+        $this->logger = $logger;
     }
 
     /**
@@ -31,8 +52,16 @@ class UsersApiController
     public function index(): JsonResponse
     {
         try {
-            return $this->restResponseFactory->ok(UsersCollection::collection(User::all()));
+            $users = DB::table('users as u')
+                ->select('u.id', 'u.name', 'email', 'r.name as role')
+                ->leftJoin('roles as r', 'u.role_id', '=', 'r.id')
+                ->get()
+                ->toArray();
+
+            return $this->restResponseFactory->ok($this->userSerialize->serializeEntities($users));
         } catch (Exception $exception) {
+            $this->logger->error($exception->getMessage(), ['exception' => $exception]);
+
             return $this->restResponseFactory->serverError($exception);
         }
     }
@@ -46,9 +75,13 @@ class UsersApiController
     public function show($id): JsonResponse
     {
         try {
-            $user = new UserCollection(User::findOrFail($id));
+            $user = (array)DB::table('users as u')
+                ->select('u.id', 'u.name', 'email', 'r.name as role')
+                ->leftJoin('roles as r', 'u.role_id', '=', 'r.id')
+                ->where('u.id', '=', $id)
+                ->first();
 
-            return $this->restResponseFactory->ok($user);
+            return $this->restResponseFactory->ok($this->userSerialize->serializeEntity($user));
         } catch (ModelNotFoundException $exception) {
             return $this->restResponseFactory->badRequest($exception->getMessage());
         } catch (Exception $exception) {
@@ -70,9 +103,15 @@ class UsersApiController
             $input['password'] = bcrypt($input['password']);
             $input['role_id'] = UserRolesEnum::EDITOR;
 
-            $user = User::create($input);
+            $table = DB::table('users');
+            $userId = $table->insertGetId($input);
+            $user = (array)DB::table('users as u')
+                ->select('u.id', 'u.name', 'email', 'r.name as role')
+                ->leftJoin('roles as r', 'u.role_id', '=', 'r.id')
+                ->where('u.id', '=', $userId)
+                ->first();
 
-            return $this->restResponseFactory->created(new UserCollection($user));
+            return $this->restResponseFactory->created($this->userSerialize->serializeEntity($user));
         } catch (ValidationException $exception) {
             return $this->restResponseFactory->badRequest($exception->getMessage());
         } catch (Exception $exception) {
@@ -91,11 +130,14 @@ class UsersApiController
         try {
             $input = $request->validated();
 
-            User::where('id', $request['id'])->update($input);
+            DB::table('users')
+                ->where('id', '=', (int)$request['id'])
+                ->update([
+                    'name' => $input['name'],
+                    'email' => $input['email'],
+                ]);
 
-            $user = User::findOrFail($request['id']);
-
-            return $this->restResponseFactory->ok(new UserCollection($user));
+            return $this->restResponseFactory->ok();
         } catch (Exception $exception) {
             return $this->restResponseFactory->serverError($exception->getMessage());
         }
@@ -110,8 +152,8 @@ class UsersApiController
     public function delete($id): JsonResponse
     {
         try {
-            $user = User::findOrFail($id);
-            $user->delete();
+            DB::table('users')
+                ->delete($id);
 
             return $this->restResponseFactory->noContent();
         } catch (ModelNotFoundException $exception) {
