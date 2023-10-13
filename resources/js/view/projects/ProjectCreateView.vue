@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="view-title">
-            <h1>Create project page</h1>
+            <h1>Create project</h1>
         </div>
 
         <el-form :model="project" :rules="rules" ref="createProjectForm">
@@ -29,18 +29,6 @@
                             :auto-upload="false"
                             :on-change="handleCoverUpload"
                             :on-remove="onCoverRemoved">
-                            <i class="el-icon-plus"></i>
-                        </el-upload>
-                    </el-form-item>
-                    <el-form-item label="Images">
-                        <el-upload
-                            action="#"
-                            ref="uploadImages"
-                            list-type="picture-card"
-                            :multiple="true"
-                            :auto-upload="false"
-                            :on-change="handleImagesUpload"
-                            :on-remove="onImagesRemoved">
                             <i class="el-icon-plus"></i>
                         </el-upload>
                     </el-form-item>
@@ -163,7 +151,6 @@ export default {
             this.project.images = [];
 
             this.$refs.uploadCover.clearFiles();
-            this.$refs.uploadImages.clearFiles();
         },
     }
 }

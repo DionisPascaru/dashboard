@@ -108,7 +108,7 @@ export default {
                             message: e
                         });
                     });
-            })
+            }).catch(() => {});
         }
     }
 }
