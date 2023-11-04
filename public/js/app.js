@@ -7619,18 +7619,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'ProjectCreateComponent',
@@ -7730,7 +7718,6 @@ __webpack_require__.r(__webpack_exports__);
       this.project.category_id = '';
       this.project.images = [];
       this.$refs.uploadCover.clearFiles();
-      this.$refs.uploadImages.clearFiles();
     }
   }
 });
@@ -7991,6 +7978,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -8043,7 +8038,7 @@ __webpack_require__.r(__webpack_exports__);
             message: e
           });
         });
-      });
+      })["catch"](function () {});
     }
   }
 });
@@ -8564,7 +8559,6 @@ var authInterceptor = function authInterceptor(config) {
   if (token) {
     config.headers["Authorization"] = 'Bearer ' + token;
   }
-  console.log(instance.baseURL);
   return config;
 };
 var responseInterceptor = function responseInterceptor(response) {
@@ -96851,29 +96845,6 @@ var render = function () {
                     ],
                     1
                   ),
-                  _vm._v(" "),
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "Images" } },
-                    [
-                      _c(
-                        "el-upload",
-                        {
-                          ref: "uploadImages",
-                          attrs: {
-                            action: "#",
-                            "list-type": "picture-card",
-                            multiple: true,
-                            "auto-upload": false,
-                            "on-change": _vm.handleImagesUpload,
-                            "on-remove": _vm.onImagesRemoved,
-                          },
-                        },
-                        [_c("i", { staticClass: "el-icon-plus" })]
-                      ),
-                    ],
-                    1
-                  ),
                 ],
                 1
               ),
@@ -96919,7 +96890,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "view-title" }, [
-      _c("h1", [_vm._v("Create project page")]),
+      _c("h1", [_vm._v("Create project")]),
     ])
   },
 ]
@@ -97087,7 +97058,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "view-title" }, [
-      _c("h1", [_vm._v("Update project page")]),
+      _c("h1", [_vm._v("Update project")]),
     ])
   },
 ]
@@ -97170,7 +97141,15 @@ var render = function () {
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: { prop: "category.name", label: "Category" },
+                attrs: { prop: "category", label: "Category" },
+              }),
+              _vm._v(" "),
+              _c("el-table-column", {
+                attrs: { prop: "created", label: "Created" },
+              }),
+              _vm._v(" "),
+              _c("el-table-column", {
+                attrs: { prop: "updated", label: "Updated" },
               }),
               _vm._v(" "),
               _c("el-table-column", {

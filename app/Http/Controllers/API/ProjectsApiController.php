@@ -9,6 +9,7 @@ use App\Http\Requests\ProjectUpdateApiRequest;
 use App\Services\Serializers\ProjectSerializer;
 use App\Services\Supervisors\ProjectSupervisor;
 use App\Traits\FileStorage;
+use DateTime;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
@@ -57,8 +58,8 @@ class ProjectsApiController
                     'title' => $project->title,
                     'cover' => $project->cover,
                     'category' => $project->category,
-                    'created' => $project->created,
-                    'updated' => $project->updated,
+                    'created' => date('Y-m-d', strtotime($project->created)),
+                    'updated' => date('Y-m-d', strtotime($project->updated)),
                 ];
             }, $this->projectSupervisor->read());
 
