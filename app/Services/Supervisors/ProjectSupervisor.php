@@ -2,8 +2,6 @@
 
 namespace App\Services\Supervisors;
 
-use App\Models\Project;
-use App\Models\ProjectImage;
 use App\Traits\FileStorage;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
@@ -12,14 +10,52 @@ class ProjectSupervisor
 {
     use FileStorage;
 
-    const TABLE_NAME = 'projects';
-
-    /** @var DB $queryBuilder */
-    private $queryBuilder;
-
-    public function __construct()
+    /**
+     * Read projects.
+     *
+     * @return array
+     */
+    public function read(): array
     {
-        $this->queryBuilder = DB::table(self::TABLE_NAME);
+        return DB::table('projects as p')
+            ->select(
+                'p.id',
+                'title',
+                'cover',
+                'pc.name as category',
+                'p.created_at as created',
+                'p.updated_at as updated'
+            )
+            ->leftJoin('project_categories as pc', 'p.category_id', '=', 'pc.id')
+            ->get()
+            ->toArray();
+    }
+
+    /**
+     * Show project by id.
+     *
+     * @param $id
+     * @return array
+     */
+    public function show($id): array
+    {
+        $project = (array)DB::table('projects')
+            ->select(
+                'id',
+                'title',
+                'cover',
+                'category_id',
+            )
+            ->where('id', '=', $id)
+            ->first();
+
+        $project['images'] = DB::table('project_images')
+            ->select()
+            ->where('project_id', '=', $id)
+            ->get()
+            ->toArray();
+
+        return $project;
     }
 
     /**
@@ -27,32 +63,53 @@ class ProjectSupervisor
      *
      * @param array $input
      *
-     * @return Project
+     * @return array
      */
-    public function create(array $input): Project
+    public function create(array $input): array
     {
-        $project = new Project();
-
         if (!empty($input['cover'])) {
             $input['cover'] = $this->store($input['cover'], 'publicFiles');
         }
 
-        $newProject = $project->create($input);
+        DB::table('projects')->insert($input);
 
-        return $newProject;
+        return [
+            'message' => 'Project successfully created.'
+        ];
     }
 
     /**
      * Update project.
      *
      * @param array $input
-     * @return Project
+     * @return array
      */
-    public function update(array $input): Project
+    public function update(array $input): array
     {
-        Project::where('id', $input['id'])->update($input);
+        DB::table('projects')
+            ->where('id', '=', $input['id'])
+            ->update($input);
 
-        return Project::findOrFail($input['id']);
+        return [
+            'message' => 'Project successfully updated.'
+        ];
+    }
+
+    /**
+     * Delete project.
+     *
+     * @param $id
+     * @return array
+     */
+    public function delete($id): array
+    {
+        DB::table('projects')
+            ->where('id', '=', $id)
+            ->delete();
+
+        return [
+            'message' => 'Project successfully deleted.'
+        ];
     }
 
     /**
@@ -66,7 +123,9 @@ class ProjectSupervisor
             $input['cover'] = $this->store($input['cover'], 'publicFiles');
         }
 
-        Project::findOrFail($input['id'])->update($input);
+        DB::table('projects')
+            ->where('id', '=', $input['id'])
+            ->update($input);
     }
 
     /**
@@ -82,13 +141,19 @@ class ProjectSupervisor
             'project_id' => $projectId
         ];
 
-        $projectImage = new ProjectImage();
-        $projectImage->insert($data);
+        DB::table('project_images')
+            ->insert($data);
     }
 
+    /**
+     * Project image remove.
+     *
+     * @param int $id
+     */
     public function removeImage(int $id): void
     {
-        $projectImage = new ProjectImage();
-        $projectImage->findOrFail($id)->delete();
+        DB::table('project_images')
+            ->where('id', '=', $id)
+            ->delete();
     }
 }
