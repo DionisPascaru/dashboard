@@ -22,11 +22,11 @@ class ProjectSerializer
 
         $images = array_map(function ($image) {
             return [
-                'id' => $image['id'],
-                'name' => $image['path'],
-                'url' => config('filesystems.disks.backend.path') . $image['path'],
+                'id' => $image->id,
+                'name' => $image->path,
+                'url' => config('filesystems.disks.backend.path') . $image->path,
             ];
-        }, $input['images']->toArray());
+        }, $input['images']);
 
         return [
             'id' => $input['id'],

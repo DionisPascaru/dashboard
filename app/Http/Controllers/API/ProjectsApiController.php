@@ -6,9 +6,6 @@ use App\Http\Requests\ProjectCreateApiRequest;
 use App\Http\Requests\ProjectFileUploadApiRequest;
 use App\Http\Requests\ProjectImageUploadApiRequest;
 use App\Http\Requests\ProjectUpdateApiRequest;
-use App\Models\Project;
-use App\Models\ProjectCategory;
-use App\Models\ProjectImage;
 use App\Services\Serializers\ProjectSerializer;
 use App\Services\Supervisors\ProjectSupervisor;
 use App\Traits\FileStorage;
@@ -36,8 +33,8 @@ class ProjectsApiController
      * @param RestResponseFactory $restResponseFactory
      */
     public function __construct(
-        ProjectSupervisor $projectSupervisor,
-        ProjectSerializer $projectSerializer,
+        ProjectSupervisor   $projectSupervisor,
+        ProjectSerializer   $projectSerializer,
         RestResponseFactory $restResponseFactory
     )
     {
@@ -56,15 +53,14 @@ class ProjectsApiController
         try {
             $projects = array_map(function ($project) {
                 return [
-                    'id' => $project['id'],
-                    'title' => $project['title'],
-                    'cover' => $project['cover'],
-                    'category' => $this->processProjectCategory($project['category_id']),
-                    'video' => $project['video'],
-                    'created_at' => $project['created_at'],
-                    'updated_at' => $project['updated_at'],
+                    'id' => $project->id,
+                    'title' => $project->title,
+                    'cover' => $project->cover,
+                    'category' => $project->category,
+                    'created' => $project->created,
+                    'updated' => $project->updated,
                 ];
-            }, Project::all()->toArray());
+            }, $this->projectSupervisor->read());
 
             return $this->restResponseFactory->ok($projects);
         } catch (Exception $exception) {
@@ -81,11 +77,10 @@ class ProjectsApiController
     public function show($id): JsonResponse
     {
         try {
-            $project = Project::findOrFail($id);
-            $project['images'] = ProjectImage::where('project_id', $id)->get(['id', 'path']);
+            $project = $this->projectSupervisor->show($id);
 
             return $this->restResponseFactory->ok(
-                $this->projectSerializer->serialize($project->toArray())
+                $this->projectSerializer->serialize($project)
             );
         } catch (ModelNotFoundException $exception) {
             return $this->restResponseFactory->badRequest($exception->getMessage());
@@ -105,7 +100,6 @@ class ProjectsApiController
         try {
             $input = $request->validated();
             $input['cover'] = $request->file('cover');
-            $input['images'] = $request->file('images');
 
             return $this->restResponseFactory->created($this->projectSupervisor->create($input));
         } catch (ValidationException $exception) {
@@ -145,8 +139,7 @@ class ProjectsApiController
     public function delete($id): JsonResponse
     {
         try {
-            $project = Project::findOrFail($id);
-            $project->delete();
+            $this->projectSupervisor->delete($id);
 
             return $this->restResponseFactory->noContent();
         } catch (ModelNotFoundException $exception) {
@@ -178,6 +171,13 @@ class ProjectsApiController
         }
     }
 
+    /**
+     * Image upload.
+     *
+     * @param ProjectImageUploadApiRequest $request
+     * @param $id
+     * @return JsonResponse
+     */
     public function imageUpload(ProjectImageUploadApiRequest $request, $id): JsonResponse
     {
         try {
@@ -194,6 +194,12 @@ class ProjectsApiController
         }
     }
 
+    /**
+     * Image remove.
+     *
+     * @param int $id
+     * @return JsonResponse
+     */
     public function imageRemove(int $id): JsonResponse
     {
         try {
@@ -205,17 +211,5 @@ class ProjectsApiController
         } catch (Exception $exception) {
             return $this->restResponseFactory->serverError($exception->getMessage());
         }
-    }
-
-    /**
-     * Process project category.
-     *
-     * @param int $categoryId
-     *
-     * @return ProjectCategory
-     */
-    private function processProjectCategory(int $categoryId): ProjectCategory
-    {
-        return ProjectCategory::findOrFail($categoryId);
     }
 }
