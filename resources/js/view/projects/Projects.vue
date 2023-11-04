@@ -29,8 +29,16 @@
                     label="Title">
                 </el-table-column>
                 <el-table-column
-                    prop="category.name"
+                    prop="category"
                     label="Category">
+                </el-table-column>
+                <el-table-column
+                    prop="created"
+                    label="Created">
+                </el-table-column>
+                <el-table-column
+                    prop="updated"
+                    label="Updated">
                 </el-table-column>
                 <el-table-column label="Actions">
                     <template slot-scope="scope">

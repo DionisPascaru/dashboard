@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="view-title">
-            <h1>Update project page</h1>
+            <h1>Update project</h1>
         </div>
 
         <el-form :model="project" :rules="rules" ref="updateProjectForm">
