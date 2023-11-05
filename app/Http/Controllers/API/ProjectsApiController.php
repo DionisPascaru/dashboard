@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\ProjectCreateApiRequest;
 use App\Http\Requests\ProjectFileUploadApiRequest;
 use App\Http\Requests\ProjectImageUploadApiRequest;
+use App\Http\Requests\ProjectsSearchRequest;
 use App\Http\Requests\ProjectUpdateApiRequest;
 use App\Services\Serializers\ProjectSerializer;
 use App\Services\Supervisors\ProjectSupervisor;
@@ -13,11 +14,15 @@ use DateTime;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class ProjectsApiController
 {
     use FileStorage;
+
+    /** @var ProjectsSearcher $projectsSearcher */
+    private $projectsSearcher;
 
     /** @var ProjectSupervisor $projectSupervisor */
     private $projectSupervisor;
@@ -34,14 +39,35 @@ class ProjectsApiController
      * @param RestResponseFactory $restResponseFactory
      */
     public function __construct(
+        ProjectsSearcher    $projectsSearcher,
         ProjectSupervisor   $projectSupervisor,
         ProjectSerializer   $projectSerializer,
         RestResponseFactory $restResponseFactory
     )
     {
+        $this->projectsSearcher = $projectsSearcher;
         $this->projectSupervisor = $projectSupervisor;
         $this->projectSerializer = $projectSerializer;
         $this->restResponseFactory = $restResponseFactory;
+    }
+
+    /**
+     * Search projects.
+     *
+     * @param ProjectsSearchRequest $request
+     * @return JsonResponse
+     */
+    public function search(ProjectsSearchRequest $request): JsonResponse
+    {
+        try {
+            $input = $request->validated();
+
+            $projects = $this->projectsSearcher->search($input);
+
+            return $this->restResponseFactory->ok($projects);
+        } catch (Exception $exception) {
+            return $this->restResponseFactory->serverError($exception);
+        }
     }
 
     /**
