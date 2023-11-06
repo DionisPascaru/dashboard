@@ -2,6 +2,8 @@
 
 namespace App\Services\Serializers;
 
+use Illuminate\Support\Facades\DB;
+
 /**
  * Project serializer.
  */
@@ -35,5 +37,32 @@ class ProjectSerializer
             'category_id' => $input['category_id'],
             'images' => $images,
         ];
+    }
+
+    /**
+     * Serialize for search.
+     *
+     * @param array $items
+     * @return array
+     */
+    public function serializeForSearch(array $items): array
+    {
+        return array_map(function ($item) {
+            $cover = [
+                'name' => $item->cover ?? null,
+                'url' => config('filesystems.disks.backend.path') . $item->cover ?? null,
+            ];
+
+            return [
+                'id' => $item->id,
+                'title' => $item->title,
+                'cover' => $cover,
+                'category' => DB::table('project_categories')
+                    ->where('id', '=', $item->category_id)
+                    ->value('name'),
+                'created' => date('Y-m-d', strtotime($item->created_at)),
+                'updated' => date('Y-m-d', strtotime($item->updated_at)),
+            ];
+        }, $items);
     }
 }

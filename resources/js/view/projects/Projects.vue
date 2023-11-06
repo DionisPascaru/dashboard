@@ -1,15 +1,29 @@
 <template>
     <div>
-        <div class="view-title">
+        <div class="view-title" style="display: flex; justify-content: space-between;">
             <h1>Projects</h1>
+            <router-link :to="{ name: 'ProjectCreateView'}">
+                <el-button type="primary">Add project</el-button>
+            </router-link>
         </div>
-        <router-link :to="{ name: 'ProjectCreateView'}">
-            <el-button>Add project</el-button>
-        </router-link>
+        <projects-search-component @search-filters="handleSearch" :options="options"></projects-search-component>
+
+        <div style="display: flex; justify-content: space-between;">
+            <el-pagination
+                background
+                layout="prev, pager, next"
+                @current-change="handlePagination"
+                :total="projects.total"
+                :current-page="options.pageNum">
+            </el-pagination>
+            <div>
+                <h4>Totals: {{ projects.total }}</h4>
+            </div>
+        </div>
         <div class="view-content">
             <el-table
                 class="table"
-                :data="projects"
+                :data="projects.items"
                 v-loading="loading"
                 style="width: 100%">
                 <el-table-column
@@ -19,7 +33,7 @@
                     <template slot-scope="scope">
                         <el-image
                             style="width: 100px; height: 100px"
-                            :src="`${path}/${scope.row.cover}`"
+                            :src="scope.row.cover.url"
                             fit="fit">
                         </el-image>
                     </template>
@@ -52,18 +66,42 @@
                 </el-table-column>
             </el-table>
         </div>
+        <div style="display: flex; justify-content: space-between;">
+            <el-pagination
+                background
+                layout="prev, pager, next"
+                @current-change="handlePagination"
+                :total="projects.total"
+                :current-page="options.pageNum">
+            </el-pagination>
+            <div>
+                <h4>Totals: {{ projects.total }}</h4>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 import config from "../../config";
+import ProjectsSearchComponent from "../../components/projects/ProjectsSearchComponent.vue";
 
 export default {
     name: 'Projects',
+    components: {
+      ProjectsSearchComponent
+    },
     data() {
         return {
             loading: true,
             path: config.path,
+            options: {
+                filters: {
+                    title: '',
+                    category_id: null
+                },
+                pageSize: 10,
+                pageNum: 1
+            }
         }
     },
     computed: {
@@ -72,13 +110,21 @@ export default {
         }
     },
     mounted() {
-        this.search();
+        this.search(this.options);
     },
     methods: {
+        handlePagination(val) {
+            this.options.pageNum = val;
+            this.search();
+        },
+        handleSearch(options) {
+            this.options = options;
+            this.search();
+        },
         search() {
             this.loading = true;
 
-            this.$store.dispatch('project/loadProjects')
+            this.$store.dispatch('project/searchProjects', this.options)
                 .then(() => {
                 })
                 .catch((e) => {
