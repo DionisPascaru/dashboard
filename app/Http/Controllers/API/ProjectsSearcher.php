@@ -2,11 +2,26 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Services\Serializers\ProjectSerializer;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 
 class ProjectsSearcher
 {
+    /** @var ProjectSerializer $projectSerializer */
+    private $projectSerializer;
+
+    /**
+     * Constructor.
+     *
+     * @param ProjectSerializer $projectSerializer
+     */
+    public function __construct(
+        ProjectSerializer $projectSerializer
+    ) {
+        $this->projectSerializer = $projectSerializer;
+    }
+
     /**
      * Search query builder.
      *
@@ -15,12 +30,31 @@ class ProjectsSearcher
      */
     public function search(array $options): array
     {
-        ['filters' => $filters, 'pageSize' => $pageSize, 'pageNum' => $pageNum] = $options;
+        $filters = $options['filters'] ?? [];
+        $pageSize = $options['pageSize'] ?? 10;
+        $pageNum = $options['pageNum'] ?? 1;
 
         $queryBuilder = $this->applyFilters($filters);
-        $queryBuilder->paginate($pageSize, '*', 'page', $pageNum);
 
-        return $queryBuilder->get()->toArray();
+        $queryBuilder->paginate($pageSize, '*', 'page', $pageNum);
+        $items = $queryBuilder
+            ->select([
+                'id',
+                'title',
+                'cover',
+                'category_id',
+                'created_at',
+                'updated_at',
+            ])
+            ->orderBy('updated_at', 'desc')
+            ->get()
+            ->toArray();
+        $total = $queryBuilder->getCountForPagination();
+
+        return [
+            'items' => $this->projectSerializer->serializeForSearch($items),
+            'total' => $total
+        ];
     }
 
     /**

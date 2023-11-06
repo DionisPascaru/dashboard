@@ -71,6 +71,9 @@ class ProjectSupervisor
             $input['cover'] = $this->store($input['cover'], 'publicFiles');
         }
 
+        $input['created_at'] = new \DateTime('now');
+        $input['updated_at'] = new \DateTime('now');
+
         DB::table('projects')->insert($input);
 
         return [
@@ -86,6 +89,8 @@ class ProjectSupervisor
      */
     public function update(array $input): array
     {
+        $input['updated_at'] = new \DateTime('now');
+
         DB::table('projects')
             ->where('id', '=', $input['id'])
             ->update($input);

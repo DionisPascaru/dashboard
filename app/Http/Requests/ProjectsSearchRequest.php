@@ -18,9 +18,9 @@ class ProjectsSearchRequest extends FormRequest
         return [
             'filters' => 'filled',
             'filters.title' => 'nullable|string|max:50',
-            'filters.category' => 'int',
-            'pageSize' => 'required',
-            'pageNum' => 'required'
+            'filters.category' => 'nullable|int',
+            'pageSize' => 'int',
+            'pageNum' => 'int'
         ];
     }
 

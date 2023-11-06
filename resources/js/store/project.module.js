@@ -1,4 +1,5 @@
 import {
+    searchProjects,
     loadProject,
     loadProjects,
     createProject,
@@ -8,7 +9,6 @@ import {
     imageUpload,
     imageRemove,
 } from "../services/projects/projects.service";
-import ca from "element-ui/src/locale/lang/ca";
 
 const state = () => ({
     projects: [],
@@ -25,6 +25,14 @@ const getters = {
 }
 
 const actions = {
+    async searchProjects({commit}, payload) {
+        try {
+            const response = await searchProjects(payload);
+            commit('SEARCH_PROJECTS', response);
+        } catch (e) {
+            throw e;
+        }
+    },
     async loadProjects({commit}) {
         try {
             const response = await loadProjects();
@@ -89,6 +97,9 @@ const actions = {
 };
 
 const mutations = {
+    SEARCH_PROJECTS(state, projects) {
+        state.projects = projects;
+    },
     LOAD_PROJECTS(state, projects) {
         state.projects = projects;
     },
@@ -96,20 +107,20 @@ const mutations = {
         state.project = project;
     },
     CREATE_PROJECT(state, project) {
-        state.projects.push(project);
+        state.projects.items.push(project);
     },
     UPDATE_PROJECT(state, project) {
-      const index = state.projects.findIndex(item => item.id === project.id);
+      const index = state.projects.items.findIndex(item => item.id === project.id);
 
       if (index !== -1) {
-          state.projects.splice(index, 1, project);
+          state.projects.items.splice(index, 1, project);
       }
     },
     DELETE_PROJECT(state, projectId) {
-        const index = state.projects.findIndex((project) => project.id === projectId);
+        const index = state.projects.items.findIndex((project) => project.id === projectId);
 
         if (index !== -1) {
-            state.projects.slice(index, 1);
+            state.projects.items.slice(index, 1);
         }
     }
 };

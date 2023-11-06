@@ -1,5 +1,9 @@
 import httpRequest from "../httpRequest";
 
+const searchProjects = (payload) => {
+    return httpRequest.post('/projects/search', payload);
+}
+
 const loadProjects = () => {
     return httpRequest.get('/projects');
 }
@@ -33,6 +37,7 @@ const imageRemove = (id) => {
 }
 
 export {
+    searchProjects,
     loadProjects,
     loadProject,
     createProject,
