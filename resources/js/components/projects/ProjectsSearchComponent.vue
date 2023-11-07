@@ -3,14 +3,14 @@
         <h4>Filters</h4>
         <el-form :model="options.filters">
             <el-row :gutter="20">
-                <el-col :md="12">
-                    <el-form-item label="Title" prop="title">
+                <el-col :md="6">
+                    <el-form-item label="Title:" prop="title">
                         <el-input v-model="options.filters.title"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :md="12">
-                    <el-form-item label="Category" prop="category_id">
-                        <el-select v-model="options.filters.category_id" placeholder="Select">
+                <el-col :md="6">
+                    <el-form-item label="Category:" prop="category_id">
+                        <el-select style="width: 100%" v-model="options.filters.category_id" placeholder="Select">
                             <el-option
                                 v-for="item in this.projectCategories"
                                 :key="item.id"
@@ -18,6 +18,26 @@
                                 :value="item.id">
                             </el-option>
                         </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :md="6">
+                    <el-form-item label="Date from:" prop="date_from">
+                        <el-date-picker
+                            style="width: 100%"
+                            v-model="options.filters.date_from"
+                            type="date"
+                            placeholder="Pick a day">
+                        </el-date-picker>
+                    </el-form-item>
+                </el-col>
+                <el-col :md="6">
+                    <el-form-item label="Date till:" prop="date_till">
+                        <el-date-picker
+                            style="width: 100%"
+                            v-model="options.filters.date_till"
+                            type="date"
+                            placeholder="Pick a day">
+                        </el-date-picker>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -52,6 +72,8 @@ export default {
         reset() {
             this.options.filters.title = '';
             this.options.filters.category_id = null;
+            this.options.filters.date_from = null;
+            this.options.filters.date_till = null;
             this.options.pageNum = 1;
             this.options.pageSize = 10;
             this.$emit('search-filters', this.options);

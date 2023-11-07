@@ -75,6 +75,12 @@ class ProjectsSearcher
             $queryBuilder->where('category_id', '=', $filters['category_id']);
         }
 
+        if (!empty($filters['date_from'])) {
+            $queryBuilder
+                ->whereDate('created_at', '>=', $filters['date_from'])
+                ->whereDate('created_at', '<=', $filters['date_till']);
+        }
+
         return $queryBuilder;
     }
 }

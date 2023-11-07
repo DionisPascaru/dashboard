@@ -7132,6 +7132,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'ProjectsSearchComponent',
@@ -7151,6 +7171,8 @@ __webpack_require__.r(__webpack_exports__);
     reset: function reset() {
       this.options.filters.title = '';
       this.options.filters.category_id = null;
+      this.options.filters.date_from = null;
+      this.options.filters.date_till = null;
       this.options.pageNum = 1;
       this.options.pageSize = 10;
       this.$emit('search-filters', this.options);
@@ -8102,7 +8124,9 @@ __webpack_require__.r(__webpack_exports__);
       options: {
         filters: {
           title: '',
-          category_id: null
+          category_id: null,
+          date_from: null,
+          date_till: null
         },
         pageSize: 10,
         pageNum: 1
@@ -8124,6 +8148,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     handleSearch: function handleSearch(options) {
       this.options = options;
+      this.options.pageSize = 10;
+      this.options.pageNum = 1;
       this.search();
     },
     search: function search() {
@@ -8335,7 +8361,9 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('app', (__webpack_require_
 
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_7__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].use((element_ui__WEBPACK_IMPORTED_MODULE_2___default()), element_ui_lib_locale_lang_en__WEBPACK_IMPORTED_MODULE_4__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].use((element_ui__WEBPACK_IMPORTED_MODULE_2___default()), {
+  locale: element_ui_lib_locale_lang_en__WEBPACK_IMPORTED_MODULE_4__["default"]
+});
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_8__["default"]);
 new vue__WEBPACK_IMPORTED_MODULE_0__["default"]({
   router: _router__WEBPACK_IMPORTED_MODULE_5__["default"],
@@ -96194,11 +96222,11 @@ var render = function () {
             [
               _c(
                 "el-col",
-                { attrs: { md: 12 } },
+                { attrs: { md: 6 } },
                 [
                   _c(
                     "el-form-item",
-                    { attrs: { label: "Title", prop: "title" } },
+                    { attrs: { label: "Title:", prop: "title" } },
                     [
                       _c("el-input", {
                         model: {
@@ -96218,15 +96246,16 @@ var render = function () {
               _vm._v(" "),
               _c(
                 "el-col",
-                { attrs: { md: 12 } },
+                { attrs: { md: 6 } },
                 [
                   _c(
                     "el-form-item",
-                    { attrs: { label: "Category", prop: "category_id" } },
+                    { attrs: { label: "Category:", prop: "category_id" } },
                     [
                       _c(
                         "el-select",
                         {
+                          staticStyle: { width: "100%" },
                           attrs: { placeholder: "Select" },
                           model: {
                             value: _vm.options.filters.category_id,
@@ -96244,6 +96273,58 @@ var render = function () {
                         }),
                         1
                       ),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-col",
+                { attrs: { md: 6 } },
+                [
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "Date from:", prop: "date_from" } },
+                    [
+                      _c("el-date-picker", {
+                        staticStyle: { width: "100%" },
+                        attrs: { type: "date", placeholder: "Pick a day" },
+                        model: {
+                          value: _vm.options.filters.date_from,
+                          callback: function ($$v) {
+                            _vm.$set(_vm.options.filters, "date_from", $$v)
+                          },
+                          expression: "options.filters.date_from",
+                        },
+                      }),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-col",
+                { attrs: { md: 6 } },
+                [
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "Date till:", prop: "date_till" } },
+                    [
+                      _c("el-date-picker", {
+                        staticStyle: { width: "100%" },
+                        attrs: { type: "date", placeholder: "Pick a day" },
+                        model: {
+                          value: _vm.options.filters.date_till,
+                          callback: function ($$v) {
+                            _vm.$set(_vm.options.filters, "date_till", $$v)
+                          },
+                          expression: "options.filters.date_till",
+                        },
+                      }),
                     ],
                     1
                   ),
