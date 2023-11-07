@@ -97,7 +97,9 @@ export default {
             options: {
                 filters: {
                     title: '',
-                    category_id: null
+                    category_id: null,
+                    date_from: null,
+                    date_till: null,
                 },
                 pageSize: 10,
                 pageNum: 1
@@ -119,6 +121,8 @@ export default {
         },
         handleSearch(options) {
             this.options = options;
+            this.options.pageSize = 10;
+            this.options.pageNum = 1;
             this.search();
         },
         search() {

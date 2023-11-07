@@ -27,7 +27,7 @@ import store from './store';
 
 Vue.use(App);
 Vue.use(VueRouter);
-Vue.use(ElementUi, locale);
+Vue.use(ElementUi, {locale});
 Vue.use(Vuex);
 
 new Vue({
