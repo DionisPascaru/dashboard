@@ -1,20 +1,53 @@
-FROM richarvey/nginx-php-fpm:latest
+FROM php:8.0-fpm
 
-COPY . .
+# Install dockerize so we can wait for containers to be ready
+ENV DOCKERIZE_VERSION 0.6.1
 
-# Image config
-ENV SKIP_COMPOSER 1
-ENV WEBROOT /var/www/html/public
-ENV PHP_ERRORS_STDERR 1
-ENV RUN_SCRIPTS 1
-ENV REAL_IP_HEADER 1
+RUN curl -s -f -L -o /tmp/dockerize.tar.gz https://github.com/jwilder/dockerize/releases/download/v$DOCKERIZE_VERSION/dockerize-linux-amd64-v$DOCKERIZE_VERSION.tar.gz \
+    && tar -C /usr/local/bin -xzvf /tmp/dockerize.tar.gz \
+    && rm /tmp/dockerize.tar.gz
 
-# Laravel config
-ENV APP_ENV production
-ENV APP_DEBUG false
-ENV LOG_CHANNEL stderr
+# Install Composer
+ENV COMPOSER_VERSION 2.1.5
 
-# Allow composer to run as root
-ENV COMPOSER_ALLOW_SUPERUSER 1
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=$COMPOSER_VERSION
 
-CMD ["/start.sh"]
+# Install nodejs
+RUN curl -fsSL https://deb.nodesource.com/setup_19.x | bash -  \
+    && apt-get install -y nodejs \
+    && npm install -g npm@9.7.2 \
+    && node --version \
+    && npm --version \
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        libz-dev \
+        libpq-dev \
+        libjpeg-dev \
+        libpng-dev \
+        libssl-dev \
+        libzip-dev \
+        unzip \
+        zip \
+        nodejs \
+    && apt-get clean \
+    && pecl install redis \
+    && docker-php-ext-configure gd \
+    && docker-php-ext-configure zip \
+    && docker-php-ext-install \
+        gd \
+        exif \
+        opcache \
+        pdo_mysql \
+        pdo_pgsql \
+        pgsql \
+        pcntl \
+        zip \
+    && docker-php-ext-enable redis \
+    && rm -rf /var/lib/apt/lists/*;
+
+COPY ./docker/php/laravel.ini /usr/local/etc/php/conf.d/laravel.ini
+
+WORKDIR /usr/src/app
+
+RUN chown -R www-data:www-data .
