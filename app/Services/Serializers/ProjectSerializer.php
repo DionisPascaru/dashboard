@@ -49,8 +49,9 @@ class ProjectSerializer
     {
         return array_map(function ($item) {
             $cover = [
-                'name' => $item->cover ?? null,
-                'url' => config('filesystems.disks.backend.path') . $item->cover ?? null,
+                'url' => $item->cover
+                    ? config('filesystems.disks.backend.path') . $item->cover
+                    : null,
             ];
 
             return [
