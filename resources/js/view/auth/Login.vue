@@ -4,10 +4,10 @@
             <h1>Login</h1>
             <el-form :model="login" status-icon :rules="rules" ref="ruleForm" label-position="top">
                 <el-form-item label="Email" prop="email">
-                    <el-input type="email" v-model="login.email" autocomplete="off"></el-input>
+                    <el-input type="email" v-model="login.email" autocomplete="on"></el-input>
                 </el-form-item>
                 <el-form-item label="Password" prop="password">
-                    <el-input type="password" v-model="login.password" autocomplete="off"></el-input>
+                    <el-input type="password" v-model="login.password" autocomplete="on"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="submitForm('ruleForm')">Submit</el-button>
@@ -24,8 +24,8 @@ export default {
     data(){
         return {
             login: {
-                email: '',
-                password: ''
+                email: null,
+                password: null
             },
             rules: {
                 email: [
