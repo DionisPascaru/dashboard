@@ -4,41 +4,43 @@
             <h1>Create project</h1>
         </div>
 
-        <el-form :model="project" :rules="rules" ref="createProjectForm">
-            <el-row :gutter="20">
-                <el-col :span="12">
-                    <el-form-item label="Title" prop="title">
-                        <el-input v-model="project.title"></el-input>
-                    </el-form-item>
-                    <el-form-item label="Category" prop="category_id">
-                        <el-select v-model="project.category_id" placeholder="Select">
-                            <el-option
-                                v-for="item in this.projectCategories"
-                                :key="item.id"
-                                :label="item.name"
-                                :value="item.id">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="Cover" prop="cover">
-                        <el-upload
-                            action="#"
-                            ref="uploadCover"
-                            list-type="picture-card"
-                            :limit="1"
-                            :auto-upload="false"
-                            :on-change="handleCoverUpload"
-                            :on-remove="onCoverRemoved">
-                            <i class="el-icon-plus"></i>
-                        </el-upload>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-        </el-form>
-        <span slot="footer" class="dialog-footer">
-            <el-button @click="resetForm">Reset</el-button>
-            <el-button type="primary" @click="create('createProjectForm')">Create</el-button>
+        <div class="ds-block bg-light">
+            <el-form :model="project" :rules="rules" ref="createProjectForm">
+                <el-row :gutter="20">
+                    <el-col :span="12">
+                        <el-form-item label="Title" prop="title">
+                            <el-input v-model="project.title"></el-input>
+                        </el-form-item>
+                        <el-form-item label="Category" prop="category_id">
+                            <el-select v-model="project.category_id" placeholder="Select">
+                                <el-option
+                                    v-for="item in this.projectCategories"
+                                    :key="item.id"
+                                    :label="item.name"
+                                    :value="item.id">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="Cover" prop="cover">
+                            <el-upload
+                                action="#"
+                                ref="uploadCover"
+                                list-type="picture-card"
+                                :limit="1"
+                                :auto-upload="false"
+                                :on-change="handleCoverUpload"
+                                :on-remove="onCoverRemoved">
+                                <i class="el-icon-plus"></i>
+                            </el-upload>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+            <el-button class="btn btn-default" @click="resetForm">Reset</el-button>
+            <el-button class="btn btn-primary" type="primary" @click="create('createProjectForm')">Create</el-button>
         </span>
+        </div>
     </div>
 </template>
 

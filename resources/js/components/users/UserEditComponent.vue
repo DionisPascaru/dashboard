@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-button @click="loadUser(userId)" icon="el-icon-edit"></el-button>
+        <el-button class="btn btn-default" @click="loadUser(userId)" icon="el-icon-edit"></el-button>
 
         <el-dialog title="Edit user" :visible.sync="dialogFormVisible" width="450px">
             <el-form :model="user">
