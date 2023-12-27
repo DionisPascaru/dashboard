@@ -17,6 +17,7 @@
         &.el-button--default {
             background-color: $light-color;
             color: $dark-color;
+            border-color: $dark-color;
 
             &:hover {
                 color: $dark-color;

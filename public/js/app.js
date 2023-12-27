@@ -7277,6 +7277,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'UserDetails',
@@ -7574,7 +7576,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     getLogo: function getLogo() {
       return _assets_logo_svg__WEBPACK_IMPORTED_MODULE_0__["default"];
+    },
+    authUser: function authUser() {
+      return this.$store.getters['auth/loadUser'];
     }
+  },
+  mounted: function mounted() {
+    this.$store.dispatch('auth/authUser');
   },
   methods: {
     logout: function logout() {
@@ -7692,6 +7700,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
 //
 //
 //
@@ -7854,6 +7864,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _components_core_FileUploadComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/core/FileUploadComponent.vue */ "./resources/js/components/core/FileUploadComponent.vue");
 /* harmony import */ var _components_core_MultipleFilesUploadComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/core/MultipleFilesUploadComponent.vue */ "./resources/js/components/core/MultipleFilesUploadComponent.vue");
+//
+//
 //
 //
 //
@@ -8701,7 +8713,7 @@ var login = function login(email, password) {
   });
 };
 var authUser = function authUser() {
-  return _httpRequest__WEBPACK_IMPORTED_MODULE_0__["default"].get('/user');
+  return _httpRequest__WEBPACK_IMPORTED_MODULE_0__["default"].get('/auth-user');
 };
 
 
@@ -8903,19 +8915,20 @@ var actions = {
             return (0,_services_auth_auth_service__WEBPACK_IMPORTED_MODULE_0__.login)(email, password);
           case 5:
             response = _context.sent;
-            localStorage.setItem('accessToken', JSON.stringify(response.data.token));
+            (0,_services_auth_auth_service__WEBPACK_IMPORTED_MODULE_0__.login)(response);
+            localStorage.setItem('accessToken', JSON.stringify(response.token));
             commit('LOGIN_SUCCESS');
-            _context.next = 13;
+            _context.next = 14;
             break;
-          case 10:
-            _context.prev = 10;
+          case 11:
+            _context.prev = 11;
             _context.t0 = _context["catch"](2);
             throw _context.t0;
-          case 13:
+          case 14:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[2, 10]]);
+      }, _callee, null, [[2, 11]]);
     }))();
   },
   authUser: function authUser(_ref3) {
@@ -96516,20 +96529,27 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "el-descriptions",
-    { attrs: { label: "Username" } },
+    "div",
+    { staticClass: "ds-block bg-light" },
     [
-      _c("el-descriptions-item", { attrs: { label: "Username" } }, [
-        _vm._v(_vm._s(_vm.user.name)),
-      ]),
-      _vm._v(" "),
-      _c("el-descriptions-item", { attrs: { label: "Email" } }, [
-        _vm._v(_vm._s(_vm.user.email)),
-      ]),
-      _vm._v(" "),
-      _c("el-descriptions-item", { attrs: { label: "Role" } }, [
-        _vm._v(_vm._s(_vm.user.role)),
-      ]),
+      _c(
+        "el-descriptions",
+        { attrs: { label: "Username" } },
+        [
+          _c("el-descriptions-item", { attrs: { label: "Username" } }, [
+            _vm._v(_vm._s(_vm.user.name)),
+          ]),
+          _vm._v(" "),
+          _c("el-descriptions-item", { attrs: { label: "Email" } }, [
+            _vm._v(_vm._s(_vm.user.email)),
+          ]),
+          _vm._v(" "),
+          _c("el-descriptions-item", { attrs: { label: "Role" } }, [
+            _vm._v(_vm._s(_vm.user.role)),
+          ]),
+        ],
+        1
+      ),
     ],
     1
   )
@@ -96561,6 +96581,7 @@ var render = function () {
     "div",
     [
       _c("el-button", {
+        staticClass: "btn btn-default",
         attrs: { icon: "el-icon-edit" },
         on: {
           click: function ($event) {
@@ -96900,7 +96921,19 @@ var render = function () {
     ),
     _vm._v(" "),
     _c("div", [
-      _vm._m(0),
+      _c("div", { staticClass: "ds-auth-user" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "ds-auth-user--info" }, [
+          _c("span", { staticClass: "ds-auth-user--name" }, [
+            _vm._v(_vm._s(_vm.authUser.name)),
+          ]),
+          _vm._v(" "),
+          _c("span", { staticClass: "ds-auth-user--email" }, [
+            _vm._v(_vm._s(_vm.authUser.email)),
+          ]),
+        ]),
+      ]),
       _vm._v(" "),
       _c(
         "button",
@@ -96915,19 +96948,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "ds-auth-user" }, [
-      _c("div", { staticClass: "ds-auth-user--avatar" }, [
-        _c("div", { staticClass: "ds-auth-user--no-image" }, [
-          _c("i", { staticClass: "el-icon-user" }),
-        ]),
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "ds-auth-user--info" }, [
-        _c("span", { staticClass: "ds-auth-user--name" }, [_vm._v("Admin")]),
-        _vm._v(" "),
-        _c("span", { staticClass: "ds-auth-user--email" }, [
-          _vm._v("admin.test@admin.com"),
-        ]),
+    return _c("div", { staticClass: "ds-auth-user--avatar" }, [
+      _c("div", { staticClass: "ds-auth-user--no-image" }, [
+        _c("i", { staticClass: "el-icon-user" }),
       ]),
     ])
   },
@@ -97074,131 +97097,139 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "el-form",
-        {
-          ref: "createProjectForm",
-          attrs: { model: _vm.project, rules: _vm.rules },
-        },
-        [
-          _c(
-            "el-row",
-            { attrs: { gutter: 20 } },
-            [
-              _c(
-                "el-col",
-                { attrs: { span: 12 } },
-                [
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "Title", prop: "title" } },
-                    [
-                      _c("el-input", {
-                        model: {
-                          value: _vm.project.title,
-                          callback: function ($$v) {
-                            _vm.$set(_vm.project, "title", $$v)
-                          },
-                          expression: "project.title",
-                        },
-                      }),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "Category", prop: "category_id" } },
-                    [
-                      _c(
-                        "el-select",
-                        {
-                          attrs: { placeholder: "Select" },
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "ds-block bg-light" },
+      [
+        _c(
+          "el-form",
+          {
+            ref: "createProjectForm",
+            attrs: { model: _vm.project, rules: _vm.rules },
+          },
+          [
+            _c(
+              "el-row",
+              { attrs: { gutter: 20 } },
+              [
+                _c(
+                  "el-col",
+                  { attrs: { span: 12 } },
+                  [
+                    _c(
+                      "el-form-item",
+                      { attrs: { label: "Title", prop: "title" } },
+                      [
+                        _c("el-input", {
                           model: {
-                            value: _vm.project.category_id,
+                            value: _vm.project.title,
                             callback: function ($$v) {
-                              _vm.$set(_vm.project, "category_id", $$v)
+                              _vm.$set(_vm.project, "title", $$v)
                             },
-                            expression: "project.category_id",
+                            expression: "project.title",
                           },
-                        },
-                        _vm._l(this.projectCategories, function (item) {
-                          return _c("el-option", {
-                            key: item.id,
-                            attrs: { label: item.name, value: item.id },
-                          })
                         }),
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "Cover", prop: "cover" } },
-                    [
-                      _c(
-                        "el-upload",
-                        {
-                          ref: "uploadCover",
-                          attrs: {
-                            action: "#",
-                            "list-type": "picture-card",
-                            limit: 1,
-                            "auto-upload": false,
-                            "on-change": _vm.handleCoverUpload,
-                            "on-remove": _vm.onCoverRemoved,
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "el-form-item",
+                      { attrs: { label: "Category", prop: "category_id" } },
+                      [
+                        _c(
+                          "el-select",
+                          {
+                            attrs: { placeholder: "Select" },
+                            model: {
+                              value: _vm.project.category_id,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.project, "category_id", $$v)
+                              },
+                              expression: "project.category_id",
+                            },
                           },
-                        },
-                        [_c("i", { staticClass: "el-icon-plus" })]
-                      ),
-                    ],
-                    1
-                  ),
-                ],
-                1
-              ),
-            ],
-            1
-          ),
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "span",
-        {
-          staticClass: "dialog-footer",
-          attrs: { slot: "footer" },
-          slot: "footer",
-        },
-        [
-          _c("el-button", { on: { click: _vm.resetForm } }, [_vm._v("Reset")]),
-          _vm._v(" "),
-          _c(
-            "el-button",
-            {
-              attrs: { type: "primary" },
-              on: {
-                click: function ($event) {
-                  return _vm.create("createProjectForm")
+                          _vm._l(this.projectCategories, function (item) {
+                            return _c("el-option", {
+                              key: item.id,
+                              attrs: { label: item.name, value: item.id },
+                            })
+                          }),
+                          1
+                        ),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "el-form-item",
+                      { attrs: { label: "Cover", prop: "cover" } },
+                      [
+                        _c(
+                          "el-upload",
+                          {
+                            ref: "uploadCover",
+                            attrs: {
+                              action: "#",
+                              "list-type": "picture-card",
+                              limit: 1,
+                              "auto-upload": false,
+                              "on-change": _vm.handleCoverUpload,
+                              "on-remove": _vm.onCoverRemoved,
+                            },
+                          },
+                          [_c("i", { staticClass: "el-icon-plus" })]
+                        ),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+              ],
+              1
+            ),
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "span",
+          {
+            staticClass: "dialog-footer",
+            attrs: { slot: "footer" },
+            slot: "footer",
+          },
+          [
+            _c(
+              "el-button",
+              { staticClass: "btn btn-default", on: { click: _vm.resetForm } },
+              [_vm._v("Reset")]
+            ),
+            _vm._v(" "),
+            _c(
+              "el-button",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { type: "primary" },
+                on: {
+                  click: function ($event) {
+                    return _vm.create("createProjectForm")
+                  },
                 },
               },
-            },
-            [_vm._v("Create")]
-          ),
-        ],
-        1
-      ),
-    ],
-    1
-  )
+              [_vm._v("Create")]
+            ),
+          ],
+          1
+        ),
+      ],
+      1
+    ),
+  ])
 }
 var staticRenderFns = [
   function () {
@@ -97232,141 +97263,145 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "el-form",
-        {
-          ref: "updateProjectForm",
-          attrs: { model: _vm.project, rules: _vm.rules },
-        },
-        [
-          _c(
-            "el-row",
-            { attrs: { gutter: 20 } },
-            [
-              _c(
-                "el-col",
-                { attrs: { span: 12 } },
-                [
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "Title", prop: "title" } },
-                    [
-                      _c("el-input", {
-                        model: {
-                          value: _vm.project.title,
-                          callback: function ($$v) {
-                            _vm.$set(_vm.project, "title", $$v)
-                          },
-                          expression: "project.title",
-                        },
-                      }),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "Category", prop: "category_id" } },
-                    [
-                      _c(
-                        "el-select",
-                        {
-                          attrs: { placeholder: "Select" },
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "ds-block bg-light" },
+      [
+        _c(
+          "el-form",
+          {
+            ref: "updateProjectForm",
+            attrs: { model: _vm.project, rules: _vm.rules },
+          },
+          [
+            _c(
+              "el-row",
+              { attrs: { gutter: 20 } },
+              [
+                _c(
+                  "el-col",
+                  { attrs: { span: 12 } },
+                  [
+                    _c(
+                      "el-form-item",
+                      { attrs: { label: "Title", prop: "title" } },
+                      [
+                        _c("el-input", {
                           model: {
-                            value: _vm.project.category_id,
+                            value: _vm.project.title,
                             callback: function ($$v) {
-                              _vm.$set(_vm.project, "category_id", $$v)
+                              _vm.$set(_vm.project, "title", $$v)
                             },
-                            expression: "project.category_id",
+                            expression: "project.title",
                           },
-                        },
-                        _vm._l(this.projectCategories, function (item) {
-                          return _c("el-option", {
-                            key: item.id,
-                            attrs: { label: item.name, value: item.id },
-                          })
                         }),
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "Cover", prop: "cover" } },
-                    [
-                      _c("file-upload-component", {
-                        attrs: { file: this.file },
-                        on: {
-                          "update:file": function ($event) {
-                            return _vm.$set(this, "file", $event)
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "el-form-item",
+                      { attrs: { label: "Category", prop: "category_id" } },
+                      [
+                        _c(
+                          "el-select",
+                          {
+                            attrs: { placeholder: "Select" },
+                            model: {
+                              value: _vm.project.category_id,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.project, "category_id", $$v)
+                              },
+                              expression: "project.category_id",
+                            },
                           },
-                          "upload-callback": _vm.updateFile,
-                        },
-                      }),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "Images" } },
-                    [
-                      _c("multiple-files-upload-component", {
-                        attrs: { files: this.files },
-                        on: {
-                          "update:files": function ($event) {
-                            return _vm.$set(this, "files", $event)
+                          _vm._l(this.projectCategories, function (item) {
+                            return _c("el-option", {
+                              key: item.id,
+                              attrs: { label: item.name, value: item.id },
+                            })
+                          }),
+                          1
+                        ),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "el-form-item",
+                      { attrs: { label: "Cover", prop: "cover" } },
+                      [
+                        _c("file-upload-component", {
+                          attrs: { file: this.file },
+                          on: {
+                            "update:file": function ($event) {
+                              return _vm.$set(this, "file", $event)
+                            },
+                            "upload-callback": _vm.updateFile,
                           },
-                          "upload-callback": _vm.updateFiles,
-                          "remove-callback": _vm.removeFiles,
-                        },
-                      }),
-                    ],
-                    1
-                  ),
-                ],
-                1
-              ),
-            ],
-            1
-          ),
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "span",
-        {
-          staticClass: "dialog-footer",
-          attrs: { slot: "footer" },
-          slot: "footer",
-        },
-        [
-          _c(
-            "el-button",
-            {
-              attrs: { type: "primary" },
-              on: {
-                click: function ($event) {
-                  return _vm.update("updateProjectForm")
+                        }),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "el-form-item",
+                      { attrs: { label: "Images" } },
+                      [
+                        _c("multiple-files-upload-component", {
+                          attrs: { files: this.files },
+                          on: {
+                            "update:files": function ($event) {
+                              return _vm.$set(this, "files", $event)
+                            },
+                            "upload-callback": _vm.updateFiles,
+                            "remove-callback": _vm.removeFiles,
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+              ],
+              1
+            ),
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "span",
+          {
+            staticClass: "dialog-footer",
+            attrs: { slot: "footer" },
+            slot: "footer",
+          },
+          [
+            _c(
+              "el-button",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { type: "primary" },
+                on: {
+                  click: function ($event) {
+                    return _vm.update("updateProjectForm")
+                  },
                 },
               },
-            },
-            [_vm._v("Update")]
-          ),
-        ],
-        1
-      ),
-    ],
-    1
-  )
+              [_vm._v("Update")]
+            ),
+          ],
+          1
+        ),
+      ],
+      1
+    ),
+  ])
 }
 var staticRenderFns = [
   function () {

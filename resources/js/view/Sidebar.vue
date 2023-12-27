@@ -30,8 +30,8 @@
                     </div>
                 </div>
                 <div class="ds-auth-user--info">
-                    <span class="ds-auth-user--name">Admin</span>
-                    <span class="ds-auth-user--email">admin.test@admin.com</span>
+                    <span class="ds-auth-user--name">{{ authUser.name }}</span>
+                    <span class="ds-auth-user--email">{{ authUser.email }}</span>
                 </div>
             </div>
             <button class="ds-logout--btn" @click="logout">

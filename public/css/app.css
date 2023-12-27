@@ -180,6 +180,7 @@ h4 {
 .btn-default.el-button--default {
   background-color: #fff;
   color: #3A3541;
+  border-color: #3A3541;
 }
 .btn-default.el-button--default:hover {
   color: #3A3541;
