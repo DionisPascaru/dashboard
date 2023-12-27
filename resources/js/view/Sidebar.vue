@@ -51,7 +51,13 @@ export default {
         },
         getLogo() {
             return logo;
+        },
+        authUser() {
+            return this.$store.getters['auth/loadUser'];
         }
+    },
+    mounted() {
+        this.$store.dispatch('auth/authUser');
     },
     methods: {
         logout() {
