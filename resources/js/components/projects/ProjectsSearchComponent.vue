@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="search-form">
         <h4>Filters</h4>
         <el-form :model="options.filters">
             <el-row :gutter="20">
@@ -43,10 +43,10 @@
             </el-row>
         </el-form>
         <div style="display: flex; justify-content: flex-end;">
-            <el-button type="info" @click="reset">
+            <el-button class="btn btn-default" @click="reset">
                 Reset
             </el-button>
-            <el-button type="primary" @click="search">
+            <el-button class="btn btn-primary" type="primary" @click="search">
                 Search
             </el-button>
         </div>

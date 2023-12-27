@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-button type="primary" @click="loadUser(userId)" icon="el-icon-edit"></el-button>
+        <el-button @click="loadUser(userId)" icon="el-icon-edit"></el-button>
 
         <el-dialog title="Edit user" :visible.sync="dialogFormVisible" width="450px">
             <el-form :model="user">
@@ -23,7 +23,7 @@
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">Cancel</el-button>
-                <el-button type="primary" @click="update(userId, user)">Update</el-button>
+                <el-button class="btn btn-primary" type="primary" @click="update(userId, user)">Update</el-button>
               </span>
         </el-dialog>
     </div>

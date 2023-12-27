@@ -2,46 +2,49 @@
     <div>
         <div class="view-title">
             <h1>Users</h1>
+            <user-create-component></user-create-component>
         </div>
-        <user-create-component></user-create-component>
-        <div class="view-content">
-            <el-table
-                class="table"
-                :data="users"
-                v-loading="loading"
-                style="width: 100%">
-                <el-table-column
-                    prop="name"
-                    label="Name"
-                    width="180">
-                </el-table-column>
-                <el-table-column
-                    prop="email"
-                    label="Email">
-                </el-table-column>
-                <el-table-column
-                    prop="role"
-                    label="Role"
-                    width="180">
-                </el-table-column>
-                <el-table-column
-                    label="Actions"
-                    width="280">
-                    <template slot-scope="scope">
-                        <div class="d-flex flex-gap">
-                            <router-link :to="{ name: 'UserDetails', params: { id: scope.row.id }}">
-                                <el-button type="info">
-                                    View
+
+        <div class="ds-block bg-light">
+            <div class="view-content">
+                <el-table
+                    class="table"
+                    :data="users"
+                    v-loading="loading"
+                    style="width: 100%">
+                    <el-table-column
+                        prop="name"
+                        label="Name"
+                        width="180">
+                    </el-table-column>
+                    <el-table-column
+                        prop="email"
+                        label="Email">
+                    </el-table-column>
+                    <el-table-column
+                        prop="role"
+                        label="Role"
+                        width="180">
+                    </el-table-column>
+                    <el-table-column
+                        label="Actions"
+                        width="280">
+                        <template slot-scope="scope">
+                            <div class="d-flex flex-gap">
+                                <router-link :to="{ name: 'UserDetails', params: { id: scope.row.id }}">
+                                    <el-button class="btn btn-info" type="info">
+                                        View
+                                    </el-button>
+                                </router-link>
+                                <user-edit-component :user-id="scope.row.id"></user-edit-component>
+                                <el-button class="btn btn-danger" type="danger" @click="deleteUser(scope.row)">
+                                    Delete
                                 </el-button>
-                            </router-link>
-                            <user-edit-component :user-id="scope.row.id"></user-edit-component>
-                            <el-button type="danger" @click="deleteUser(scope.row)">
-                                Delete
-                            </el-button>
-                        </div>
-                    </template>
-                </el-table-column>
-            </el-table>
+                            </div>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </div>
         </div>
     </div>
 </template>

@@ -1,81 +1,86 @@
 <template>
     <div>
-        <div class="view-title" style="display: flex; justify-content: space-between;">
+        <div class="view-title">
             <h1>Projects</h1>
             <router-link :to="{ name: 'ProjectCreateView'}">
-                <el-button type="primary">Add project</el-button>
+                <el-button class="btn btn-primary" type="primary">Add project</el-button>
             </router-link>
         </div>
-        <projects-search-component @search-filters="handleSearch" :options="options"></projects-search-component>
 
-        <div style="display: flex; justify-content: space-between;">
-            <el-pagination
-                background
-                layout="prev, pager, next"
-                @current-change="handlePagination"
-                :total="projects.total"
-                :current-page="options.pageNum">
-            </el-pagination>
-            <div>
-                <h4>Totals: {{ projects.total }}</h4>
+        <div class="ds-block bg-light">
+            <projects-search-component @search-filters="handleSearch" :options="options"></projects-search-component>
+        </div>
+
+        <div class="ds-block bg-light">
+            <div class="ds-pagination">
+                <el-pagination
+                    class="ds-pagination-buttons"
+                    layout="prev, pager, next"
+                    @current-change="handlePagination"
+                    :total="projects.total"
+                    :current-page="options.pageNum">
+                </el-pagination>
+                <div>
+                    <h4>Totals: {{ projects.total }}</h4>
+                </div>
             </div>
-        </div>
-        <div class="view-content">
-            <el-table
-                class="table"
-                :data="projects.items"
-                v-loading="loading"
-                style="width: 100%">
-                <el-table-column
-                    prop="cover"
-                    label="Cover"
-                    width="180">
-                    <template slot-scope="scope">
-                        <el-image
-                            style="width: 100px; height: 100px"
-                            :src="scope.row.cover.url"
-                            fit="fit">
-                        </el-image>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    prop="title"
-                    label="Title">
-                </el-table-column>
-                <el-table-column
-                    prop="category"
-                    label="Category">
-                </el-table-column>
-                <el-table-column
-                    prop="created"
-                    label="Created">
-                </el-table-column>
-                <el-table-column
-                    prop="updated"
-                    label="Updated">
-                </el-table-column>
-                <el-table-column label="Actions">
-                    <template slot-scope="scope">
-                        <router-link :to="{ name: 'ProjectUpdateView', params: { id: scope.row.id } }">
-                            <el-button>Update project</el-button>
-                        </router-link>
-                        <el-button type="danger" @click="deleteProject(scope.row)">
-                            Delete
-                        </el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-        </div>
-        <div style="display: flex; justify-content: space-between;">
-            <el-pagination
-                background
-                layout="prev, pager, next"
-                @current-change="handlePagination"
-                :total="projects.total"
-                :current-page="options.pageNum">
-            </el-pagination>
-            <div>
-                <h4>Totals: {{ projects.total }}</h4>
+            <div class="view-content">
+                <el-table
+                    class="table"
+                    :data="projects.items"
+                    v-loading="loading"
+                    style="width: 100%">
+                    <el-table-column
+                        prop="cover"
+                        label="Cover"
+                        width="180">
+                        <template slot-scope="scope">
+                            <el-image
+                                style="width: 100px; height: 100px"
+                                :src="scope.row.cover.url"
+                                fit="fit">
+                            </el-image>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                        prop="title"
+                        label="Title">
+                    </el-table-column>
+                    <el-table-column
+                        prop="category"
+                        label="Category">
+                    </el-table-column>
+                    <el-table-column
+                        prop="created"
+                        label="Created">
+                    </el-table-column>
+                    <el-table-column
+                        prop="updated"
+                        label="Updated">
+                    </el-table-column>
+                    <el-table-column label="Actions">
+                        <template slot-scope="scope">
+                            <router-link :to="{ name: 'ProjectUpdateView', params: { id: scope.row.id } }">
+                                <el-button class="btn btn-default">Update project</el-button>
+                            </router-link>
+                            <el-button class="btn btn-danger" type="danger" @click="deleteProject(scope.row)">
+                                Delete
+                            </el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </div>
+            <div class="ds-pagination">
+                <el-pagination
+                    class="ds-pagination-buttons"
+                    layout="prev, pager, next"
+                    @current-change="handlePagination"
+                    :total="projects.total"
+                    :current-page="options.pageNum">
+                </el-pagination>
+                <div>
+                    <h4>Totals: {{ projects.total }}</h4>
+                </div>
             </div>
         </div>
     </div>

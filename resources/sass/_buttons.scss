@@ -1,0 +1,77 @@
+.btn {
+    &-primary {
+        &.el-button--primary {
+            background-color: $primary-color;
+            color: $light-color;
+            border-color: $primary-color;
+
+            &:hover {
+                color: $dark-color;
+                border-color: $dark-color;
+                background-color: transparent;
+            }
+        }
+    }
+
+    &-default {
+        &.el-button--default {
+            background-color: $light-color;
+            color: $dark-color;
+
+            &:hover {
+                color: $dark-color;
+                border-color: $dark-color;
+                background-color: transparent;
+            }
+        }
+    }
+
+    &-info {
+        &.el-button--info {
+            background-color: $secondary-color;
+            color: $dark-color;
+
+            &:hover {
+                color: $dark-color;
+                border-color: $dark-color;
+                background-color: transparent;
+            }
+        }
+    }
+
+    &-success {
+        &.el-button--success {
+            background-color: $success-color;
+
+            &:hover {
+                color: $dark-color;
+                border-color: $dark-color;
+                background-color: transparent;
+            }
+        }
+    }
+
+    &-danger {
+        &.el-button--danger {
+            background-color: $danger-color;
+
+            &:hover {
+                color: $dark-color;
+                border-color: $dark-color;
+                background-color: transparent;
+            }
+        }
+    }
+
+    &-warning {
+        &.el-button--warning {
+            background-color: $warning-color;
+
+            &:hover {
+                color: $dark-color;
+                border-color: $dark-color;
+                background-color: transparent;
+            }
+        }
+    }
+}
