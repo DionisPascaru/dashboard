@@ -20,7 +20,8 @@ const actions = {
     async login({commit}, {email, password}) {
         try {
             const response = await login(email, password);
-            localStorage.setItem('accessToken', JSON.stringify(response.data.token));
+            login(response);
+            localStorage.setItem('accessToken', JSON.stringify(response.token));
             commit('LOGIN_SUCCESS')
         } catch (e) {
             throw e;

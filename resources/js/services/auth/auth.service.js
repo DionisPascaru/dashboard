@@ -5,7 +5,7 @@ const login = (email, password) => {
 }
 
 const authUser = () => {
-    return httpRequest.get('/user');
+    return httpRequest.get('/auth-user');
 }
 
 export {

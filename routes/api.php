@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AdminManagerController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ProjectCategoriesApiController;
 use App\Http\Controllers\API\ProjectsApiController;
@@ -21,6 +22,9 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
 Route::middleware('auth:sanctum')->group( function () {
+    // Admin
+    Route::get('/auth-user', [AuthController::class, 'getAuthUser']);
+
     // Users
     Route::get('/users', [UsersApiController::class, 'index']);
     Route::group(['prefix' => 'user'], function (){

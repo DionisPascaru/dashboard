@@ -30,7 +30,13 @@ export default {
     computed: {
         activeIndex() {
             return this.$route.name;
+        },
+        authUser() {
+            return this.$store.getters['auth/loadUser'];
         }
+    },
+    mounted() {
+        this.$store.dispatch('auth/authUser');
     },
     methods: {
         logout() {

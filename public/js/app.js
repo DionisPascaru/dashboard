@@ -7553,12 +7553,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Sidebar",
   computed: {
     activeIndex: function activeIndex() {
       return this.$route.name;
+    },
+    admin: function admin() {
+      return this.$store.getters['auth/loadUser'];
     }
+  },
+  mounted: function mounted() {
+    this.$store.dispatch('auth/authUser');
   },
   methods: {
     logout: function logout() {
@@ -8444,7 +8454,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  path: "http://localhost:8000/public/resources/publicFiles/"
+  path: "http://localhost:8000/resources/publicFiles/"
 });
 
 /***/ }),
@@ -8686,7 +8696,7 @@ var login = function login(email, password) {
 };
 
 var authUser = function authUser() {
-  return _httpRequest__WEBPACK_IMPORTED_MODULE_0__["default"].get('/user');
+  return _httpRequest__WEBPACK_IMPORTED_MODULE_0__["default"].get('/auth-user');
 };
 
 
@@ -8920,22 +8930,25 @@ var actions = {
 
             case 5:
               response = _context.sent;
-              localStorage.setItem('accessToken', JSON.stringify(response.data.token));
+
+              (0,_services_auth_auth_service__WEBPACK_IMPORTED_MODULE_1__.login)(response);
+
+              localStorage.setItem('accessToken', JSON.stringify(response.token));
               commit('LOGIN_SUCCESS');
-              _context.next = 13;
+              _context.next = 14;
               break;
 
-            case 10:
-              _context.prev = 10;
+            case 11:
+              _context.prev = 11;
               _context.t0 = _context["catch"](2);
               throw _context.t0;
 
-            case 13:
+            case 14:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[2, 10]]);
+      }, _callee, null, [[2, 11]]);
     }))();
   },
   authUser: function authUser(_ref3) {
@@ -16602,7 +16615,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".sidebar[data-v-296cc450] {\n  background-color: #545c64;\n  height: calc(100vh - 40px);\n  min-height: 500px;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  padding: 20px;\n}\n.sidebar .el-menu-vertical-demo[data-v-296cc450] {\n  border-right: 0;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".sidebar[data-v-296cc450] {\n  background-color: #545c64;\n  height: calc(100vh - 40px);\n  min-height: 500px;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  padding: 20px;\n}\n.sidebar .el-menu-vertical-demo[data-v-296cc450] {\n  border-right: 0;\n}\n.auth-user[data-v-296cc450] {\n  background-color: #000;\n  display: flex;\n  flex-direction: column;\n  margin-bottom: 20px;\n  border: 1px solid #fff;\n  color: #fff;\n  border-radius: 10px;\n  padding: 10px;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -97815,6 +97828,12 @@ var render = function () {
       _c(
         "div",
         [
+          _c("div", { staticClass: "auth-user" }, [
+            _c("span", [_vm._v(_vm._s(_vm.admin.name))]),
+            _vm._v(" "),
+            _c("span", [_vm._v(_vm._s(_vm.admin.email))]),
+          ]),
+          _vm._v(" "),
           _c("el-button", { on: { click: _vm.logout } }, [
             _vm._v("\n            Logout\n        "),
           ]),
