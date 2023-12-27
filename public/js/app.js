@@ -8130,6 +8130,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -8226,6 +8231,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _components_users_UserCreateComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/users/UserCreateComponent */ "./resources/js/components/users/UserCreateComponent.vue");
 /* harmony import */ var _components_users_UserEditComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/users/UserEditComponent */ "./resources/js/components/users/UserEditComponent.vue");
+//
+//
+//
 //
 //
 //
@@ -96176,6 +96184,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "search-form" },
     [
       _c("h4", [_vm._v("Filters")]),
       _vm._v(" "),
@@ -96311,13 +96320,17 @@ var render = function () {
         [
           _c(
             "el-button",
-            { attrs: { type: "info" }, on: { click: _vm.reset } },
+            { staticClass: "btn btn-default", on: { click: _vm.reset } },
             [_vm._v("\n            Reset\n        ")]
           ),
           _vm._v(" "),
           _c(
             "el-button",
-            { attrs: { type: "primary" }, on: { click: _vm.search } },
+            {
+              staticClass: "btn btn-primary",
+              attrs: { type: "primary" },
+              on: { click: _vm.search },
+            },
             [_vm._v("\n            Search\n        ")]
           ),
         ],
@@ -96356,6 +96369,7 @@ var render = function () {
       _c(
         "el-button",
         {
+          staticClass: "btn btn-primary",
           attrs: { type: "primary" },
           on: {
             click: function ($event) {
@@ -96461,7 +96475,11 @@ var render = function () {
               _vm._v(" "),
               _c(
                 "el-button",
-                { attrs: { type: "primary" }, on: { click: _vm.create } },
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "primary" },
+                  on: { click: _vm.create },
+                },
                 [_vm._v("Create")]
               ),
             ],
@@ -96543,7 +96561,7 @@ var render = function () {
     "div",
     [
       _c("el-button", {
-        attrs: { type: "primary", icon: "el-icon-edit" },
+        attrs: { icon: "el-icon-edit" },
         on: {
           click: function ($event) {
             return _vm.loadUser(_vm.userId)
@@ -96658,6 +96676,7 @@ var render = function () {
               _c(
                 "el-button",
                 {
+                  staticClass: "btn btn-primary",
                   attrs: { type: "primary" },
                   on: {
                     click: function ($event) {
@@ -97381,46 +97400,49 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "view-title" },
+      [
+        _c("h1", [_vm._v("Projects")]),
+        _vm._v(" "),
+        _c(
+          "router-link",
+          { attrs: { to: { name: "ProjectCreateView" } } },
+          [
+            _c(
+              "el-button",
+              { staticClass: "btn btn-primary", attrs: { type: "primary" } },
+              [_vm._v("Add project")]
+            ),
+          ],
+          1
+        ),
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "ds-block bg-light" },
+      [
+        _c("projects-search-component", {
+          attrs: { options: _vm.options },
+          on: { "search-filters": _vm.handleSearch },
+        }),
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "ds-block bg-light" }, [
       _c(
         "div",
-        {
-          staticClass: "view-title",
-          staticStyle: { display: "flex", "justify-content": "space-between" },
-        },
-        [
-          _c("h1", [_vm._v("Projects")]),
-          _vm._v(" "),
-          _c(
-            "router-link",
-            { attrs: { to: { name: "ProjectCreateView" } } },
-            [
-              _c("el-button", { attrs: { type: "primary" } }, [
-                _vm._v("Add project"),
-              ]),
-            ],
-            1
-          ),
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("projects-search-component", {
-        attrs: { options: _vm.options },
-        on: { "search-filters": _vm.handleSearch },
-      }),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticStyle: { display: "flex", "justify-content": "space-between" },
-        },
+        { staticClass: "ds-pagination" },
         [
           _c("el-pagination", {
+            staticClass: "ds-pagination-buttons",
             attrs: {
-              background: "",
               layout: "prev, pager, next",
               total: _vm.projects.total,
               "current-page": _vm.options.pageNum,
@@ -97505,13 +97527,20 @@ var render = function () {
                               },
                             },
                           },
-                          [_c("el-button", [_vm._v("Update project")])],
+                          [
+                            _c(
+                              "el-button",
+                              { staticClass: "btn btn-default" },
+                              [_vm._v("Update project")]
+                            ),
+                          ],
                           1
                         ),
                         _vm._v(" "),
                         _c(
                           "el-button",
                           {
+                            staticClass: "btn btn-danger",
                             attrs: { type: "danger" },
                             on: {
                               click: function ($event) {
@@ -97521,7 +97550,7 @@ var render = function () {
                           },
                           [
                             _vm._v(
-                              "\n                        Delete\n                    "
+                              "\n                            Delete\n                        "
                             ),
                           ]
                         ),
@@ -97539,13 +97568,11 @@ var render = function () {
       _vm._v(" "),
       _c(
         "div",
-        {
-          staticStyle: { display: "flex", "justify-content": "space-between" },
-        },
+        { staticClass: "ds-pagination" },
         [
           _c("el-pagination", {
+            staticClass: "ds-pagination-buttons",
             attrs: {
-              background: "",
               layout: "prev, pager, next",
               total: _vm.projects.total,
               "current-page": _vm.options.pageNum,
@@ -97559,9 +97586,8 @@ var render = function () {
         ],
         1
       ),
-    ],
-    1
-  )
+    ]),
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -97586,13 +97612,15 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("user-create-component"),
-      _vm._v(" "),
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "view-title" },
+      [_c("h1", [_vm._v("Users")]), _vm._v(" "), _c("user-create-component")],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "ds-block bg-light" }, [
       _c(
         "div",
         { staticClass: "view-content" },
@@ -97647,11 +97675,18 @@ var render = function () {
                                 },
                               },
                               [
-                                _c("el-button", { attrs: { type: "info" } }, [
-                                  _vm._v(
-                                    "\n                                View\n                            "
-                                  ),
-                                ]),
+                                _c(
+                                  "el-button",
+                                  {
+                                    staticClass: "btn btn-info",
+                                    attrs: { type: "info" },
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                    View\n                                "
+                                    ),
+                                  ]
+                                ),
                               ],
                               1
                             ),
@@ -97663,6 +97698,7 @@ var render = function () {
                             _c(
                               "el-button",
                               {
+                                staticClass: "btn btn-danger",
                                 attrs: { type: "danger" },
                                 on: {
                                   click: function ($event) {
@@ -97672,7 +97708,7 @@ var render = function () {
                               },
                               [
                                 _vm._v(
-                                  "\n                            Delete\n                        "
+                                  "\n                                Delete\n                            "
                                 ),
                               ]
                             ),
@@ -97690,20 +97726,10 @@ var render = function () {
         ],
         1
       ),
-    ],
-    1
-  )
+    ]),
+  ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "view-title" }, [
-      _c("h1", [_vm._v("Users")]),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

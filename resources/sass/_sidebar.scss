@@ -1,5 +1,5 @@
 .ds-sidebar {
-    background-color: #fff;
+    background-color: $light-color;
     height: calc(100vh - 40px);
     min-height: 500px;
     display: flex;
@@ -90,12 +90,12 @@
 
     &--name {
         font-size: 16px;
-        color: #fff;
+        color: $light-color;
     }
 
     &--email {
         font-size: 14px;
-        color: #fff;
+        color: $light-color;
     }
 }
 
@@ -103,7 +103,7 @@
     background-color: $primary-color;
     margin-top: 20px;
     border-radius: 10px;
-    color: #fff;
+    color: $light-color;
     width: 100%;
     padding: 15px 10px;
     border: none;

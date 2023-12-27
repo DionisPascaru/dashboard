@@ -11,8 +11,20 @@ aside {
   left: 0;
 }
 
+h1 {
+  font-size: 24px;
+  margin: 10px 0;
+}
+
+h4 {
+  margin: 3px 0;
+}
+
 .view-title {
-  border-bottom: 3px solid #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #3A3541;
   margin: 10px auto;
 }
 
@@ -26,6 +38,17 @@ aside {
 
 .el-upload-list__item {
   transition: none !important;
+}
+
+.bg-light {
+  background-color: #fff;
+}
+
+.ds-block {
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px 5px #DBDCDE;
+  margin: 20px 0;
 }
 
 .ds-sidebar {
@@ -122,5 +145,78 @@ aside {
   width: 100%;
   padding: 15px 10px;
   border: none;
+}
+
+.ds-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+.ds-pagination-buttons li.number {
+  background-color: #e7e7f4;
+  color: #3A3541;
+  border-radius: 5px;
+  margin: 0 5px;
+}
+.ds-pagination-buttons li.number.active {
+  background-color: #6E39CB;
+  color: #fff;
+}
+.ds-pagination-buttons li.number:hover {
+  color: #fff;
+}
+
+.btn-primary.el-button--primary {
+  background-color: #6E39CB;
+  color: #fff;
+  border-color: #6E39CB;
+}
+.btn-primary.el-button--primary:hover {
+  color: #3A3541;
+  border-color: #3A3541;
+  background-color: transparent;
+}
+.btn-default.el-button--default {
+  background-color: #fff;
+  color: #3A3541;
+}
+.btn-default.el-button--default:hover {
+  color: #3A3541;
+  border-color: #3A3541;
+  background-color: transparent;
+}
+.btn-info.el-button--info {
+  background-color: #e7e7f4;
+  color: #3A3541;
+}
+.btn-info.el-button--info:hover {
+  color: #3A3541;
+  border-color: #3A3541;
+  background-color: transparent;
+}
+.btn-success.el-button--success {
+  background-color: #00B091;
+}
+.btn-success.el-button--success:hover {
+  color: #3A3541;
+  border-color: #3A3541;
+  background-color: transparent;
+}
+.btn-danger.el-button--danger {
+  background-color: #FF447D;
+}
+.btn-danger.el-button--danger:hover {
+  color: #3A3541;
+  border-color: #3A3541;
+  background-color: transparent;
+}
+.btn-warning.el-button--warning {
+  background-color: #FF845A;
+}
+.btn-warning.el-button--warning:hover {
+  color: #3A3541;
+  border-color: #3A3541;
+  background-color: transparent;
 }
 

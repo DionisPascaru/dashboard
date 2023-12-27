@@ -1,0 +1,24 @@
+.ds-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+
+    &-buttons {
+        li.number {
+            background-color: $secondary-color;
+            color: $dark-color;
+            border-radius: 5px;
+            margin: 0 5px;
+
+            &.active {
+                background-color: $primary-color;
+                color: $light-color;
+            }
+
+            &:hover {
+                color: $light-color;
+            }
+        }
+    }
+}

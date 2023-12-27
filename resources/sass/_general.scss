@@ -10,8 +10,20 @@ aside {
     left: 0;
 }
 
+h1 {
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+h4 {
+    margin: 3px 0;
+}
+
 .view-title {
-    border-bottom: 3px solid #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: $dark-color;
     margin: 10px auto;
 }
 
@@ -25,4 +37,15 @@ aside {
 
 .el-upload-list__item {
     transition: none!important;
+}
+
+.bg-light {
+    background-color: $light-color;
+}
+
+.ds-block {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px 5px $grey-color;
+    margin: 20px 0;
 }
