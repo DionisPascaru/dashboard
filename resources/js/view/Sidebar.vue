@@ -1,35 +1,56 @@
 <template>
-    <div class="sidebar">
-        <el-menu
-            :default-active="activeIndex"
-            class="el-menu-vertical-demo"
-            background-color="transparent"
-            text-color="#fff"
-            active-text-color="#ffd04b"
-            :router="true">
-            <el-menu-item index="ExampleComponent" :route="{ name: 'ExampleComponent' }">
-                <span>Example</span>
-            </el-menu-item>
-            <el-menu-item index="Users" :route="{ name: 'Users' }">
-                <span>Users</span>
-            </el-menu-item>
-            <el-menu-item index="Projects" :route="{ name: 'Projects' }">
-                <span>Projects</span>
-            </el-menu-item>
-        </el-menu>
+    <div class="ds-sidebar">
         <div>
-            <el-button @click="logout">
+            <div class="ds-logo">
+                <img :src="getLogo" alt="logo">
+            </div>
+            <el-menu
+                :default-active="activeIndex"
+                class="ds-sidebar-menu"
+                :router="true">
+                <el-menu-item class="ds-sidebar-menu--item" index="ExampleComponent" :route="{ name: 'ExampleComponent' }">
+                    <i class="el-icon-eleme"></i>
+                    <span>Example</span>
+                </el-menu-item>
+                <el-menu-item class="ds-sidebar-menu--item" index="Users" :route="{ name: 'Users' }">
+                    <i class="el-icon-user"></i>
+                    <span>Users</span>
+                </el-menu-item>
+                <el-menu-item class="ds-sidebar-menu--item" index="Projects" :route="{ name: 'Projects' }">
+                    <i class="el-icon-s-grid"></i>
+                    <span>Projects</span>
+                </el-menu-item>
+            </el-menu>
+        </div>
+        <div>
+            <div class="ds-auth-user">
+                <div class="ds-auth-user--avatar">
+                    <div  class="ds-auth-user--no-image">
+                        <i class="el-icon-user"></i>
+                    </div>
+                </div>
+                <div class="ds-auth-user--info">
+                    <span class="ds-auth-user--name">Admin</span>
+                    <span class="ds-auth-user--email">admin.test@admin.com</span>
+                </div>
+            </div>
+            <button class="ds-logout--btn" @click="logout">
                 Logout
-            </el-button>
+            </button>
         </div>
     </div>
 </template>
 <script>
+import logo from '@/assets/logo.svg';
+
 export default {
     name: "Sidebar",
     computed: {
         activeIndex() {
             return this.$route.name;
+        },
+        getLogo() {
+            return logo;
         },
         authUser() {
             return this.$store.getters['auth/loadUser'];
@@ -47,19 +68,3 @@ export default {
     }
 };
 </script>
-
-<style lang="scss" scoped>
-.sidebar {
-    background-color: #545c64;
-    height: calc(100vh - 40px);
-    min-height: 500px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 20px;
-
-    .el-menu-vertical-demo {
-        border-right: 0;
-    }
-}
-</style>

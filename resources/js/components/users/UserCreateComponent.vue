@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-button type="primary" @click="dialogFormVisible = true">Add User</el-button>
+        <el-button class="btn btn-primary" type="primary" @click="dialogFormVisible = true">Add User</el-button>
 
         <el-dialog title="Add user" :visible.sync="dialogFormVisible" width="450px">
             <el-form :model="user">
@@ -16,7 +16,7 @@
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">Cancel</el-button>
-                <el-button type="primary" @click="create">Create</el-button>
+                <el-button class="btn btn-primary" type="primary" @click="create">Create</el-button>
               </span>
         </el-dialog>
     </div>
