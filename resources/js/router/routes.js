@@ -7,6 +7,7 @@ import UserUpdateView from '../view/users/UserUpdateView.vue';
 import Projects from '../view/projects/Projects';
 import ProjectCreateView from '../view/projects/ProjectCreateView.vue';
 import ProjectUpdateView from "../view/projects/ProjectUpdateView.vue";
+import ProfileView from "../view/profile/ProfileView.vue";
 import Error from '../view/Error';
 
 export default [
@@ -86,6 +87,14 @@ export default [
                     guard: 'auth'
                 }
             },
+            {
+                path: '/profile',
+                component: ProfileView,
+                name: 'ProfileView',
+                meta: {
+                    guard: 'auth'
+                }
+            }
         ]
     },
     {

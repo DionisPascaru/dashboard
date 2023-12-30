@@ -8,7 +8,8 @@
                 :default-active="activeIndex"
                 class="ds-sidebar-menu"
                 :router="true">
-                <el-menu-item class="ds-sidebar-menu--item" index="ExampleComponent" :route="{ name: 'ExampleComponent' }">
+                <el-menu-item class="ds-sidebar-menu--item" index="ExampleComponent"
+                              :route="{ name: 'ExampleComponent' }">
                     <i class="el-icon-eleme"></i>
                     <span>Example</span>
                 </el-menu-item>
@@ -23,17 +24,19 @@
             </el-menu>
         </div>
         <div>
-            <div class="ds-auth-user">
-                <div class="ds-auth-user--avatar">
-                    <div  class="ds-auth-user--no-image">
-                        <i class="el-icon-user"></i>
+            <router-link class="ds-auth-user-link" :to="{ name: 'ProfileView'}">
+                <div class="ds-auth-user">
+                    <div class="ds-auth-user--avatar">
+                        <div class="ds-auth-user--no-image">
+                            <i class="el-icon-user"></i>
+                        </div>
+                    </div>
+                    <div class="ds-auth-user--info">
+                        <span class="ds-auth-user--name">{{ authUser.name }}</span>
+                        <span class="ds-auth-user--email">{{ authUser.email }}</span>
                     </div>
                 </div>
-                <div class="ds-auth-user--info">
-                    <span class="ds-auth-user--name">{{ authUser.name }}</span>
-                    <span class="ds-auth-user--email">{{ authUser.email }}</span>
-                </div>
-            </div>
+            </router-link>
             <button class="ds-logout--btn" @click="logout">
                 Logout
             </button>
