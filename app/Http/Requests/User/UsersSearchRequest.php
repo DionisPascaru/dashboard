@@ -18,7 +18,7 @@ class UsersSearchRequest extends FormRequest
         return [
             'filters' => 'filled',
             'filters.name' => 'nullable|string|max:50',
-            'filters.email' => 'nullable|int',
+            'filters.email' => 'nullable|string',
             'filters.role_id' => 'nullable|int',
             'filters.date_from' => 'nullable|string',
             'filters.date_till' => 'nullable|string',

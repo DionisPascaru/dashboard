@@ -2,7 +2,6 @@
 
 namespace App\Services\Serializers;
 
-use http\Client\Curl\User;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -10,24 +9,6 @@ use Illuminate\Support\Facades\DB;
  */
 class UserSerializer
 {
-    /**
-     * Serialize users.
-     *
-     * @param array $input
-     * @return array
-     */
-    public function serializeEntities(array $input): array
-    {
-        return array_map(function($user) {
-            return [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'role' => $user->role,
-            ];
-        }, $input);
-    }
-
     /**
      * Serialize user.
      *
@@ -47,7 +28,8 @@ class UserSerializer
     /**
      * Serialize user for search.
      *
-     * @param array $user
+     * @param array $users
+     *
      * @return array
      */
     public function serializeForSearch(array $users): array

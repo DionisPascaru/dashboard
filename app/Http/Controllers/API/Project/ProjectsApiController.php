@@ -70,31 +70,6 @@ class ProjectsApiController
     }
 
     /**
-     * Read all projects.
-     *
-     * @return JsonResponse
-     */
-    public function index(): JsonResponse
-    {
-        try {
-            $projects = array_map(function ($project) {
-                return [
-                    'id' => $project->id,
-                    'title' => $project->title,
-                    'cover' => $project->cover,
-                    'category' => $project->category,
-                    'created' => date('Y-m-d', strtotime($project->created)),
-                    'updated' => date('Y-m-d', strtotime($project->updated)),
-                ];
-            }, $this->projectSupervisor->read());
-
-            return $this->restResponseFactory->ok($projects);
-        } catch (Exception $exception) {
-            return $this->restResponseFactory->serverError($exception);
-        }
-    }
-
-    /**
      * Read a project.
      *
      * @param $id

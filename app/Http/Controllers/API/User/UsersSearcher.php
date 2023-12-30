@@ -69,6 +69,10 @@ class UsersSearcher implements SearcherInterfaces
             $queryBuilder->where('name', 'like', '%' . $filters['name'] . '%');
         }
 
+        if (!empty($filters['email'])) {
+            $queryBuilder->where('email', 'like', '%' . $filters['email'] . '%');
+        }
+
         if (!empty($filters['role_id'])) {
             $queryBuilder->where('role_id', '=', $filters['role_id']);
         }

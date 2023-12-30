@@ -47,12 +47,9 @@
                         width="280">
                         <template slot-scope="scope">
                             <div class="d-flex flex-gap">
-                                <router-link :to="{ name: 'UserDetails', params: { id: scope.row.id }}">
-                                    <el-button class="btn btn-info" type="info">
-                                        View
-                                    </el-button>
+                                <router-link :to="{ name: 'UserUpdateView', params: { id: scope.row.id }}">
+                                    <el-button class="btn btn-info" type="info" icon="el-icon-edit"></el-button>
                                 </router-link>
-                                <user-edit-component :user-id="scope.row.id"></user-edit-component>
                                 <el-button class="btn btn-danger" type="danger" @click="deleteUser(scope.row)">
                                     Delete
                                 </el-button>
@@ -79,14 +76,12 @@
 
 <script>
 import UserCreateComponent from "../../components/users/UserCreateComponent";
-import UserEditComponent from "../../components/users/UserEditComponent";
 import UsersSearchComponent from "../../components/users/UsersSearchComponent.vue";
 
 export default {
     name: 'Users',
     components: {
         UserCreateComponent,
-        UserEditComponent,
         UsersSearchComponent,
     },
     data() {
@@ -95,6 +90,7 @@ export default {
             options: {
                 filters: {
                     name: '',
+                    email: '',
                     role_id: null,
                     date_from: null,
                     date_till: null,

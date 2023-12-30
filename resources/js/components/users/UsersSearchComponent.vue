@@ -9,6 +9,11 @@
                     </el-form-item>
                 </el-col>
                 <el-col :md="6">
+                    <el-form-item label="Email:" prop="email">
+                        <el-input v-model="options.filters.email"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :md="4">
                     <el-form-item label="Role:" prop="role_id">
                         <el-select style="width: 100%" v-model="options.filters.role_id" placeholder="Select">
                             <el-option
@@ -20,7 +25,7 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-                <el-col :md="6">
+                <el-col :md="4">
                     <el-form-item label="Date from:" prop="date_from">
                         <el-date-picker
                             style="width: 100%"
@@ -30,7 +35,7 @@
                         </el-date-picker>
                     </el-form-item>
                 </el-col>
-                <el-col :md="6">
+                <el-col :md="4">
                     <el-form-item label="Date till:" prop="date_till">
                         <el-date-picker
                             style="width: 100%"
@@ -71,6 +76,7 @@ export default {
         },
         reset() {
             this.options.filters.name = '';
+            this.options.filters.email = '';
             this.options.filters.role_id = null;
             this.options.filters.date_from = null;
             this.options.filters.date_till = null;

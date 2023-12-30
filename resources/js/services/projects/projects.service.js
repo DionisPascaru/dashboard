@@ -4,10 +4,6 @@ const searchProjects = (payload) => {
     return httpRequest.post('/projects/search', payload);
 }
 
-const loadProjects = () => {
-    return httpRequest.get('/projects');
-}
-
 const loadProject = (id) => {
     return httpRequest.get(`/project/${id}`);
 }
@@ -38,7 +34,6 @@ const imageRemove = (id) => {
 
 export {
     searchProjects,
-    loadProjects,
     loadProject,
     createProject,
     updateProject,

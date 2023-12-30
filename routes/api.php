@@ -27,7 +27,6 @@ Route::middleware('auth:sanctum')->group( function () {
     Route::get('/auth-user', [AuthController::class, 'getAuthUser']);
 
     // Users
-    Route::get('/users', [UsersApiController::class, 'index']);
     Route::post('/users/search', [UsersApiController::class, 'search']);
     Route::group(['prefix' => 'user'], function (){
         Route::get('/{id}', [UsersApiController::class, 'show']);
@@ -37,7 +36,6 @@ Route::middleware('auth:sanctum')->group( function () {
     });
 
     // Projects
-    Route::get('/projects', [ProjectsApiController::class, 'index']);
     Route::post('/projects/search', [ProjectsApiController::class, 'search']);
     Route::group(['prefix' => 'project'], function () {
         Route::get('/{id}', [ProjectsApiController::class, 'show']);

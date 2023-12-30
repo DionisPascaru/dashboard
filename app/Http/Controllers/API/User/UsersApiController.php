@@ -75,28 +75,6 @@ class UsersApiController
     }
 
     /**
-     * Read all users.
-     *
-     * @return JsonResponse
-     */
-    public function index(): JsonResponse
-    {
-        try {
-            $users = DB::table('users as u')
-                ->select('u.id', 'u.name', 'email', 'r.name as role')
-                ->leftJoin('roles as r', 'u.role_id', '=', 'r.id')
-                ->get()
-                ->toArray();
-
-            return $this->restResponseFactory->ok($this->userSerialize->serializeEntities($users));
-        } catch (Exception $exception) {
-            $this->logger->error($exception->getMessage(), ['exception' => $exception]);
-
-            return $this->restResponseFactory->serverError($exception);
-        }
-    }
-
-    /**
      * Read user by id.
      *
      * @param $id
@@ -105,10 +83,9 @@ class UsersApiController
     public function show($id): JsonResponse
     {
         try {
-            $user = (array)DB::table('users as u')
-                ->select('u.id', 'u.name', 'email', 'r.name as role')
-                ->leftJoin('roles as r', 'u.role_id', '=', 'r.id')
-                ->where('u.id', '=', $id)
+            $user = (array)DB::table('users')
+                ->select('id', 'name', 'email', 'role_id')
+                ->where('id', '=', $id)
                 ->first();
 
             return $this->restResponseFactory->ok($this->userSerialize->serializeEntity($user));
@@ -165,6 +142,7 @@ class UsersApiController
                 ->update([
                     'name' => $input['name'],
                     'email' => $input['email'],
+                    'role_id' => $input['role_id'],
                 ]);
 
             return $this->restResponseFactory->ok();

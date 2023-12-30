@@ -1,7 +1,6 @@
 import {
     searchProjects,
     loadProject,
-    loadProjects,
     createProject,
     updateProject,
     deleteProject,
@@ -29,14 +28,6 @@ const actions = {
         try {
             const response = await searchProjects(payload);
             commit('SEARCH_PROJECTS', response);
-        } catch (e) {
-            throw e;
-        }
-    },
-    async loadProjects({commit}) {
-        try {
-            const response = await loadProjects();
-            commit('LOAD_PROJECTS', response);
         } catch (e) {
             throw e;
         }
@@ -96,9 +87,6 @@ const actions = {
 
 const mutations = {
     SEARCH_PROJECTS(state, projects) {
-        state.projects = projects;
-    },
-    LOAD_PROJECTS(state, projects) {
         state.projects = projects;
     },
     LOAD_PROJECT(state, project) {
