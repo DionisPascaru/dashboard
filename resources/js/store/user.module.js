@@ -1,8 +1,17 @@
-import {loadUsers, loadUser, createUser, updateUser, deleteUser} from "../services/users/users.service";
+import {
+    searchUsers,
+    loadUsers,
+    loadUser,
+    createUser,
+    updateUser,
+    deleteUser,
+    userRoles,
+} from "../services/users/users.service";
 
 const state = () => ({
     users: [],
-    user: {}
+    user: {},
+    roles: [],
 })
 
 const getters = {
@@ -11,10 +20,21 @@ const getters = {
     },
     getUser(state) {
         return state.user;
+    },
+    getRoles(state) {
+        return state.roles;
     }
 }
 
 const actions = {
+    async searchUsers({commit}, payload) {
+        try {
+            const response = await searchUsers(payload);
+            commit('SEARCH_USERS', response);
+        } catch (e) {
+            throw e;
+        }
+    },
     async loadUsers({commit}) {
         try {
             const response = await loadUsers();
@@ -54,10 +74,21 @@ const actions = {
         } catch (e) {
             throw e;
         }
+    },
+    async getRoles({commit}) {
+        try {
+            const response = await userRoles();
+            commit('USER_ROLES', response);
+        } catch (e) {
+            throw e;
+        }
     }
 }
 
 const mutations = {
+    SEARCH_USERS(state, users) {
+        state.users = users;
+    },
     LOAD_USERS(state, users) {
         state.users = users;
     },
@@ -79,6 +110,9 @@ const mutations = {
         if (index !== -1) {
             state.users.slice(index, 1);
         }
+    },
+    USER_ROLES(state, roles) {
+        state.roles = roles;
     }
 }
 

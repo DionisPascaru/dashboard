@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Project;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class ProjectCreateApiRequest extends FormRequest
+class ProjectFileUploadApiRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -16,11 +16,8 @@ class ProjectCreateApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
-            'cover' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'images' => 'array',
-            'images.*' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'category_id' => 'integer'
+            'id' => 'required',
+            'cover' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ];
     }
 

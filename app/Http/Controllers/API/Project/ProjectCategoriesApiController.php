@@ -1,16 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\Project;
 
+use App\Http\Controllers\API\RestResponseFactory;
 use App\Models\ProjectCategory;
 use Exception;
 use Illuminate\Http\JsonResponse;
 
+/**
+ * project categories api controller.
+ */
 class ProjectCategoriesApiController
 {
     /** @var RestResponseFactory $restResponseFactory */
-    private $restResponseFactory;
+    private RestResponseFactory $restResponseFactory;
 
+    /**
+     * Constructor.
+     *
+     * @param RestResponseFactory $restResponseFactory
+     */
     public function __construct(RestResponseFactory $restResponseFactory)
     {
         $this->restResponseFactory = $restResponseFactory;

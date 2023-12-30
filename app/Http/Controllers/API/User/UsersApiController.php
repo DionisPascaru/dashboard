@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\User;
 
 use App\Enums\UserRolesEnum;
-use App\Http\Requests\UserCreateApiRequest;
-use App\Http\Requests\UserUpdateApiRequest;
+use App\Http\Controllers\API\RestResponseFactory;
+use App\Http\Requests\User\UserCreateApiRequest;
+use App\Http\Requests\User\UsersSearchRequest;
+use App\Http\Requests\User\UserUpdateApiRequest;
 use App\Services\Serializers\UserSerializer;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -18,30 +20,58 @@ use Psr\Log\LoggerInterface;
  */
 class UsersApiController
 {
+    /** @var UsersSearcher $usersSearcher */
+    private UsersSearcher $usersSearcher;
+
     /** @var UserSerializer $userSerialize */
-    private $userSerialize;
+    private UserSerializer $userSerialize;
 
     /** @var RestResponseFactory $restResponseFactory */
-    private $restResponseFactory;
+    private RestResponseFactory $restResponseFactory;
 
     /** @var LoggerInterface $logger */
-    private $logger;
+    private LoggerInterface $logger;
 
     /**
      * Constructor.
      *
+     * @param UsersSearcher $usersSearcher
      * @param UserSerializer $userSerialize
      * @param RestResponseFactory $restResponseFactory
      * @param LoggerInterface $logger
      */
     public function __construct(
+        UsersSearcher $usersSearcher,
         UserSerializer $userSerialize,
         RestResponseFactory $restResponseFactory,
         LoggerInterface $logger
     ) {
+        $this->usersSearcher = $usersSearcher;
         $this->userSerialize = $userSerialize;
         $this->restResponseFactory = $restResponseFactory;
         $this->logger = $logger;
+    }
+
+    /**
+     * Search users.
+     *
+     * @param UsersSearchRequest $request
+     *
+     * @return JsonResponse
+     */
+    public function search(UsersSearchRequest $request): JsonResponse
+    {
+        try {
+            $input = $request->validated();
+
+            $users = $this->usersSearcher->search($input);
+
+            return $this->restResponseFactory->ok($users);
+        } catch (Exception $exception) {
+            $this->logger->error($exception->getMessage(), ['exception' => $exception]);
+
+            return $this->restResponseFactory->serverError($exception);
+        }
     }
 
     /**

@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\Project;
 
+use App\Interfaces\SearcherInterfaces;
 use App\Services\Serializers\ProjectSerializer;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 
-class ProjectsSearcher
+class ProjectsSearcher implements SearcherInterfaces
 {
     /** @var ProjectSerializer $projectSerializer */
-    private $projectSerializer;
+    private ProjectSerializer $projectSerializer;
 
     /**
      * Constructor.
@@ -76,9 +77,11 @@ class ProjectsSearcher
         }
 
         if (!empty($filters['date_from'])) {
-            $queryBuilder
-                ->whereDate('created_at', '>=', $filters['date_from'])
-                ->whereDate('created_at', '<=', $filters['date_till']);
+            $queryBuilder->whereDate('created_at', '>=', $filters['date_from']);
+        }
+
+        if (!empty($filters['date_till'])) {
+            $queryBuilder->whereDate('created_at', '<=', $filters['date_till']);
         }
 
         return $queryBuilder;

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Project;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class ProjectsSearchRequest extends FormRequest
+class ProjectCreateApiRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -16,13 +16,11 @@ class ProjectsSearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'filters' => 'filled',
-            'filters.title' => 'nullable|string|max:50',
-            'filters.category' => 'nullable|int',
-            'filters.date_from' => 'nullable|string',
-            'filters.date_till' => 'nullable|string',
-            'pageSize' => 'int',
-            'pageNum' => 'int'
+            'title' => 'required',
+            'cover' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'images' => 'array',
+            'images.*' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'category_id' => 'integer'
         ];
     }
 
