@@ -75,28 +75,6 @@ class UsersApiController
     }
 
     /**
-     * Read all users.
-     *
-     * @return JsonResponse
-     */
-    public function index(): JsonResponse
-    {
-        try {
-            $users = DB::table('users as u')
-                ->select('u.id', 'u.name', 'email', 'r.name as role')
-                ->leftJoin('roles as r', 'u.role_id', '=', 'r.id')
-                ->get()
-                ->toArray();
-
-            return $this->restResponseFactory->ok($this->userSerialize->serializeEntities($users));
-        } catch (Exception $exception) {
-            $this->logger->error($exception->getMessage(), ['exception' => $exception]);
-
-            return $this->restResponseFactory->serverError($exception);
-        }
-    }
-
-    /**
      * Read user by id.
      *
      * @param $id

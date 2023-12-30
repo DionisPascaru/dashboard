@@ -8367,13 +8367,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 
-// import UserEditComponent from "../../components/users/UserEditComponent";
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Users',
   components: {
     UserCreateComponent: _components_users_UserCreateComponent__WEBPACK_IMPORTED_MODULE_0__["default"],
-    // UserEditComponent,
     UsersSearchComponent: _components_users_UsersSearchComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
@@ -8914,7 +8912,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   createUser: () => (/* binding */ createUser),
 /* harmony export */   deleteUser: () => (/* binding */ deleteUser),
 /* harmony export */   loadUser: () => (/* binding */ loadUser),
-/* harmony export */   loadUsers: () => (/* binding */ loadUsers),
 /* harmony export */   searchUsers: () => (/* binding */ searchUsers),
 /* harmony export */   updateUser: () => (/* binding */ updateUser),
 /* harmony export */   userRoles: () => (/* binding */ userRoles)
@@ -8923,9 +8920,6 @@ __webpack_require__.r(__webpack_exports__);
 
 var searchUsers = function searchUsers(payload) {
   return _httpRequest__WEBPACK_IMPORTED_MODULE_0__["default"].post('/users/search', payload);
-};
-var loadUsers = function loadUsers() {
-  return _httpRequest__WEBPACK_IMPORTED_MODULE_0__["default"].get('/users');
 };
 var loadUser = function loadUser(id) {
   return _httpRequest__WEBPACK_IMPORTED_MODULE_0__["default"].get("/user/".concat(id));
@@ -9539,7 +9533,7 @@ var actions = {
       }, _callee, null, [[1, 8]]);
     }))();
   },
-  loadUsers: function loadUsers(_ref2) {
+  loadUser: function loadUser(_ref2, userId) {
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
       var commit, response;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
@@ -9548,10 +9542,10 @@ var actions = {
             commit = _ref2.commit;
             _context2.prev = 1;
             _context2.next = 4;
-            return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_0__.loadUsers)();
+            return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_0__.loadUser)(userId);
           case 4:
             response = _context2.sent;
-            commit('LOAD_USERS', response);
+            commit('LOAD_USER', response);
             _context2.next = 11;
             break;
           case 8:
@@ -9565,7 +9559,7 @@ var actions = {
       }, _callee2, null, [[1, 8]]);
     }))();
   },
-  loadUser: function loadUser(_ref3, userId) {
+  createUser: function createUser(_ref3, user) {
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
       var commit, response;
       return _regeneratorRuntime().wrap(function _callee3$(_context3) {
@@ -9574,10 +9568,10 @@ var actions = {
             commit = _ref3.commit;
             _context3.prev = 1;
             _context3.next = 4;
-            return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_0__.loadUser)(userId);
+            return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_0__.createUser)(user);
           case 4:
             response = _context3.sent;
-            commit('LOAD_USER', response);
+            commit('CREATE_USER', response);
             _context3.next = 11;
             break;
           case 8:
@@ -9591,114 +9585,85 @@ var actions = {
       }, _callee3, null, [[1, 8]]);
     }))();
   },
-  createUser: function createUser(_ref4, user) {
+  updateUser: function updateUser(_ref4, _ref5) {
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
-      var commit, response;
+      var commit, id, user;
       return _regeneratorRuntime().wrap(function _callee4$(_context4) {
         while (1) switch (_context4.prev = _context4.next) {
           case 0:
             commit = _ref4.commit;
-            _context4.prev = 1;
-            _context4.next = 4;
-            return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_0__.createUser)(user);
-          case 4:
-            response = _context4.sent;
-            commit('CREATE_USER', response);
-            _context4.next = 11;
+            id = _ref5.id, user = _ref5.user;
+            _context4.prev = 2;
+            _context4.next = 5;
+            return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_0__.updateUser)(id, user);
+          case 5:
+            _context4.next = 10;
             break;
-          case 8:
-            _context4.prev = 8;
-            _context4.t0 = _context4["catch"](1);
+          case 7:
+            _context4.prev = 7;
+            _context4.t0 = _context4["catch"](2);
             throw _context4.t0;
-          case 11:
+          case 10:
           case "end":
             return _context4.stop();
         }
-      }, _callee4, null, [[1, 8]]);
+      }, _callee4, null, [[2, 7]]);
     }))();
   },
-  updateUser: function updateUser(_ref5, _ref6) {
+  deleteUser: function deleteUser(_ref6, userId) {
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
-      var commit, id, user;
+      var commit;
       return _regeneratorRuntime().wrap(function _callee5$(_context5) {
         while (1) switch (_context5.prev = _context5.next) {
           case 0:
-            commit = _ref5.commit;
-            id = _ref6.id, user = _ref6.user;
-            _context5.prev = 2;
-            _context5.next = 5;
-            return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_0__.updateUser)(id, user);
-          case 5:
+            commit = _ref6.commit;
+            _context5.prev = 1;
+            _context5.next = 4;
+            return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_0__.deleteUser)(userId);
+          case 4:
+            commit('REMOVE_USER', userId);
             _context5.next = 10;
             break;
           case 7:
             _context5.prev = 7;
-            _context5.t0 = _context5["catch"](2);
+            _context5.t0 = _context5["catch"](1);
             throw _context5.t0;
           case 10:
           case "end":
             return _context5.stop();
         }
-      }, _callee5, null, [[2, 7]]);
+      }, _callee5, null, [[1, 7]]);
     }))();
   },
-  deleteUser: function deleteUser(_ref7, userId) {
+  getRoles: function getRoles(_ref7) {
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
-      var commit;
+      var commit, response;
       return _regeneratorRuntime().wrap(function _callee6$(_context6) {
         while (1) switch (_context6.prev = _context6.next) {
           case 0:
             commit = _ref7.commit;
             _context6.prev = 1;
             _context6.next = 4;
-            return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_0__.deleteUser)(userId);
+            return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_0__.userRoles)();
           case 4:
-            commit('REMOVE_USER', userId);
-            _context6.next = 10;
+            response = _context6.sent;
+            commit('USER_ROLES', response);
+            _context6.next = 11;
             break;
-          case 7:
-            _context6.prev = 7;
+          case 8:
+            _context6.prev = 8;
             _context6.t0 = _context6["catch"](1);
             throw _context6.t0;
-          case 10:
+          case 11:
           case "end":
             return _context6.stop();
         }
-      }, _callee6, null, [[1, 7]]);
-    }))();
-  },
-  getRoles: function getRoles(_ref8) {
-    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
-      var commit, response;
-      return _regeneratorRuntime().wrap(function _callee7$(_context7) {
-        while (1) switch (_context7.prev = _context7.next) {
-          case 0:
-            commit = _ref8.commit;
-            _context7.prev = 1;
-            _context7.next = 4;
-            return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_0__.userRoles)();
-          case 4:
-            response = _context7.sent;
-            commit('USER_ROLES', response);
-            _context7.next = 11;
-            break;
-          case 8:
-            _context7.prev = 8;
-            _context7.t0 = _context7["catch"](1);
-            throw _context7.t0;
-          case 11:
-          case "end":
-            return _context7.stop();
-        }
-      }, _callee7, null, [[1, 8]]);
+      }, _callee6, null, [[1, 8]]);
     }))();
   }
 };
 var mutations = {
   SEARCH_USERS: function SEARCH_USERS(state, users) {
-    state.users = users;
-  },
-  LOAD_USERS: function LOAD_USERS(state, users) {
     state.users = users;
   },
   LOAD_USER: function LOAD_USER(state, user) {

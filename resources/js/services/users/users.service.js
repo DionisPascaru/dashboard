@@ -4,10 +4,6 @@ const searchUsers = (payload) => {
     return httpRequest.post('/users/search', payload);
 }
 
-const loadUsers = () => {
-    return httpRequest.get('/users');
-}
-
 const loadUser = (id) => {
     return httpRequest.get(`/user/${id}`);
 }
@@ -30,7 +26,6 @@ const userRoles = () => {
 
 export {
     searchUsers,
-    loadUsers,
     loadUser,
     createUser,
     updateUser,

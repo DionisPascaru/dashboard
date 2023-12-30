@@ -1,6 +1,5 @@
 import {
     searchUsers,
-    loadUsers,
     loadUser,
     createUser,
     updateUser,
@@ -31,14 +30,6 @@ const actions = {
         try {
             const response = await searchUsers(payload);
             commit('SEARCH_USERS', response);
-        } catch (e) {
-            throw e;
-        }
-    },
-    async loadUsers({commit}) {
-        try {
-            const response = await loadUsers();
-            commit('LOAD_USERS', response);
         } catch (e) {
             throw e;
         }
@@ -86,9 +77,6 @@ const actions = {
 
 const mutations = {
     SEARCH_USERS(state, users) {
-        state.users = users;
-    },
-    LOAD_USERS(state, users) {
         state.users = users;
     },
     LOAD_USER(state, user) {

@@ -27,7 +27,6 @@ Route::middleware('auth:sanctum')->group( function () {
     Route::get('/auth-user', [AuthController::class, 'getAuthUser']);
 
     // Users
-    Route::get('/users', [UsersApiController::class, 'index']);
     Route::post('/users/search', [UsersApiController::class, 'search']);
     Route::group(['prefix' => 'user'], function (){
         Route::get('/{id}', [UsersApiController::class, 'show']);
