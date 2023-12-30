@@ -15,13 +15,29 @@ class UserSerializer
      * @param array $user
      * @return array
      */
-    public function serializeEntity(array $user): array
+    public function serializeUserForCreate(array $user): array
     {
         return [
             'id' => $user['id'],
             'name' => $user['name'],
             'email' => $user['email'],
             'role' => $user['role'],
+        ];
+    }
+
+    /**
+     * Serialize user.
+     *
+     * @param array $user
+     * @return array
+     */
+    public function serializeUserForRead(array $user): array
+    {
+        return [
+            'id' => $user['id'],
+            'name' => $user['name'],
+            'email' => $user['email'],
+            'role_id' => $user['role_id'],
         ];
     }
 
