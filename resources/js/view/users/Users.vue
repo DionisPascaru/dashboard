@@ -6,10 +6,26 @@
         </div>
 
         <div class="ds-block bg-light">
+            <users-search-component @search-filters="handleSearch" :options="options"></users-search-component>
+        </div>
+
+        <div class="ds-block bg-light">
+            <div class="ds-pagination">
+                <el-pagination
+                    class="ds-pagination-buttons"
+                    layout="prev, pager, next"
+                    @current-change="handlePagination"
+                    :total="users.total"
+                    :current-page="options.pageNum">
+                </el-pagination>
+                <div>
+                    <h4>Totals: {{ users.total }}</h4>
+                </div>
+            </div>
             <div class="view-content">
                 <el-table
                     class="table"
-                    :data="users"
+                    :data="users.items"
                     v-loading="loading"
                     style="width: 100%">
                     <el-table-column
@@ -45,6 +61,18 @@
                     </el-table-column>
                 </el-table>
             </div>
+            <div class="ds-pagination">
+                <el-pagination
+                    class="ds-pagination-buttons"
+                    layout="prev, pager, next"
+                    @current-change="handlePagination"
+                    :total="users.total"
+                    :current-page="options.pageNum">
+                </el-pagination>
+                <div>
+                    <h4>Totals: {{ users.total }}</h4>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -52,16 +80,28 @@
 <script>
 import UserCreateComponent from "../../components/users/UserCreateComponent";
 import UserEditComponent from "../../components/users/UserEditComponent";
+import UsersSearchComponent from "../../components/users/UsersSearchComponent.vue";
 
 export default {
     name: 'Users',
     components: {
         UserCreateComponent,
-        UserEditComponent
+        UserEditComponent,
+        UsersSearchComponent,
     },
     data() {
         return {
-            loading: true
+            loading: true,
+            options: {
+                filters: {
+                    name: '',
+                    role_id: null,
+                    date_from: null,
+                    date_till: null,
+                },
+                pageSize: 10,
+                pageNum: 1
+            }
         }
     },
     computed: {
@@ -70,15 +110,24 @@ export default {
         }
     },
     mounted() {
-        this.search();
+        this.search(this.options);
     },
     methods: {
+        handlePagination(val) {
+            this.options.pageNum = val;
+            this.search();
+        },
+        handleSearch(options) {
+            this.options = options;
+            this.options.pageSize = 10;
+            this.options.pageNum = 1;
+            this.search();
+        },
         search() {
             this.loading = true;
 
-            this.$store.dispatch('user/loadUsers')
-                .then(() => {
-                })
+            this.$store.dispatch('user/searchUsers', this.options)
+                .then(() => {})
                 .catch((e) => {
                     this.$notify.error({
                         title: 'Error',

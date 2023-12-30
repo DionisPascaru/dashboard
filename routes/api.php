@@ -4,6 +4,7 @@ use App\Http\Controllers\API\AdminManagerController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\Project\ProjectCategoriesApiController;
 use App\Http\Controllers\API\Project\ProjectsApiController;
+use App\Http\Controllers\API\User\RolesApiController;
 use App\Http\Controllers\API\User\UsersApiController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,4 +51,7 @@ Route::middleware('auth:sanctum')->group( function () {
 
     // Project categories
     Route::get('/project-categories', [ProjectCategoriesApiController::class, 'index']);
+
+    // Roles
+    Route::get('/roles', [RolesApiController::class, 'index']);
 });

@@ -7393,6 +7393,102 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/users/UsersSearchComponent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/users/UsersSearchComponent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "UsersSearchComponent",
+  props: ['options'],
+  computed: {
+    roles: function roles() {
+      return this.$store.getters['user/getRoles'];
+    }
+  },
+  mounted: function mounted() {
+    this.$store.dispatch('user/getRoles');
+  },
+  methods: {
+    search: function search() {
+      this.$emit('search-filters', this.options);
+    },
+    reset: function reset() {
+      this.options.filters.name = '';
+      this.options.filters.role_id = null;
+      this.options.filters.date_from = null;
+      this.options.filters.date_till = null;
+      this.options.pageNum = 1;
+      this.options.pageSize = 10;
+      this.$emit('search-filters', this.options);
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/view/Dashboard.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/view/Dashboard.vue?vue&type=script&lang=js& ***!
@@ -8243,6 +8339,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _components_users_UserCreateComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/users/UserCreateComponent */ "./resources/js/components/users/UserCreateComponent.vue");
 /* harmony import */ var _components_users_UserEditComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/users/UserEditComponent */ "./resources/js/components/users/UserEditComponent.vue");
+/* harmony import */ var _components_users_UsersSearchComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/users/UsersSearchComponent.vue */ "./resources/js/components/users/UsersSearchComponent.vue");
 //
 //
 //
@@ -8294,6 +8391,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -8301,11 +8427,22 @@ __webpack_require__.r(__webpack_exports__);
   name: 'Users',
   components: {
     UserCreateComponent: _components_users_UserCreateComponent__WEBPACK_IMPORTED_MODULE_0__["default"],
-    UserEditComponent: _components_users_UserEditComponent__WEBPACK_IMPORTED_MODULE_1__["default"]
+    UserEditComponent: _components_users_UserEditComponent__WEBPACK_IMPORTED_MODULE_1__["default"],
+    UsersSearchComponent: _components_users_UsersSearchComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
-      loading: true
+      loading: true,
+      options: {
+        filters: {
+          name: '',
+          role_id: null,
+          date_from: null,
+          date_till: null
+        },
+        pageSize: 10,
+        pageNum: 1
+      }
     };
   },
   computed: {
@@ -8314,13 +8451,23 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    this.search();
+    this.search(this.options);
   },
   methods: {
+    handlePagination: function handlePagination(val) {
+      this.options.pageNum = val;
+      this.search();
+    },
+    handleSearch: function handleSearch(options) {
+      this.options = options;
+      this.options.pageSize = 10;
+      this.options.pageNum = 1;
+      this.search();
+    },
     search: function search() {
       var _this = this;
       this.loading = true;
-      this.$store.dispatch('user/loadUsers').then(function () {})["catch"](function (e) {
+      this.$store.dispatch('user/searchUsers', this.options).then(function () {})["catch"](function (e) {
         _this.$notify.error({
           title: 'Error',
           message: e
@@ -8845,10 +8992,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   deleteUser: () => (/* binding */ deleteUser),
 /* harmony export */   loadUser: () => (/* binding */ loadUser),
 /* harmony export */   loadUsers: () => (/* binding */ loadUsers),
-/* harmony export */   updateUser: () => (/* binding */ updateUser)
+/* harmony export */   searchUsers: () => (/* binding */ searchUsers),
+/* harmony export */   updateUser: () => (/* binding */ updateUser),
+/* harmony export */   userRoles: () => (/* binding */ userRoles)
 /* harmony export */ });
 /* harmony import */ var _httpRequest__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../httpRequest */ "./resources/js/services/httpRequest.js");
 
+var searchUsers = function searchUsers(payload) {
+  return _httpRequest__WEBPACK_IMPORTED_MODULE_0__["default"].post('/users/search', payload);
+};
 var loadUsers = function loadUsers() {
   return _httpRequest__WEBPACK_IMPORTED_MODULE_0__["default"].get('/users');
 };
@@ -8863,6 +9015,9 @@ var updateUser = function updateUser(id, user) {
 };
 var deleteUser = function deleteUser(id) {
   return _httpRequest__WEBPACK_IMPORTED_MODULE_0__["default"]["delete"]("/user/".concat(id));
+};
+var userRoles = function userRoles() {
+  return _httpRequest__WEBPACK_IMPORTED_MODULE_0__["default"].get('/roles');
 };
 
 
@@ -9419,7 +9574,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var state = function state() {
   return {
     users: [],
-    user: {}
+    user: {},
+    roles: []
   };
 };
 var getters = {
@@ -9428,10 +9584,13 @@ var getters = {
   },
   getUser: function getUser(state) {
     return state.user;
+  },
+  getRoles: function getRoles(state) {
+    return state.roles;
   }
 };
 var actions = {
-  loadUsers: function loadUsers(_ref) {
+  searchUsers: function searchUsers(_ref, payload) {
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
       var commit, response;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
@@ -9440,10 +9599,10 @@ var actions = {
             commit = _ref.commit;
             _context.prev = 1;
             _context.next = 4;
-            return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_0__.loadUsers)();
+            return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_0__.searchUsers)(payload);
           case 4:
             response = _context.sent;
-            commit('LOAD_USERS', response);
+            commit('SEARCH_USERS', response);
             _context.next = 11;
             break;
           case 8:
@@ -9457,7 +9616,7 @@ var actions = {
       }, _callee, null, [[1, 8]]);
     }))();
   },
-  loadUser: function loadUser(_ref2, userId) {
+  loadUsers: function loadUsers(_ref2) {
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
       var commit, response;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
@@ -9466,10 +9625,10 @@ var actions = {
             commit = _ref2.commit;
             _context2.prev = 1;
             _context2.next = 4;
-            return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_0__.loadUser)(userId);
+            return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_0__.loadUsers)();
           case 4:
             response = _context2.sent;
-            commit('LOAD_USER', response);
+            commit('LOAD_USERS', response);
             _context2.next = 11;
             break;
           case 8:
@@ -9483,7 +9642,7 @@ var actions = {
       }, _callee2, null, [[1, 8]]);
     }))();
   },
-  createUser: function createUser(_ref3, user) {
+  loadUser: function loadUser(_ref3, userId) {
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
       var commit, response;
       return _regeneratorRuntime().wrap(function _callee3$(_context3) {
@@ -9492,10 +9651,10 @@ var actions = {
             commit = _ref3.commit;
             _context3.prev = 1;
             _context3.next = 4;
-            return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_0__.createUser)(user);
+            return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_0__.loadUser)(userId);
           case 4:
             response = _context3.sent;
-            commit('CREATE_USER', response);
+            commit('LOAD_USER', response);
             _context3.next = 11;
             break;
           case 8:
@@ -9509,60 +9668,115 @@ var actions = {
       }, _callee3, null, [[1, 8]]);
     }))();
   },
-  updateUser: function updateUser(_ref4, _ref5) {
+  createUser: function createUser(_ref4, user) {
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
-      var commit, id, user, response;
+      var commit, response;
       return _regeneratorRuntime().wrap(function _callee4$(_context4) {
         while (1) switch (_context4.prev = _context4.next) {
           case 0:
             commit = _ref4.commit;
-            id = _ref5.id, user = _ref5.user;
-            _context4.prev = 2;
-            _context4.next = 5;
-            return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_0__.updateUser)(id, user);
-          case 5:
+            _context4.prev = 1;
+            _context4.next = 4;
+            return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_0__.createUser)(user);
+          case 4:
             response = _context4.sent;
-            commit('UPDATE_USER', response);
-            _context4.next = 12;
+            commit('CREATE_USER', response);
+            _context4.next = 11;
             break;
-          case 9:
-            _context4.prev = 9;
-            _context4.t0 = _context4["catch"](2);
+          case 8:
+            _context4.prev = 8;
+            _context4.t0 = _context4["catch"](1);
             throw _context4.t0;
-          case 12:
+          case 11:
           case "end":
             return _context4.stop();
         }
-      }, _callee4, null, [[2, 9]]);
+      }, _callee4, null, [[1, 8]]);
     }))();
   },
-  deleteUser: function deleteUser(_ref6, userId) {
+  updateUser: function updateUser(_ref5, _ref6) {
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
-      var commit;
+      var commit, id, user, response;
       return _regeneratorRuntime().wrap(function _callee5$(_context5) {
         while (1) switch (_context5.prev = _context5.next) {
           case 0:
-            commit = _ref6.commit;
-            _context5.prev = 1;
-            _context5.next = 4;
-            return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_0__.deleteUser)(userId);
-          case 4:
-            commit('REMOVE_USER', userId);
-            _context5.next = 10;
+            commit = _ref5.commit;
+            id = _ref6.id, user = _ref6.user;
+            _context5.prev = 2;
+            _context5.next = 5;
+            return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_0__.updateUser)(id, user);
+          case 5:
+            response = _context5.sent;
+            commit('UPDATE_USER', response);
+            _context5.next = 12;
             break;
-          case 7:
-            _context5.prev = 7;
-            _context5.t0 = _context5["catch"](1);
+          case 9:
+            _context5.prev = 9;
+            _context5.t0 = _context5["catch"](2);
             throw _context5.t0;
-          case 10:
+          case 12:
           case "end":
             return _context5.stop();
         }
-      }, _callee5, null, [[1, 7]]);
+      }, _callee5, null, [[2, 9]]);
+    }))();
+  },
+  deleteUser: function deleteUser(_ref7, userId) {
+    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
+      var commit;
+      return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+        while (1) switch (_context6.prev = _context6.next) {
+          case 0:
+            commit = _ref7.commit;
+            _context6.prev = 1;
+            _context6.next = 4;
+            return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_0__.deleteUser)(userId);
+          case 4:
+            commit('REMOVE_USER', userId);
+            _context6.next = 10;
+            break;
+          case 7:
+            _context6.prev = 7;
+            _context6.t0 = _context6["catch"](1);
+            throw _context6.t0;
+          case 10:
+          case "end":
+            return _context6.stop();
+        }
+      }, _callee6, null, [[1, 7]]);
+    }))();
+  },
+  getRoles: function getRoles(_ref8) {
+    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
+      var commit, response;
+      return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+        while (1) switch (_context7.prev = _context7.next) {
+          case 0:
+            commit = _ref8.commit;
+            _context7.prev = 1;
+            _context7.next = 4;
+            return (0,_services_users_users_service__WEBPACK_IMPORTED_MODULE_0__.userRoles)();
+          case 4:
+            response = _context7.sent;
+            commit('USER_ROLES', response);
+            _context7.next = 11;
+            break;
+          case 8:
+            _context7.prev = 8;
+            _context7.t0 = _context7["catch"](1);
+            throw _context7.t0;
+          case 11:
+          case "end":
+            return _context7.stop();
+        }
+      }, _callee7, null, [[1, 8]]);
     }))();
   }
 };
 var mutations = {
+  SEARCH_USERS: function SEARCH_USERS(state, users) {
+    state.users = users;
+  },
   LOAD_USERS: function LOAD_USERS(state, users) {
     state.users = users;
   },
@@ -9587,6 +9801,9 @@ var mutations = {
     if (index !== -1) {
       state.users.slice(index, 1);
     }
+  },
+  USER_ROLES: function USER_ROLES(state, roles) {
+    state.roles = roles;
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -95019,6 +95236,45 @@ component.options.__file = "resources/js/components/users/UserEditComponent.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/users/UsersSearchComponent.vue":
+/*!****************************************************************!*\
+  !*** ./resources/js/components/users/UsersSearchComponent.vue ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _UsersSearchComponent_vue_vue_type_template_id_70436b5f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UsersSearchComponent.vue?vue&type=template&id=70436b5f& */ "./resources/js/components/users/UsersSearchComponent.vue?vue&type=template&id=70436b5f&");
+/* harmony import */ var _UsersSearchComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UsersSearchComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/users/UsersSearchComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _UsersSearchComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _UsersSearchComponent_vue_vue_type_template_id_70436b5f___WEBPACK_IMPORTED_MODULE_0__.render,
+  _UsersSearchComponent_vue_vue_type_template_id_70436b5f___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/users/UsersSearchComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/view/Dashboard.vue":
 /*!*****************************************!*\
   !*** ./resources/js/view/Dashboard.vue ***!
@@ -95506,6 +95762,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/users/UsersSearchComponent.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/users/UsersSearchComponent.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UsersSearchComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./UsersSearchComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/users/UsersSearchComponent.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UsersSearchComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/view/Dashboard.vue?vue&type=script&lang=js&":
 /*!******************************************************************!*\
   !*** ./resources/js/view/Dashboard.vue?vue&type=script&lang=js& ***!
@@ -95834,6 +96106,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserEditComponent_vue_vue_type_template_id_047f2ea6___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserEditComponent_vue_vue_type_template_id_047f2ea6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./UserEditComponent.vue?vue&type=template&id=047f2ea6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/users/UserEditComponent.vue?vue&type=template&id=047f2ea6&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/users/UsersSearchComponent.vue?vue&type=template&id=70436b5f&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/users/UsersSearchComponent.vue?vue&type=template&id=70436b5f& ***!
+  \***********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UsersSearchComponent_vue_vue_type_template_id_70436b5f___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UsersSearchComponent_vue_vue_type_template_id_70436b5f___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UsersSearchComponent_vue_vue_type_template_id_70436b5f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./UsersSearchComponent.vue?vue&type=template&id=70436b5f& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/users/UsersSearchComponent.vue?vue&type=template&id=70436b5f&");
 
 
 /***/ }),
@@ -96694,6 +96983,187 @@ var render = function () {
               ),
             ],
             1
+          ),
+        ],
+        1
+      ),
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/users/UsersSearchComponent.vue?vue&type=template&id=70436b5f&":
+/*!**************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/users/UsersSearchComponent.vue?vue&type=template&id=70436b5f& ***!
+  \**************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "search-form" },
+    [
+      _c("h4", [_vm._v("Filters")]),
+      _vm._v(" "),
+      _c(
+        "el-form",
+        { attrs: { model: _vm.options.filters } },
+        [
+          _c(
+            "el-row",
+            { attrs: { gutter: 20 } },
+            [
+              _c(
+                "el-col",
+                { attrs: { md: 6 } },
+                [
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "Name:", prop: "name" } },
+                    [
+                      _c("el-input", {
+                        model: {
+                          value: _vm.options.filters.name,
+                          callback: function ($$v) {
+                            _vm.$set(_vm.options.filters, "name", $$v)
+                          },
+                          expression: "options.filters.name",
+                        },
+                      }),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-col",
+                { attrs: { md: 6 } },
+                [
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "Role:", prop: "role_id" } },
+                    [
+                      _c(
+                        "el-select",
+                        {
+                          staticStyle: { width: "100%" },
+                          attrs: { placeholder: "Select" },
+                          model: {
+                            value: _vm.options.filters.role_id,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.options.filters, "role_id", $$v)
+                            },
+                            expression: "options.filters.role_id",
+                          },
+                        },
+                        _vm._l(this.roles, function (item) {
+                          return _c("el-option", {
+                            key: item.id,
+                            attrs: { label: item.name, value: item.id },
+                          })
+                        }),
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-col",
+                { attrs: { md: 6 } },
+                [
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "Date from:", prop: "date_from" } },
+                    [
+                      _c("el-date-picker", {
+                        staticStyle: { width: "100%" },
+                        attrs: { type: "date", placeholder: "Pick a day" },
+                        model: {
+                          value: _vm.options.filters.date_from,
+                          callback: function ($$v) {
+                            _vm.$set(_vm.options.filters, "date_from", $$v)
+                          },
+                          expression: "options.filters.date_from",
+                        },
+                      }),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-col",
+                { attrs: { md: 6 } },
+                [
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "Date till:", prop: "date_till" } },
+                    [
+                      _c("el-date-picker", {
+                        staticStyle: { width: "100%" },
+                        attrs: { type: "date", placeholder: "Pick a day" },
+                        model: {
+                          value: _vm.options.filters.date_till,
+                          callback: function ($$v) {
+                            _vm.$set(_vm.options.filters, "date_till", $$v)
+                          },
+                          expression: "options.filters.date_till",
+                        },
+                      }),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticStyle: { display: "flex", "justify-content": "flex-end" } },
+        [
+          _c(
+            "el-button",
+            { staticClass: "btn btn-default", on: { click: _vm.reset } },
+            [_vm._v("\n            Reset\n        ")]
+          ),
+          _vm._v(" "),
+          _c(
+            "el-button",
+            {
+              staticClass: "btn btn-primary",
+              attrs: { type: "primary" },
+              on: { click: _vm.search },
+            },
+            [_vm._v("\n            Search\n        ")]
           ),
         ],
         1
@@ -97640,7 +98110,38 @@ var render = function () {
       1
     ),
     _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "ds-block bg-light" },
+      [
+        _c("users-search-component", {
+          attrs: { options: _vm.options },
+          on: { "search-filters": _vm.handleSearch },
+        }),
+      ],
+      1
+    ),
+    _vm._v(" "),
     _c("div", { staticClass: "ds-block bg-light" }, [
+      _c(
+        "div",
+        { staticClass: "ds-pagination" },
+        [
+          _c("el-pagination", {
+            staticClass: "ds-pagination-buttons",
+            attrs: {
+              layout: "prev, pager, next",
+              total: _vm.users.total,
+              "current-page": _vm.options.pageNum,
+            },
+            on: { "current-change": _vm.handlePagination },
+          }),
+          _vm._v(" "),
+          _c("div", [_c("h4", [_vm._v("Totals: " + _vm._s(_vm.users.total))])]),
+        ],
+        1
+      ),
+      _vm._v(" "),
       _c(
         "div",
         { staticClass: "view-content" },
@@ -97658,7 +98159,7 @@ var render = function () {
               ],
               staticClass: "table",
               staticStyle: { width: "100%" },
-              attrs: { data: _vm.users },
+              attrs: { data: _vm.users.items },
             },
             [
               _c("el-table-column", {
@@ -97743,6 +98244,25 @@ var render = function () {
             ],
             1
           ),
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "ds-pagination" },
+        [
+          _c("el-pagination", {
+            staticClass: "ds-pagination-buttons",
+            attrs: {
+              layout: "prev, pager, next",
+              total: _vm.users.total,
+              "current-page": _vm.options.pageNum,
+            },
+            on: { "current-change": _vm.handlePagination },
+          }),
+          _vm._v(" "),
+          _c("div", [_c("h4", [_vm._v("Totals: " + _vm._s(_vm.users.total))])]),
         ],
         1
       ),

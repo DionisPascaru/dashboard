@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\API\Project;
+namespace App\Http\Controllers\API\User;
 
 use App\Http\Controllers\API\RestResponseFactory;
-use App\Models\ProjectCategory;
+use App\Models\Role;
 use Exception;
 use Illuminate\Http\JsonResponse;
 
 /**
- * project categories api controller.
+ * Roles api controller.
  */
-class ProjectCategoriesApiController
+class RolesApiController
 {
     /** @var RestResponseFactory $restResponseFactory */
     private RestResponseFactory $restResponseFactory;
@@ -33,7 +33,7 @@ class ProjectCategoriesApiController
     public function index(): JsonResponse
     {
         try {
-            return $this->restResponseFactory->ok(ProjectCategory::all());
+            return $this->restResponseFactory->ok(Role::all());
         } catch (Exception $exception) {
             return $this->restResponseFactory->serverError($exception);
         }
