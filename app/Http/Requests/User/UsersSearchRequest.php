@@ -1,23 +1,29 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class ProjectFileUploadApiRequest extends FormRequest
+class UsersSearchRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'id' => 'required',
-            'cover' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'filters' => 'filled',
+            'filters.name' => 'nullable|string|max:50',
+            'filters.email' => 'nullable|int',
+            'filters.role_id' => 'nullable|int',
+            'filters.date_from' => 'nullable|string',
+            'filters.date_till' => 'nullable|string',
+            'pageSize' => 'int',
+            'pageNum' => 'int'
         ];
     }
 

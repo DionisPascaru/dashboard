@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\API\AdminManagerController;
 use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\API\ProjectCategoriesApiController;
-use App\Http\Controllers\API\ProjectsApiController;
-use App\Http\Controllers\API\UsersApiController;
+use App\Http\Controllers\API\Project\ProjectCategoriesApiController;
+use App\Http\Controllers\API\Project\ProjectsApiController;
+use App\Http\Controllers\API\User\UsersApiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +27,7 @@ Route::middleware('auth:sanctum')->group( function () {
 
     // Users
     Route::get('/users', [UsersApiController::class, 'index']);
+    Route::post('/users/search', [UsersApiController::class, 'search']);
     Route::group(['prefix' => 'user'], function (){
         Route::get('/{id}', [UsersApiController::class, 'show']);
         Route::post('', [UsersApiController::class, 'create']);

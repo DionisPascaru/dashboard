@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UserUpdateApiRequest extends FormRequest
+class UserCreateApiRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -17,8 +17,8 @@ class UserUpdateApiRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required',
-            'role_id' => 'number'
+            'email' => 'unique:users|required',
+            'password' => 'required'
         ];
     }
 

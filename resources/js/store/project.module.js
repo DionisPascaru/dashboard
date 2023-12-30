@@ -51,16 +51,14 @@ const actions = {
     },
     async createProject({commit}, payload) {
         try {
-            const response = await createProject(payload);
-            commit('CREATE_PROJECT', response);
+            await createProject(payload);
         } catch (e) {
             throw e;
         }
     },
     async updateProject({commit}, {id, project}) {
         try {
-            const response = await updateProject(id, project);
-            commit('UPDATE_PROJECT', response);
+            await updateProject(id, project);
         } catch (e) {
             throw e;
         }
@@ -105,16 +103,6 @@ const mutations = {
     },
     LOAD_PROJECT(state, project) {
         state.project = project;
-    },
-    CREATE_PROJECT(state, project) {
-        state.projects.items.push(project);
-    },
-    UPDATE_PROJECT(state, project) {
-      const index = state.projects.items.findIndex(item => item.id === project.id);
-
-      if (index !== -1) {
-          state.projects.items.splice(index, 1, project);
-      }
     },
     DELETE_PROJECT(state, projectId) {
         const index = state.projects.items.findIndex((project) => project.id === projectId);

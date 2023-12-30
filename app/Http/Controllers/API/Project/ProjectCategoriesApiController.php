@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\Project;
 
+use App\Http\Controllers\API\RestResponseFactory;
 use App\Models\ProjectCategory;
 use Exception;
 use Illuminate\Http\JsonResponse;

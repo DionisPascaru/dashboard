@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\Project;
 
-use App\Http\Requests\ProjectCreateApiRequest;
-use App\Http\Requests\ProjectFileUploadApiRequest;
-use App\Http\Requests\ProjectImageUploadApiRequest;
-use App\Http\Requests\ProjectsSearchRequest;
-use App\Http\Requests\ProjectUpdateApiRequest;
+use App\Http\Controllers\API\RestResponseFactory;
+use App\Http\Requests\Project\ProjectCreateApiRequest;
+use App\Http\Requests\Project\ProjectFileUploadApiRequest;
+use App\Http\Requests\Project\ProjectImageUploadApiRequest;
+use App\Http\Requests\Project\ProjectsSearchRequest;
+use App\Http\Requests\Project\ProjectUpdateApiRequest;
 use App\Services\Serializers\ProjectSerializer;
 use App\Services\Supervisors\ProjectSupervisor;
 use App\Traits\FileStorage;
-use DateTime;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class ProjectsApiController
