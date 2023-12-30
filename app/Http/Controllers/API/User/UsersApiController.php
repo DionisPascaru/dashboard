@@ -88,7 +88,7 @@ class UsersApiController
                 ->where('id', '=', $id)
                 ->first();
 
-            return $this->restResponseFactory->ok($this->userSerialize->serializeEntity($user));
+            return $this->restResponseFactory->ok($this->userSerialize->serializeUserForRead($user));
         } catch (ModelNotFoundException $exception) {
             return $this->restResponseFactory->badRequest($exception->getMessage());
         } catch (Exception $exception) {
@@ -118,7 +118,7 @@ class UsersApiController
                 ->where('u.id', '=', $userId)
                 ->first();
 
-            return $this->restResponseFactory->created($this->userSerialize->serializeEntity($user));
+            return $this->restResponseFactory->created($this->userSerialize->serializeUserForCreate($user));
         } catch (ValidationException $exception) {
             return $this->restResponseFactory->badRequest($exception->getMessage());
         } catch (Exception $exception) {
