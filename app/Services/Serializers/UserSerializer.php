@@ -2,7 +2,6 @@
 
 namespace App\Services\Serializers;
 
-use http\Client\Curl\User;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -22,14 +21,15 @@ class UserSerializer
             'id' => $user['id'],
             'name' => $user['name'],
             'email' => $user['email'],
-            'role_id' => $user['role_id'],
+            'role' => $user['role'],
         ];
     }
 
     /**
      * Serialize user for search.
      *
-     * @param array $user
+     * @param array $users
+     *
      * @return array
      */
     public function serializeForSearch(array $users): array

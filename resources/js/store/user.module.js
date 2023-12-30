@@ -83,7 +83,7 @@ const mutations = {
         state.user = user;
     },
     CREATE_USER(state, user) {
-        state.users.push(user);
+        state.users.items.push(user);
     },
     REMOVE_USER(state, userId) {
         const index = state.users.items.findIndex(user => user.id === userId);

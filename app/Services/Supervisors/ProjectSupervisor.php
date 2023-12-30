@@ -11,27 +11,6 @@ class ProjectSupervisor
     use FileStorage;
 
     /**
-     * Read projects.
-     *
-     * @return array
-     */
-    public function read(): array
-    {
-        return DB::table('projects as p')
-            ->select(
-                'p.id',
-                'title',
-                'cover',
-                'pc.name as category',
-                'p.created_at as created',
-                'p.updated_at as updated'
-            )
-            ->leftJoin('project_categories as pc', 'p.category_id', '=', 'pc.id')
-            ->get()
-            ->toArray();
-    }
-
-    /**
      * Show project by id.
      *
      * @param $id

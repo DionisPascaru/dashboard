@@ -8863,7 +8863,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   imageRemove: () => (/* binding */ imageRemove),
 /* harmony export */   imageUpload: () => (/* binding */ imageUpload),
 /* harmony export */   loadProject: () => (/* binding */ loadProject),
-/* harmony export */   loadProjects: () => (/* binding */ loadProjects),
 /* harmony export */   searchProjects: () => (/* binding */ searchProjects),
 /* harmony export */   updateProject: () => (/* binding */ updateProject)
 /* harmony export */ });
@@ -8871,9 +8870,6 @@ __webpack_require__.r(__webpack_exports__);
 
 var searchProjects = function searchProjects(payload) {
   return _httpRequest__WEBPACK_IMPORTED_MODULE_0__["default"].post('/projects/search', payload);
-};
-var loadProjects = function loadProjects() {
-  return _httpRequest__WEBPACK_IMPORTED_MODULE_0__["default"].get('/projects');
 };
 var loadProject = function loadProject(id) {
   return _httpRequest__WEBPACK_IMPORTED_MODULE_0__["default"].get("/project/".concat(id));
@@ -9241,7 +9237,7 @@ var actions = {
       }, _callee, null, [[1, 8]]);
     }))();
   },
-  loadProjects: function loadProjects(_ref2) {
+  loadProject: function loadProject(_ref2, projectId) {
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
       var commit, response;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
@@ -9250,10 +9246,10 @@ var actions = {
             commit = _ref2.commit;
             _context2.prev = 1;
             _context2.next = 4;
-            return (0,_services_projects_projects_service__WEBPACK_IMPORTED_MODULE_0__.loadProjects)();
+            return (0,_services_projects_projects_service__WEBPACK_IMPORTED_MODULE_0__.loadProject)(projectId);
           case 4:
             response = _context2.sent;
-            commit('LOAD_PROJECTS', response);
+            commit('LOAD_PROJECT', response);
             _context2.next = 11;
             break;
           case 8:
@@ -9267,117 +9263,116 @@ var actions = {
       }, _callee2, null, [[1, 8]]);
     }))();
   },
-  loadProject: function loadProject(_ref3, projectId) {
+  createProject: function createProject(_ref3, payload) {
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-      var commit, response;
+      var commit;
       return _regeneratorRuntime().wrap(function _callee3$(_context3) {
         while (1) switch (_context3.prev = _context3.next) {
           case 0:
             commit = _ref3.commit;
             _context3.prev = 1;
             _context3.next = 4;
-            return (0,_services_projects_projects_service__WEBPACK_IMPORTED_MODULE_0__.loadProject)(projectId);
+            return (0,_services_projects_projects_service__WEBPACK_IMPORTED_MODULE_0__.createProject)(payload);
           case 4:
-            response = _context3.sent;
-            commit('LOAD_PROJECT', response);
-            _context3.next = 11;
+            _context3.next = 9;
             break;
-          case 8:
-            _context3.prev = 8;
+          case 6:
+            _context3.prev = 6;
             _context3.t0 = _context3["catch"](1);
             throw _context3.t0;
-          case 11:
+          case 9:
           case "end":
             return _context3.stop();
         }
-      }, _callee3, null, [[1, 8]]);
+      }, _callee3, null, [[1, 6]]);
     }))();
   },
-  createProject: function createProject(_ref4, payload) {
+  updateProject: function updateProject(_ref4, _ref5) {
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
-      var commit;
+      var commit, id, project;
       return _regeneratorRuntime().wrap(function _callee4$(_context4) {
         while (1) switch (_context4.prev = _context4.next) {
           case 0:
             commit = _ref4.commit;
-            _context4.prev = 1;
-            _context4.next = 4;
-            return (0,_services_projects_projects_service__WEBPACK_IMPORTED_MODULE_0__.createProject)(payload);
-          case 4:
-            _context4.next = 9;
+            id = _ref5.id, project = _ref5.project;
+            _context4.prev = 2;
+            _context4.next = 5;
+            return (0,_services_projects_projects_service__WEBPACK_IMPORTED_MODULE_0__.updateProject)(id, project);
+          case 5:
+            _context4.next = 10;
             break;
-          case 6:
-            _context4.prev = 6;
-            _context4.t0 = _context4["catch"](1);
+          case 7:
+            _context4.prev = 7;
+            _context4.t0 = _context4["catch"](2);
             throw _context4.t0;
-          case 9:
+          case 10:
           case "end":
             return _context4.stop();
         }
-      }, _callee4, null, [[1, 6]]);
+      }, _callee4, null, [[2, 7]]);
     }))();
   },
-  updateProject: function updateProject(_ref5, _ref6) {
+  deleteProject: function deleteProject(_ref6, projectId) {
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
-      var commit, id, project;
+      var commit;
       return _regeneratorRuntime().wrap(function _callee5$(_context5) {
         while (1) switch (_context5.prev = _context5.next) {
           case 0:
-            commit = _ref5.commit;
-            id = _ref6.id, project = _ref6.project;
-            _context5.prev = 2;
-            _context5.next = 5;
-            return (0,_services_projects_projects_service__WEBPACK_IMPORTED_MODULE_0__.updateProject)(id, project);
-          case 5:
+            commit = _ref6.commit;
+            _context5.prev = 1;
+            _context5.next = 4;
+            return (0,_services_projects_projects_service__WEBPACK_IMPORTED_MODULE_0__.deleteProject)(projectId);
+          case 4:
+            commit('DELETE_PROJECT', projectId);
             _context5.next = 10;
             break;
           case 7:
             _context5.prev = 7;
-            _context5.t0 = _context5["catch"](2);
+            _context5.t0 = _context5["catch"](1);
             throw _context5.t0;
           case 10:
           case "end":
             return _context5.stop();
         }
-      }, _callee5, null, [[2, 7]]);
+      }, _callee5, null, [[1, 7]]);
     }))();
   },
-  deleteProject: function deleteProject(_ref7, projectId) {
+  fileUpload: function fileUpload(_ref7, _ref8) {
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
-      var commit;
+      var commit, id, payload;
       return _regeneratorRuntime().wrap(function _callee6$(_context6) {
         while (1) switch (_context6.prev = _context6.next) {
           case 0:
             commit = _ref7.commit;
-            _context6.prev = 1;
-            _context6.next = 4;
-            return (0,_services_projects_projects_service__WEBPACK_IMPORTED_MODULE_0__.deleteProject)(projectId);
-          case 4:
-            commit('DELETE_PROJECT', projectId);
+            id = _ref8.id, payload = _ref8.payload;
+            _context6.prev = 2;
+            _context6.next = 5;
+            return (0,_services_projects_projects_service__WEBPACK_IMPORTED_MODULE_0__.fileUpload)(id, payload);
+          case 5:
             _context6.next = 10;
             break;
           case 7:
             _context6.prev = 7;
-            _context6.t0 = _context6["catch"](1);
+            _context6.t0 = _context6["catch"](2);
             throw _context6.t0;
           case 10:
           case "end":
             return _context6.stop();
         }
-      }, _callee6, null, [[1, 7]]);
+      }, _callee6, null, [[2, 7]]);
     }))();
   },
-  fileUpload: function fileUpload(_ref8, _ref9) {
+  imageUpload: function imageUpload(_ref9, _ref10) {
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
       var commit, id, payload;
       return _regeneratorRuntime().wrap(function _callee7$(_context7) {
         while (1) switch (_context7.prev = _context7.next) {
           case 0:
-            commit = _ref8.commit;
-            id = _ref9.id, payload = _ref9.payload;
+            commit = _ref9.commit;
+            id = _ref10.id, payload = _ref10.payload;
             _context7.prev = 2;
             _context7.next = 5;
-            return (0,_services_projects_projects_service__WEBPACK_IMPORTED_MODULE_0__.fileUpload)(id, payload);
+            return (0,_services_projects_projects_service__WEBPACK_IMPORTED_MODULE_0__.imageUpload)(id, payload);
           case 5:
             _context7.next = 10;
             break;
@@ -9392,61 +9387,33 @@ var actions = {
       }, _callee7, null, [[2, 7]]);
     }))();
   },
-  imageUpload: function imageUpload(_ref10, _ref11) {
+  imageRemove: function imageRemove(_ref11, imageId) {
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8() {
-      var commit, id, payload;
+      var commit;
       return _regeneratorRuntime().wrap(function _callee8$(_context8) {
         while (1) switch (_context8.prev = _context8.next) {
           case 0:
-            commit = _ref10.commit;
-            id = _ref11.id, payload = _ref11.payload;
-            _context8.prev = 2;
-            _context8.next = 5;
-            return (0,_services_projects_projects_service__WEBPACK_IMPORTED_MODULE_0__.imageUpload)(id, payload);
-          case 5:
-            _context8.next = 10;
+            commit = _ref11.commit;
+            _context8.prev = 1;
+            _context8.next = 4;
+            return (0,_services_projects_projects_service__WEBPACK_IMPORTED_MODULE_0__.imageRemove)(imageId);
+          case 4:
+            _context8.next = 9;
             break;
-          case 7:
-            _context8.prev = 7;
-            _context8.t0 = _context8["catch"](2);
+          case 6:
+            _context8.prev = 6;
+            _context8.t0 = _context8["catch"](1);
             throw _context8.t0;
-          case 10:
+          case 9:
           case "end":
             return _context8.stop();
         }
-      }, _callee8, null, [[2, 7]]);
-    }))();
-  },
-  imageRemove: function imageRemove(_ref12, imageId) {
-    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
-      var commit;
-      return _regeneratorRuntime().wrap(function _callee9$(_context9) {
-        while (1) switch (_context9.prev = _context9.next) {
-          case 0:
-            commit = _ref12.commit;
-            _context9.prev = 1;
-            _context9.next = 4;
-            return (0,_services_projects_projects_service__WEBPACK_IMPORTED_MODULE_0__.imageRemove)(imageId);
-          case 4:
-            _context9.next = 9;
-            break;
-          case 6:
-            _context9.prev = 6;
-            _context9.t0 = _context9["catch"](1);
-            throw _context9.t0;
-          case 9:
-          case "end":
-            return _context9.stop();
-        }
-      }, _callee9, null, [[1, 6]]);
+      }, _callee8, null, [[1, 6]]);
     }))();
   }
 };
 var mutations = {
   SEARCH_PROJECTS: function SEARCH_PROJECTS(state, projects) {
-    state.projects = projects;
-  },
-  LOAD_PROJECTS: function LOAD_PROJECTS(state, projects) {
     state.projects = projects;
   },
   LOAD_PROJECT: function LOAD_PROJECT(state, project) {
@@ -9670,7 +9637,7 @@ var mutations = {
     state.user = user;
   },
   CREATE_USER: function CREATE_USER(state, user) {
-    state.users.push(user);
+    state.users.items.push(user);
   },
   REMOVE_USER: function REMOVE_USER(state, userId) {
     var index = state.users.items.findIndex(function (user) {
