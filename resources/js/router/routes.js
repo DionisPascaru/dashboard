@@ -3,7 +3,7 @@ import ExampleComponent from '../components/ExampleComponent';
 import Dashboard from '../view/Dashboard';
 import Home from '../view/Home';
 import Users from '../view/users/Users';
-import UserDetails from '../components/users/UserDetailsComponent';
+import UserUpdateView from '../view/users/UserUpdateView.vue';
 import Projects from '../view/projects/Projects';
 import ProjectCreateView from '../view/projects/ProjectCreateView.vue';
 import ProjectUpdateView from "../view/projects/ProjectUpdateView.vue";
@@ -55,9 +55,9 @@ export default [
                 }
             },
             {
-                path: '/user/:id/details',
-                component: UserDetails,
-                name: 'UserDetails',
+                path: '/user/:id/update',
+                component: UserUpdateView,
+                name: 'UserUpdateView',
                 meta: {
                     guard: 'auth'
                 }

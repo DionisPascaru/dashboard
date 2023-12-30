@@ -61,8 +61,7 @@ const actions = {
     },
     async updateUser({commit}, {id, user}) {
         try {
-            const response = await updateUser(id, user)
-            commit('UPDATE_USER', response);
+            await updateUser(id, user);
         } catch (e) {
             throw e;
         }
@@ -98,17 +97,11 @@ const mutations = {
     CREATE_USER(state, user) {
         state.users.push(user);
     },
-    UPDATE_USER(state, user) {
-        const index = state.users.findIndex(item => item.id === user.id);
-        if (index !== -1) {
-            state.users.splice(index, 1, user);
-        }
-    },
     REMOVE_USER(state, userId) {
-        const index = state.users.findIndex(user => user.id === userId);
+        const index = state.users.items.findIndex(user => user.id === userId);
 
         if (index !== -1) {
-            state.users.slice(index, 1);
+            state.users.items.slice(index, 1);
         }
     },
     USER_ROLES(state, roles) {

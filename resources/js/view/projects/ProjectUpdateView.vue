@@ -36,9 +36,7 @@
                 </el-row>
             </el-form>
 
-            <span slot="footer" class="dialog-footer">
             <el-button class="btn btn-primary" type="primary" @click="update('updateProjectForm')">Update</el-button>
-        </span>
         </div>
     </div>
 </template>
