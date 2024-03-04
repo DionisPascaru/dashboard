@@ -49,6 +49,7 @@ Route::middleware('auth:sanctum')->group( function () {
 
     // Project categories
     Route::get('/project-categories', [ProjectCategoriesApiController::class, 'index']);
+    Route::post('/project-category', [ProjectCategoriesApiController::class, 'create']);
 
     // Roles
     Route::get('/roles', [RolesApiController::class, 'index']);
