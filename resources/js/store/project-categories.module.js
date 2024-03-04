@@ -1,4 +1,7 @@
-import {loadProjectCategories} from "../services/project-categories/project-categories.service";
+import {
+    loadProjectCategories,
+    createProjectCategory
+} from "../services/project-categories/project-categories.service";
 
 const state = () => ({
     projectCategories: []
@@ -15,6 +18,16 @@ const actions = {
         try {
             const response = await loadProjectCategories();
             commit('LOAD_PROJECT_CATEGORIES', response);
+        } catch (e) {
+            throw e;
+        }
+    },
+    async createProjectCategory({commit}, category){
+
+        console.log(category);
+        try {
+            const response = await  createProjectCategory(category);
+            commit('CREATE_CATEGORY', response);
         } catch (e) {
             throw e;
         }

@@ -5,6 +5,7 @@
             <router-link :to="{ name: 'ProjectCreateView'}">
                 <el-button class="btn btn-primary" type="primary">Add project</el-button>
             </router-link>
+            <project-category-create-component></project-category-create-component>
         </div>
 
         <div class="ds-block bg-light">
@@ -89,10 +90,12 @@
 <script>
 import config from "../../config";
 import ProjectsSearchComponent from "../../components/projects/ProjectsSearchComponent.vue";
+import ProjectCategoryCreateComponent from "../../components/projects/ProjectCategoryCreateComponent.vue";
 
 export default {
     name: 'Projects',
     components: {
+        ProjectCategoryCreateComponent,
       ProjectsSearchComponent
     },
     data() {
