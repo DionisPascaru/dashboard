@@ -1,4 +1,4 @@
-import {login, authUser} from '../services/auth/auth.service'
+import {login, register, authUser} from '../services/auth/auth.service'
 
 const state = () => ({
     user: {},
@@ -20,7 +20,15 @@ const actions = {
     async login({commit}, {email, password}) {
         try {
             const response = await login(email, password);
-            login(response);
+            localStorage.setItem('accessToken', JSON.stringify(response.token));
+            commit('LOGIN_SUCCESS');
+        } catch (e) {
+            throw e;
+        }
+    },
+    async register({commit}, payload) {
+        try {
+            const response = await register(payload);
             localStorage.setItem('accessToken', JSON.stringify(response.token));
             commit('LOGIN_SUCCESS')
         } catch (e) {
@@ -49,20 +57,9 @@ const mutations = {
     LOGIN_SUCCESS(state) {
         state.status.loggedIn = true;
     },
-    // loginFailure(state) {
-    //     state.status.loggedIn = false;
-    //     state.user = null;
-    // },
     LOGOUT(state) {
         state.status.loggedIn = false;
-        state.user = null;
     },
-    // registerSuccess(state) {
-    //     state.status.loggedIn = false;
-    // },
-    // registerFailure(state) {
-    //     state.status.loggedIn = false;
-    // }
 }
 
 export default {

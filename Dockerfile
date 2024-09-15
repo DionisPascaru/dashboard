@@ -49,3 +49,5 @@ RUN apt-get update \
 COPY ./docker/php/laravel.ini /usr/local/etc/php/conf.d/laravel.ini
 
 RUN chown -R www-data:www-data .
+RUN chmod -R 777 /var/www/app/storage
+RUN chmod -R 777 /var/www/app/public/resources/publicFiles

@@ -1,4 +1,5 @@
 import Login from '../view/auth/Login';
+import Register from '../view/auth/Register.vue';
 import ExampleComponent from '../components/ExampleComponent';
 import Dashboard from '../view/Dashboard';
 import Home from '../view/Home';
@@ -14,7 +15,7 @@ export default [
     {
         path: '/',
         name: 'Home',
-        redirect: {name: 'Login'},
+        redirect: { name: 'Login' },
         component: Home,
         meta: {
             guard: "guest"
@@ -24,6 +25,14 @@ export default [
                 path: '/login',
                 component: Login,
                 name: 'Login',
+                meta: {
+                    guard: 'guest'
+                }
+            },
+            {
+                path: '/register',
+                component: Register,
+                name: 'Register',
                 meta: {
                     guard: 'guest'
                 }

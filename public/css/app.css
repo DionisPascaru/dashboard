@@ -51,6 +51,18 @@ h4 {
   margin: 20px 0;
 }
 
+.auth-form {
+  margin: 60px auto;
+}
+.auth-form-redirect {
+  margin-bottom: 20px;
+}
+.auth-form-redirect a {
+  text-decoration: none;
+  font-weight: 600;
+  color: #3A3541;
+}
+
 .ds-sidebar {
   background-color: #fff;
   height: calc(100vh - 40px);
