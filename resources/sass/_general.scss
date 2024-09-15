@@ -49,3 +49,17 @@ h4 {
     box-shadow: 0 0 5px 5px $grey-color;
     margin: 20px 0;
 }
+
+.auth-form {
+    margin: 60px auto;
+
+    &-redirect {
+        margin-bottom: 20px;
+
+        a {
+            text-decoration: none;
+            font-weight: 600;
+            color: $dark-color;
+        }
+    }
+}

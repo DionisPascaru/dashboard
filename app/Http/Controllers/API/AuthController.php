@@ -61,7 +61,7 @@ class AuthController
                 'name' => 'required',
                 'email' => 'required|email',
                 'password' => 'required',
-                'confirm_password' => 'required|same:password',
+                'confirmPassword' => 'required|same:password',
             ]);
 
             if($validator->fails()){

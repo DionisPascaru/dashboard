@@ -4,11 +4,14 @@
             <h1>Login</h1>
             <el-form :model="login" status-icon :rules="rules" ref="ruleForm" label-position="top">
                 <el-form-item label="Email" prop="email">
-                    <el-input type="email" v-model="login.email" autocomplete="on"></el-input>
+                    <el-input type="email" v-model="login.email" autocomplete="email"></el-input>
                 </el-form-item>
                 <el-form-item label="Password" prop="password">
-                    <el-input type="password" v-model="login.password" autocomplete="on"></el-input>
+                    <el-input type="password" v-model="login.password" autocomplete="password"></el-input>
                 </el-form-item>
+                <div class="auth-form-redirect">
+                    <router-link :to="{ name: 'Register'}">Register?</router-link>
+                </div>
                 <el-form-item>
                     <el-button type="primary" @click="submitForm('ruleForm')">Submit</el-button>
                     <el-button @click="resetForm('ruleForm')">Reset</el-button>
@@ -24,8 +27,8 @@ export default {
     data(){
         return {
             login: {
-                email: null,
-                password: null
+                email: '',
+                password: ''
             },
             rules: {
                 email: [
@@ -84,6 +87,5 @@ export default {
 <style scoped lang="scss">
 .auth-form {
     max-width: 300px;
-    margin: 60px auto;
 }
 </style>
