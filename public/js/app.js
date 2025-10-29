@@ -7602,6 +7602,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Login',
@@ -7713,6 +7719,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Register',
@@ -7726,6 +7734,11 @@ __webpack_require__.r(__webpack_exports__);
         confirmPassword: ''
       },
       rules: {
+        name: [{
+          required: true,
+          message: "Name is required",
+          trigger: ["blur", "change"]
+        }],
         email: [{
           required: true,
           message: "Email is required",
@@ -7742,7 +7755,6 @@ __webpack_require__.r(__webpack_exports__);
         }],
         confirmPassword: [{
           validator: function validator(rule, value, callback) {
-            console.log(value);
             if (value === '') {
               callback(new Error('Confirm password is required'));
             } else if (value !== _this.register.password) {
@@ -7769,11 +7781,12 @@ __webpack_require__.r(__webpack_exports__);
               type: 'success',
               message: "Register account successfully!"
             });
-          })["catch"](function (e) {
-            _this2.$notify.error({
-              title: 'Error',
-              message: e
-            });
+          })["catch"](function (error) {
+            // this.$notify({
+            //     title: 'Error',
+            //     type: 'error',
+            //     message: error
+            // })
           });
         } else {
           return false;
@@ -9018,6 +9031,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var element_ui__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! element-ui */ "./node_modules/element-ui/lib/element-ui.common.js");
+/* harmony import */ var element_ui__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(element_ui__WEBPACK_IMPORTED_MODULE_1__);
+
 
 var instance = {
   baseURL: "http://localhost:8000"
@@ -9030,18 +9046,68 @@ var httpRequest = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
   },
   timeout: 0
 });
-var authInterceptor = function authInterceptor(config) {
-  var token = JSON.parse(localStorage.getItem('accessToken'));
+
+// ✅ REQUEST INTERCEPTOR — add auth token
+httpRequest.interceptors.request.use(function (config) {
+  var token = JSON.parse(localStorage.getItem("accessToken"));
   if (token) {
-    config.headers["Authorization"] = 'Bearer ' + token;
+    config.headers.Authorization = "Bearer ".concat(token);
   }
   return config;
-};
-var responseInterceptor = function responseInterceptor(response) {
+}, function (error) {
+  return Promise.reject(error);
+});
+
+// ✅ RESPONSE INTERCEPTOR — success
+httpRequest.interceptors.response.use(function (response) {
   return response.data;
-};
-httpRequest.interceptors.request.use(authInterceptor);
-httpRequest.interceptors.response.use(responseInterceptor);
+},
+// ✅ GLOBAL ERROR HANDLER
+function (error) {
+  if (!error.response) {
+    // Network or server down
+    console.error("Network error:", error);
+    return Promise.reject("Network error. Please try again later.");
+  }
+  var _error$response = error.response,
+    status = _error$response.status,
+    data = _error$response.data;
+  switch (status) {
+    case 401:
+      // Unauthorized → maybe logout or redirect
+      console.warn("Unauthorized, redirecting...");
+      localStorage.removeItem("accessToken");
+      window.location.href = "/login";
+      break;
+    case 403:
+      console.warn("Forbidden:", data.message);
+      break;
+    case 404:
+      console.warn("Not found:", data.message);
+      break;
+    case 422:
+      // Laravel validation error
+      var validationMessages = Object.values(data.message || {}).flat().join("\n");
+      console.warn("Validation Error:", validationMessages);
+      element_ui__WEBPACK_IMPORTED_MODULE_1__.Notification.error({
+        title: status,
+        message: validationMessages
+      });
+      return Promise.reject(validationMessages);
+    case 500:
+      console.error("Server error:", data.message);
+      break;
+    default:
+      console.error("Unhandled error:", data.message || error.message);
+  }
+
+  // Reject the promise so your .catch() in components still receives the error
+  element_ui__WEBPACK_IMPORTED_MODULE_1__.Notification.error({
+    title: status,
+    message: data.message || error.message
+  });
+  return Promise.reject(data.message || error.message);
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (httpRequest);
 
 /***/ }),
@@ -97349,7 +97415,7 @@ var render = function () {
       "div",
       [
         _c("div", { staticClass: "ds-logo" }, [
-          _c("img", { attrs: { src: _vm.getLogo, alt: "logo" } }),
+          _vm._v("\n            LOGO\n        "),
         ]),
         _vm._v(" "),
         _c(
@@ -97483,6 +97549,7 @@ var render = function () {
             "el-form",
             {
               ref: "ruleForm",
+              staticClass: "form-group",
               attrs: {
                 model: _vm.login,
                 "status-icon": "",
@@ -97493,7 +97560,10 @@ var render = function () {
             [
               _c(
                 "el-form-item",
-                { attrs: { label: "Email", prop: "email" } },
+                {
+                  staticClass: "form-input",
+                  attrs: { label: "Email", prop: "email" },
+                },
                 [
                   _c("el-input", {
                     attrs: { type: "email", autocomplete: "email" },
@@ -97511,7 +97581,10 @@ var render = function () {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                { attrs: { label: "Password", prop: "password" } },
+                {
+                  staticClass: "form-input",
+                  attrs: { label: "Password", prop: "password" },
+                },
                 [
                   _c("el-input", {
                     attrs: { type: "password", autocomplete: "password" },
@@ -97614,6 +97687,7 @@ var render = function () {
             "el-form",
             {
               ref: "ruleForm",
+              staticClass: "form-group",
               attrs: {
                 model: _vm.register,
                 "status-icon": "",
@@ -97623,96 +97697,99 @@ var render = function () {
             },
             [
               _c(
-                "el-row",
-                { attrs: { gutter: 20 } },
+                "div",
+                { staticClass: "ds-flex flex-gap" },
                 [
                   _c(
-                    "el-col",
-                    { attrs: { span: 12 } },
+                    "el-form-item",
+                    {
+                      staticClass: "form-input",
+                      attrs: { label: "Name", prop: "name" },
+                    },
                     [
-                      _c(
-                        "el-form-item",
-                        { attrs: { label: "Name", prop: "name" } },
-                        [
-                          _c("el-input", {
-                            attrs: { type: "name", autocomplete: "off" },
-                            model: {
-                              value: _vm.register.name,
-                              callback: function ($$v) {
-                                _vm.$set(_vm.register, "name", $$v)
-                              },
-                              expression: "register.name",
-                            },
-                          }),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "el-form-item",
-                        { attrs: { label: "Password", prop: "password" } },
-                        [
-                          _c("el-input", {
-                            attrs: { type: "password", autocomplete: "off" },
-                            model: {
-                              value: _vm.register.password,
-                              callback: function ($$v) {
-                                _vm.$set(_vm.register, "password", $$v)
-                              },
-                              expression: "register.password",
-                            },
-                          }),
-                        ],
-                        1
-                      ),
+                      _c("el-input", {
+                        attrs: { type: "name", autocomplete: "off" },
+                        model: {
+                          value: _vm.register.name,
+                          callback: function ($$v) {
+                            _vm.$set(_vm.register, "name", $$v)
+                          },
+                          expression: "register.name",
+                        },
+                      }),
                     ],
                     1
                   ),
                   _vm._v(" "),
                   _c(
-                    "el-col",
-                    { attrs: { span: 12 } },
+                    "el-form-item",
+                    {
+                      staticClass: "form-input",
+                      attrs: { label: "Email", prop: "email" },
+                    },
                     [
-                      _c(
-                        "el-form-item",
-                        { attrs: { label: "Email", prop: "email" } },
-                        [
-                          _c("el-input", {
-                            attrs: { type: "email", autocomplete: "off" },
-                            model: {
-                              value: _vm.register.email,
-                              callback: function ($$v) {
-                                _vm.$set(_vm.register, "email", $$v)
-                              },
-                              expression: "register.email",
-                            },
-                          }),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "el-form-item",
-                        {
-                          attrs: {
-                            label: "Confirm password",
-                            prop: "confirmPassword",
+                      _c("el-input", {
+                        attrs: { type: "email", autocomplete: "off" },
+                        model: {
+                          value: _vm.register.email,
+                          callback: function ($$v) {
+                            _vm.$set(_vm.register, "email", $$v)
                           },
+                          expression: "register.email",
                         },
-                        [
-                          _c("el-input", {
-                            attrs: { type: "password", autocomplete: "off" },
-                            model: {
-                              value: _vm.register.confirmPassword,
-                              callback: function ($$v) {
-                                _vm.$set(_vm.register, "confirmPassword", $$v)
-                              },
-                              expression: "register.confirmPassword",
-                            },
-                          }),
-                        ],
-                        1
-                      ),
+                      }),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "ds-flex flex-gap" },
+                [
+                  _c(
+                    "el-form-item",
+                    {
+                      staticClass: "form-input",
+                      attrs: { label: "Password", prop: "password" },
+                    },
+                    [
+                      _c("el-input", {
+                        attrs: { type: "password", autocomplete: "off" },
+                        model: {
+                          value: _vm.register.password,
+                          callback: function ($$v) {
+                            _vm.$set(_vm.register, "password", $$v)
+                          },
+                          expression: "register.password",
+                        },
+                      }),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    {
+                      staticClass: "form-input",
+                      attrs: {
+                        label: "Confirm password",
+                        prop: "confirmPassword",
+                      },
+                    },
+                    [
+                      _c("el-input", {
+                        attrs: { type: "password", autocomplete: "off" },
+                        model: {
+                          value: _vm.register.confirmPassword,
+                          callback: function ($$v) {
+                            _vm.$set(_vm.register, "confirmPassword", $$v)
+                          },
+                          expression: "register.confirmPassword",
+                        },
+                      }),
                     ],
                     1
                   ),

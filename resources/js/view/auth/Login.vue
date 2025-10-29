@@ -2,11 +2,17 @@
     <div>
         <el-card class="auth-form">
             <h1>Login</h1>
-            <el-form :model="login" status-icon :rules="rules" ref="ruleForm" label-position="top">
-                <el-form-item label="Email" prop="email">
+            <el-form
+                :model="login"
+                status-icon
+                :rules="rules"
+                ref="ruleForm"
+                label-position="top"
+                class="form-group">
+                <el-form-item label="Email" prop="email" class="form-input">
                     <el-input type="email" v-model="login.email" autocomplete="email"></el-input>
                 </el-form-item>
-                <el-form-item label="Password" prop="password">
+                <el-form-item label="Password" prop="password" class="form-input">
                     <el-input type="password" v-model="login.password" autocomplete="password"></el-input>
                 </el-form-item>
                 <div class="auth-form-redirect">

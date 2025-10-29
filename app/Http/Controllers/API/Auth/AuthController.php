@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\Auth;
 
+use App\Http\Controllers\API\RestResponseFactory;
+use App\Http\Requests\Auth\UserLoginApiRequest;
+use App\Http\Requests\Auth\UserRegisterApiRequest;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use App\Models\User;
 
 /**
  * Auth controller.
@@ -30,19 +31,23 @@ class AuthController
     /**
      * Login.
      *
-     * @param Request $request
+     * @param UserLoginApiRequest $request
      * @return JsonResponse
      */
-    public function login(Request $request): JsonResponse
+    public function login(UserLoginApiRequest $request): JsonResponse
     {
         try {
-            Auth::attempt(['email' => $request->email, 'password' => $request->password]);
+            Auth::attempt($request->validated());
 
             $authUser = Auth::user();
-            $success['token'] =  $authUser->createToken('MyAuthApp')->plainTextToken;
-            $success['name'] =  $authUser->name;
+            $token =  $authUser->createToken('MyAuthApp')->plainTextToken;
 
-            return $this->restResponseFactory->ok($success);
+            return $this->restResponseFactory->ok(
+                [
+                    'token' => $token,
+                    'name' => $authUser->name
+                ]
+            );
         } catch (Exception $exception) {
             return $this->restResponseFactory->serverError($exception);
         }
@@ -51,30 +56,22 @@ class AuthController
     /**
      * Register.
      *
-     * @param Request $request
+     * @param UserRegisterApiRequest $request
      * @return JsonResponse
      */
-    public function register(Request $request): JsonResponse
+    public function register(UserRegisterApiRequest $request): JsonResponse
     {
         try {
-            $validator = Validator::make($request->all(), [
-                'name' => 'required',
-                'email' => 'required|email',
-                'password' => 'required',
-                'confirmPassword' => 'required|same:password',
-            ]);
-
-            if($validator->fails()){
-                return $this->sendError('Error validation', (array)$validator->errors());
-            }
-
-            $input = $request->all();
+            $input = $request->validated();
             $input['password'] = bcrypt($input['password']);
-            $user = User::create($input);
-            $success['token'] =  $user->createToken('MyAuthApp')->plainTextToken;
-            $success['name'] =  $user->name;
 
-            return $this->restResponseFactory->ok($success);
+            $user = User::create($input);
+            $token =  $user->createToken('MyAuthApp')->plainTextToken;
+
+            return $this->restResponseFactory->ok([
+                'token' => $token,
+                'name' => $user->name
+            ]);
         } catch (Exception $exception) {
             return $this->restResponseFactory->serverError($exception);
         }
