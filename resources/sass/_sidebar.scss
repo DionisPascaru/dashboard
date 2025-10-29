@@ -1,3 +1,6 @@
+.el-aside {
+    overflow: unset!important;
+}
 .ds-sidebar {
     background-color: $light-color;
     height: calc(100vh - 40px);
@@ -6,6 +9,7 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 20px;
+    box-shadow: 0 0 5px 5px $grey-color;
 
     .ds-logo {
         width: 100%;
@@ -21,6 +25,7 @@
 
     .ds-sidebar-menu {
         border-right: 0;
+        background-color: unset;
 
         &--item {
             color: $dark-color;
@@ -83,6 +88,7 @@
 
         i {
             font-size: 30px;
+            color: $primary-color;
         }
     }
 

@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\API\AdminManagerController;
-use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\Project\ProjectCategoriesApiController;
 use App\Http\Controllers\API\Project\ProjectsApiController;
 use App\Http\Controllers\API\User\RolesApiController;
