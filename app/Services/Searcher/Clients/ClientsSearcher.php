@@ -6,8 +6,7 @@ use App\Enums\Client\ClientFieldsEnum;
 use App\Enums\Client\ClientFiltersEnum;
 use App\Models\Client;
 use App\Services\Serializers\Client\ClientSerializer;
-use Illuminate\Database\Query\Builder;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
 
 class ClientsSearcher
 {
@@ -44,6 +43,7 @@ class ClientsSearcher
                 ClientFieldsEnum::NAME,
                 ClientFieldsEnum::EMAIL,
                 ClientFieldsEnum::CREATED_AT,
+                ClientFieldsEnum::UPDATED_AT,
                 ClientFieldsEnum::STATUS,
             ])
             ->orderBy(ClientFieldsEnum::CREATED_AT, 'desc')
@@ -68,7 +68,7 @@ class ClientsSearcher
      */
     private function applyFilters(array $filters): Builder
     {
-        $queryBuilder = DB::table(Client::DQL_ALIAS);
+        $queryBuilder = Client::query();
 
         if (!empty($filters[ClientFiltersEnum::NAME])) {
             $queryBuilder->where('name', 'like', '%' . $filters[ClientFiltersEnum::NAME] . '%');
