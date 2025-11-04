@@ -1,25 +1,31 @@
 <template>
-    <div class="ds-block bg-light">
-        <el-form :model="user">
-            <el-form-item label="Name">
-                <el-input v-model="user.name"></el-input>
-            </el-form-item>
-            <el-form-item label="Email">
-                <el-input v-model="user.email"></el-input>
-            </el-form-item>
-            <el-form-item label="Role">
-                <el-select v-model="user.role_id" placeholder="Select">
-                    <el-option
-                        v-for="item in this.roles"
-                        :key="item.id"
-                        :label="item.name"
-                        :value="item.id">
-                    </el-option>
-                </el-select>
-            </el-form-item>
-        </el-form>
+    <div class="view-content">
+        <div class="ds-block bg-light view-title">
+            <h1>Update user</h1>
+        </div>
 
-        <el-button class="btn btn-primary" type="primary" @click="update()">Update</el-button>
+        <div class="ds-block bg-light">
+            <el-form :model="user">
+                <el-form-item label="Name">
+                    <el-input v-model="user.name"></el-input>
+                </el-form-item>
+                <el-form-item label="Email">
+                    <el-input v-model="user.email"></el-input>
+                </el-form-item>
+                <el-form-item label="Role">
+                    <el-select v-model="user.role_id" placeholder="Select">
+                        <el-option
+                            v-for="item in this.roles"
+                            :key="item.id"
+                            :label="item.name"
+                            :value="item.id">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+            </el-form>
+
+            <el-button class="btn btn-primary" type="primary" @click="update()">Update</el-button>
+        </div>
     </div>
 </template>
 

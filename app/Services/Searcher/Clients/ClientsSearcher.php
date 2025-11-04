@@ -49,7 +49,7 @@ class ClientsSearcher
             ->orderBy(ClientFieldsEnum::CREATED_AT, 'desc')
             ->get()
             ->toArray();
-        $total = $queryBuilder->getCountForPagination();
+        $total = $queryBuilder->paginate()->total();
 
         return [
             'items' => \array_map(function ($item) {

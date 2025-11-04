@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div class="view-title">
+    <div class="view-content">
+        <div class="ds-block bg-light view-title">
             <h1>Profile info</h1>
         </div>
 

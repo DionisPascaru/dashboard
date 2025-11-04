@@ -8,11 +8,6 @@
                 :default-active="activeIndex"
                 class="ds-sidebar-menu"
                 :router="true">
-                <el-menu-item class="ds-sidebar-menu--item" index="ExampleComponent"
-                              :route="{ name: 'ExampleComponent' }">
-                    <i class="el-icon-eleme"></i>
-                    <span>Example</span>
-                </el-menu-item>
                 <el-menu-item class="ds-sidebar-menu--item" index="Users" :route="{ name: 'Users' }">
                     <i class="el-icon-user"></i>
                     <span>Users</span>
@@ -20,6 +15,10 @@
                 <el-menu-item class="ds-sidebar-menu--item" index="Projects" :route="{ name: 'Projects' }">
                     <i class="el-icon-s-grid"></i>
                     <span>Projects</span>
+                </el-menu-item>
+                <el-menu-item class="ds-sidebar-menu--item" index="Clients" :route="{ name: 'Clients' }">
+                    <i class="el-icon-s-grid"></i>
+                    <span>Clients</span>
                 </el-menu-item>
             </el-menu>
         </div>

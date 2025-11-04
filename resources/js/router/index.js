@@ -12,7 +12,7 @@ router.beforeEach((to, from, next) => {
     const token = localStorage.getItem('accessToken');
 
     if (token) {
-        if (to.matched.some(route => route.meta.guard === 'guest')) next({ name: 'ExampleComponent' })
+        if (to.matched.some(route => route.meta.guard === 'guest')) next({ name: 'Users' })
         else next();
     } else {
         if (to.matched.some(route => route.meta.guard === 'auth')) next({ name: 'Login' })
