@@ -3,38 +3,30 @@
 namespace App\Http\Controllers\API\Admin\Client;
 
 use App\Http\Controllers\API\RestResponseFactory;
+use App\Http\Requests\Admin\Client\ClientCreateRequest;
 use App\Http\Requests\Admin\Client\ClientsSearchRequest;
 use App\Services\Searcher\Clients\ClientsSearcher;
+use App\Services\Supervisors\Client\ClientSupervisor;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Psr\Log\LoggerInterface;
 
 class ClientController
 {
-    /** @var ClientsSearcher $clientsSearcher */
-    private ClientsSearcher $clientsSearcher;
-
-    /** @var RestResponseFactory $restResponseFactory */
-    private RestResponseFactory $restResponseFactory;
-
-    /** @var LoggerInterface $logger */
-    private LoggerInterface $logger;
-
     /**
      * Constructor.
      *
+     * @param ClientSupervisor $clientSupervisor
      * @param ClientsSearcher $clientsSearcher
      * @param RestResponseFactory $restResponseFactory
      * @param LoggerInterface $logger
      */
     public function __construct(
-        ClientsSearcher $clientsSearcher,
-        RestResponseFactory $restResponseFactory,
-        LoggerInterface $logger
+        private readonly ClientSupervisor $clientSupervisor,
+        private readonly ClientsSearcher $clientsSearcher,
+        private readonly RestResponseFactory $restResponseFactory,
+        private readonly LoggerInterface $logger,
     ) {
-        $this->clientsSearcher = $clientsSearcher;
-        $this->restResponseFactory = $restResponseFactory;
-        $this->logger = $logger;
     }
 
     /**
@@ -51,6 +43,28 @@ class ClientController
 
             return $this->restResponseFactory->ok(
                 $this->clientsSearcher->search($input)
+            );
+        } catch (Exception $exception) {
+            $this->logger->error($exception->getMessage(), ['exception' => $exception]);
+
+            return $this->restResponseFactory->serverError($exception);
+        }
+    }
+
+    /**
+     * Create.
+     *
+     * @param ClientCreateRequest $request
+     *
+     * @return JsonResponse
+     */
+    public function create(ClientCreateRequest $request): JsonResponse
+    {
+        try {
+            $input = $request->validated();
+
+            return $this->restResponseFactory->created(
+                $this->clientSupervisor->create($input),
             );
         } catch (Exception $exception) {
             $this->logger->error($exception->getMessage(), ['exception' => $exception]);
