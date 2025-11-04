@@ -1,14 +1,15 @@
 <template>
     <div class="view-content">
         <div class="ds-block bg-light view-title">
-            <h1>Projects</h1>
-            <router-link :to="{ name: 'ProjectCreateView'}">
-                <el-button class="btn btn-primary" type="primary">Add project</el-button>
-            </router-link>
+            <h1>Clients</h1>
+<!--            <user-create-component></user-create-component>-->
         </div>
 
         <div class="ds-block bg-light">
-            <projects-search-component @search-filters="handleSearch" :options="options"></projects-search-component>
+            <client-search-filter-component
+                @search-filters="handleSearch"
+                :options="options">
+            </client-search-filter-component>
         </div>
 
         <div class="ds-block bg-light">
@@ -17,55 +18,48 @@
                     class="ds-pagination-buttons"
                     layout="prev, pager, next"
                     @current-change="handlePagination"
-                    :total="projects.total"
+                    :total="clients.total"
                     :current-page="options.pageNum">
                 </el-pagination>
                 <div>
-                    <h4>Totals: {{ projects.total }}</h4>
+                    <h4>Totals: {{ clients.total }}</h4>
                 </div>
             </div>
             <div class="view-content">
                 <el-table
                     class="table"
-                    :data="projects.items"
+                    :data="clients.items"
                     v-loading="loading"
                     style="width: 100%">
                     <el-table-column
-                        prop="cover"
-                        label="Cover"
+                        prop="name"
+                        label="Name"
                         width="180">
-                        <template slot-scope="scope">
-                            <el-image
-                                style="width: 100px; height: 100px"
-                                :src="scope.row.cover.url"
-                                fit="fit">
-                            </el-image>
-                        </template>
                     </el-table-column>
                     <el-table-column
-                        prop="title"
-                        label="Title">
+                        prop="email"
+                        label="Email">
                     </el-table-column>
                     <el-table-column
-                        prop="category"
-                        label="Category">
-                    </el-table-column>
-                    <el-table-column
-                        prop="created"
+                        prop="created_at"
                         label="Created">
                     </el-table-column>
                     <el-table-column
-                        prop="updated"
+                        prop="updated_at"
                         label="Updated">
                     </el-table-column>
-                    <el-table-column label="Actions">
+                    <el-table-column
+                        label="Actions"
+                        width="280">
                         <template slot-scope="scope">
-                            <router-link :to="{ name: 'ProjectUpdateView', params: { id: scope.row.id } }">
-                                <el-button class="btn btn-default">Update project</el-button>
-                            </router-link>
-                            <el-button class="btn btn-danger" type="danger" @click="deleteProject(scope.row)">
-                                Delete
-                            </el-button>
+                            <div class="d-flex flex-gap">
+<!--                                <router-link :to="{ name: 'UserUpdateView', params: { id: scope.row.id }}">-->
+<!--                                    <el-button class="btn btn-info" type="info" icon="el-icon-edit"></el-button>-->
+<!--                                </router-link>-->
+                                <el-button class="btn btn-danger" type="danger" @click="deleteClient(scope.row)">
+                                    Delete
+                                </el-button>
+                            </div>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -75,11 +69,11 @@
                     class="ds-pagination-buttons"
                     layout="prev, pager, next"
                     @current-change="handlePagination"
-                    :total="projects.total"
+                    :total="clients.total"
                     :current-page="options.pageNum">
                 </el-pagination>
                 <div>
-                    <h4>Totals: {{ projects.total }}</h4>
+                    <h4>Totals: {{ clients.total }}</h4>
                 </div>
             </div>
         </div>
@@ -87,22 +81,21 @@
 </template>
 
 <script>
-import config from "../../config";
-import ProjectsSearchComponent from "../../components/projects/ProjectsSearchComponent.vue";
+import ClientSearchFilterComponent from "../../components/clients/ClientSearchFilterComponent.vue";
 
 export default {
-    name: 'Projects',
+    name: 'Clients',
     components: {
-      ProjectsSearchComponent
+        ClientSearchFilterComponent
     },
     data() {
         return {
             loading: true,
-            path: config.path,
             options: {
                 filters: {
-                    title: '',
-                    category_id: null,
+                    name: '',
+                    email: '',
+                    role_id: null,
                     date_from: null,
                     date_till: null,
                 },
@@ -112,8 +105,8 @@ export default {
         }
     },
     computed: {
-        projects() {
-            return this.$store.getters['project/getProjects'];
+        clients() {
+            return this.$store.getters['client/getClients'];
         }
     },
     mounted() {
@@ -133,9 +126,8 @@ export default {
         search() {
             this.loading = true;
 
-            this.$store.dispatch('project/searchProjects', this.options)
-                .then(() => {
-                })
+            this.$store.dispatch('client/searchClients', this.options)
+                .then(() => {})
                 .catch((e) => {
                     this.$notify.error({
                         title: 'Error',
@@ -146,22 +138,22 @@ export default {
                     this.loading = false;
                 })
         },
-        deleteProject(project) {
+        deleteClient(client) {
             this.$confirm(
-                `Are you sure you want to delete project ${project.title}?`,
+                `Are you sure you want to delete client ${client.name}?`,
                 {
-                    title: 'Delete project',
+                    title: 'Delete client',
                     confirmButtonText: "OK",
                     cancelButtonText: "Cancel",
                     type: "warning"
                 }
             ).then(() => {
-                this.$store.dispatch('project/deleteProject', project.id)
+                this.$store.dispatch('client/deleteClient', client.id)
                     .then(() => {
                         this.$notify({
                             title: 'Success',
                             type: 'success',
-                            message: `The ${project.title} successfully deleted!`
+                            message: `The ${client.name} successfully deleted!`
                         });
                         this.search();
                     })
@@ -171,8 +163,12 @@ export default {
                             message: e
                         });
                     });
-            }).catch(() => {});
+            })
         }
     }
 }
 </script>
+
+<style scoped lang="scss">
+
+</style>

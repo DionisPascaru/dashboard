@@ -1,6 +1,5 @@
 import Login from '../view/auth/Login';
 import Register from '../view/auth/Register.vue';
-import ExampleComponent from '../components/ExampleComponent';
 import Dashboard from '../view/Dashboard';
 import Home from '../view/Home';
 import Users from '../view/users/Users';
@@ -10,6 +9,7 @@ import ProjectCreateView from '../view/projects/ProjectCreateView.vue';
 import ProjectUpdateView from "../view/projects/ProjectUpdateView.vue";
 import ProfileView from "../view/profile/ProfileView.vue";
 import Error from '../view/Error';
+import Clients from "../view/clients/Clients.vue";
 
 export default [
     {
@@ -40,22 +40,14 @@ export default [
         ]
     },
     {
-        path: '/dashboard',
+        path: '/',
         component: Dashboard,
         name: 'Dashboard',
-        redirect: { name: 'ExampleComponent' },
+        redirect: { name: 'Users' },
         meta: {
             guard: 'auth'
         },
         children: [
-            {
-                path: '/example',
-                component: ExampleComponent,
-                name: 'ExampleComponent',
-                meta: {
-                    guard: 'auth'
-                }
-            },
             {
                 path: '/users',
                 component: Users,
@@ -103,7 +95,15 @@ export default [
                 meta: {
                     guard: 'auth'
                 }
-            }
+            },
+            {
+                path: '/clients',
+                component: Clients,
+                name: 'Clients',
+                meta: {
+                    guard: 'auth'
+                }
+            },
         ]
     },
     {

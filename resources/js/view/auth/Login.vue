@@ -65,7 +65,7 @@ export default {
                 if (valid){
                     this.$store.dispatch('auth/login', this.login)
                         .then(()=>{
-                            this.$router.push({name: 'ExampleComponent'})
+                            this.$router.push({name: 'Users'})
                             this.$notify({
                                 title: 'Success',
                                 type: 'success',

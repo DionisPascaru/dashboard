@@ -22,9 +22,9 @@ class ClientSerializer
             ClientFieldsEnum::ID => $client[ClientFieldsEnum::ID],
             ClientFieldsEnum::NAME => $client[ClientFieldsEnum::NAME],
             ClientFieldsEnum::EMAIL => $client[ClientFieldsEnum::EMAIL],
-            ClientFieldsEnum::CREATED_AT => $client[ClientFieldsEnum::CREATED_AT],
-            ClientFieldsEnum::UPDATED_AT => $client[ClientFieldsEnum::UPDATED_AT],
             ClientFieldsEnum::STATUS => $client[ClientFieldsEnum::STATUS],
+            ClientFieldsEnum::CREATED_AT => date('Y-m-d h:m:s', strtotime($client[ClientFieldsEnum::CREATED_AT])),
+            ClientFieldsEnum::UPDATED_AT => date('Y-m-d h:m:s', strtotime($client[ClientFieldsEnum::UPDATED_AT])),
         ];
     }
 }

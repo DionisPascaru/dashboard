@@ -1,5 +1,5 @@
 <template>
-  <div class="error">
+  <div class="view-content error">
     <div class="header">
       <span>Dashboard</span>
     </div>
