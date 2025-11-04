@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\Admin\Client\ClientController;
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\Project\ProjectCategoriesApiController;
 use App\Http\Controllers\API\Project\ProjectsApiController;
@@ -51,4 +52,13 @@ Route::middleware('auth:sanctum')->group( function () {
 
     // Roles
     Route::get('/roles', [RolesApiController::class, 'index']);
+
+    // Clients
+    Route::group(['prefix' => 'clients'], function () {
+        Route::post('/search', [ClientController::class, 'search']);
+        Route::post('/', [ClientController::class, 'create']);
+        Route::put('/{client}', [ClientController::class, 'update']);
+        Route::get('/{client}', [ClientController::class, 'read']);
+        Route::delete('/{client}', [ClientController::class, 'delete']);
+    });
 });
