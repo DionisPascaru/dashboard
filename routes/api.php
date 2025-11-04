@@ -59,5 +59,6 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::post('/', [ClientController::class, 'create']);
         Route::put('/{client}', [ClientController::class, 'update']);
         Route::get('/{client}', [ClientController::class, 'read']);
+        Route::delete('/{client}', [ClientController::class, 'delete']);
     });
 });

@@ -117,4 +117,24 @@ class ClientController
             return $this->restResponseFactory->serverError($exception);
         }
     }
+
+    /**
+     * Delete.
+     *
+     * @param Client $client
+     *
+     * @return JsonResponse
+     */
+    public function delete(Client $client): JsonResponse
+    {
+        try {
+            $this->clientSupervisor->delete($client);
+
+            return $this->restResponseFactory->noContent();
+        } catch (Exception $exception) {
+            $this->logger->error($exception->getMessage(), ['exception' => $exception]);
+
+            return $this->restResponseFactory->serverError($exception);
+        }
+    }
 }

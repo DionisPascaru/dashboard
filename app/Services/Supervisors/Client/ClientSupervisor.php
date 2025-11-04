@@ -66,4 +66,14 @@ class ClientSupervisor
             ClientFieldsEnum::EMAIL => $client->email,
         ];
     }
+
+    /**
+     * Delete.
+     *
+     * @param Client $client
+     */
+    public function delete(Client $client): void
+    {
+        $client->delete();
+    }
 }
