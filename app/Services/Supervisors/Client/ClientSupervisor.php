@@ -50,4 +50,20 @@ class ClientSupervisor
             ClientFieldsEnum::EMAIL => $client->email,
         ];
     }
+
+    /**
+     * Read.
+     *
+     * @param Client $client
+     *
+     * @return array
+     */
+    public function read(Client $client): array
+    {
+        return [
+            ClientFieldsEnum::ID => $client->id,
+            ClientFieldsEnum::NAME => $client->name,
+            ClientFieldsEnum::EMAIL => $client->email,
+        ];
+    }
 }

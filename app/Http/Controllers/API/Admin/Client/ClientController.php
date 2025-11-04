@@ -97,4 +97,24 @@ class ClientController
             return $this->restResponseFactory->serverError($exception);
         }
     }
+
+    /**
+     * Read.
+     *
+     * @param Client $client
+     *
+     * @return JsonResponse
+     */
+    public function read(Client $client): JsonResponse
+    {
+        try {
+            return $this->restResponseFactory->ok(
+                $this->clientSupervisor->read($client),
+            );
+        } catch (Exception $exception) {
+            $this->logger->error($exception->getMessage(), ['exception' => $exception]);
+
+            return $this->restResponseFactory->serverError($exception);
+        }
+    }
 }
