@@ -28,4 +28,26 @@ class ClientSupervisor
 
         return ['id' => $client->id];
     }
+
+    /**
+     * Update.
+     *
+     * @param Client $client
+     * @param array $input
+     *
+     * @return array
+     */
+    public function update(Client $client, array $input): array
+    {
+        $client->name = $input[ClientFieldsEnum::NAME];
+        $client->email = $input[ClientFieldsEnum::EMAIL];
+        $client->password = Hash::make($input[ClientFieldsEnum::PASSWORD]);
+        $client->save();
+
+        return [
+            ClientFieldsEnum::ID => $client->id,
+            ClientFieldsEnum::NAME => $client->name,
+            ClientFieldsEnum::EMAIL => $client->email,
+        ];
+    }
 }

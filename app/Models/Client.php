@@ -18,6 +18,8 @@ class Client extends Model
 {
     use HasFactory;
 
+    const DQL_ALIAS = 'clients';
+
     protected $fillable = [
         'name',
         'email',

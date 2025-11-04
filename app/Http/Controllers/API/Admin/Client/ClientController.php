@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API\Admin\Client;
 use App\Http\Controllers\API\RestResponseFactory;
 use App\Http\Requests\Admin\Client\ClientCreateRequest;
 use App\Http\Requests\Admin\Client\ClientsSearchRequest;
+use App\Http\Requests\Admin\Client\ClientUpdateRequest;
+use App\Models\Client;
 use App\Services\Searcher\Clients\ClientsSearcher;
 use App\Services\Supervisors\Client\ClientSupervisor;
 use Exception;
@@ -65,6 +67,29 @@ class ClientController
 
             return $this->restResponseFactory->created(
                 $this->clientSupervisor->create($input),
+            );
+        } catch (Exception $exception) {
+            $this->logger->error($exception->getMessage(), ['exception' => $exception]);
+
+            return $this->restResponseFactory->serverError($exception);
+        }
+    }
+
+    /**
+     * Update.
+     *
+     * @param Client $client
+     * @param ClientUpdateRequest $request
+     *
+     * @return JsonResponse
+     */
+    public function update(Client $client, ClientUpdateRequest $request): JsonResponse
+    {
+        try {
+            $input = $request->validated();
+
+            return $this->restResponseFactory->ok(
+                $this->clientSupervisor->update($client, $input),
             );
         } catch (Exception $exception) {
             $this->logger->error($exception->getMessage(), ['exception' => $exception]);

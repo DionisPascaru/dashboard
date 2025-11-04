@@ -57,5 +57,6 @@ Route::middleware('auth:sanctum')->group( function () {
     Route::group(['prefix' => 'clients'], function () {
         Route::post('/search', [ClientController::class, 'search']);
         Route::post('/', [ClientController::class, 'create']);
+        Route::put('/{client}', [ClientController::class, 'update']);
     });
 });
