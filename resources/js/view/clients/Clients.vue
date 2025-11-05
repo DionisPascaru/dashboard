@@ -2,7 +2,7 @@
     <div class="view-content">
         <div class="ds-block bg-light view-title">
             <h1>Clients</h1>
-<!--            <user-create-component></user-create-component>-->
+            <client-create-modal-component></client-create-modal-component>
         </div>
 
         <div class="ds-block bg-light">
@@ -53,9 +53,9 @@
                         width="280">
                         <template slot-scope="scope">
                             <div class="d-flex flex-gap">
-<!--                                <router-link :to="{ name: 'UserUpdateView', params: { id: scope.row.id }}">-->
-<!--                                    <el-button class="btn btn-info" type="info" icon="el-icon-edit"></el-button>-->
-<!--                                </router-link>-->
+                                <router-link :to="{ name: 'ClientUpdateView', params: { id: scope.row.id }}">
+                                    <el-button class="btn btn-info" type="info" icon="el-icon-edit"></el-button>
+                                </router-link>
                                 <el-button class="btn btn-danger" type="danger" @click="deleteClient(scope.row)">
                                     Delete
                                 </el-button>
@@ -82,10 +82,12 @@
 
 <script>
 import ClientSearchFilterComponent from "../../components/clients/ClientSearchFilterComponent.vue";
+import ClientCreateModalComponent from "../../components/clients/ClientCreateModalComponent.vue";
 
 export default {
     name: 'Clients',
     components: {
+        ClientCreateModalComponent,
         ClientSearchFilterComponent
     },
     data() {
