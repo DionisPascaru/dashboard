@@ -2,7 +2,7 @@
     <div class="view-content">
         <div class="ds-block bg-light view-title">
             <h1>Clients</h1>
-<!--            <user-create-component></user-create-component>-->
+            <client-create-modal-component></client-create-modal-component>
         </div>
 
         <div class="ds-block bg-light">
@@ -82,10 +82,12 @@
 
 <script>
 import ClientSearchFilterComponent from "../../components/clients/ClientSearchFilterComponent.vue";
+import ClientCreateModalComponent from "../../components/clients/ClientCreateModalComponent.vue";
 
 export default {
     name: 'Clients',
     components: {
+        ClientCreateModalComponent,
         ClientSearchFilterComponent
     },
     data() {

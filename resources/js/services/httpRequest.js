@@ -55,17 +55,18 @@ httpRequest.interceptors.response.use(
                 break;
 
             case 422:
-                // Laravel validation error
-                const validationMessages = Object.values(data.message || {})
-                    .flat()
-                    .join("\n");
+                const validationErrors = data.errors
+                    ? Object.values(data.errors).flat().join("\n")
+                    : data.message;
 
-                console.warn("Validation Error:", validationMessages);
+                console.warn("Validation Error:", validationErrors);
+
                 Notification.error({
                     title: status,
-                    message: validationMessages
-                })
-                return Promise.reject(validationMessages);
+                    message: validationErrors
+                });
+
+                return Promise.reject(validationErrors);
             case 500:
                 console.error("Server error:", data.message);
                 break;

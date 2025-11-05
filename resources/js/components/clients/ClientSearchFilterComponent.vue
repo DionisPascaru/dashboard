@@ -13,7 +13,7 @@
                         <el-input v-model="options.filters.email"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :md="4">
+                <el-col :md="6">
                     <el-form-item label="Date from:" prop="date_from">
                         <el-date-picker
                             style="width: 100%"
@@ -23,7 +23,7 @@
                         </el-date-picker>
                     </el-form-item>
                 </el-col>
-                <el-col :md="4">
+                <el-col :md="6">
                     <el-form-item label="Date till:" prop="date_till">
                         <el-date-picker
                             style="width: 100%"
