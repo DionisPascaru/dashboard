@@ -45,6 +45,7 @@ export default {
                         message: `The ${this.client.name} successfully created!`
                     });
 
+                    this.$store.dispatch('client/searchClients');
                     this.dialogFormVisible = false;
                     this.resetForm();
                 })

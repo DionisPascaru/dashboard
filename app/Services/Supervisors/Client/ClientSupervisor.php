@@ -41,7 +41,6 @@ class ClientSupervisor
     {
         $client->name = $input[ClientFieldsEnum::NAME];
         $client->email = $input[ClientFieldsEnum::EMAIL];
-        $client->password = Hash::make($input[ClientFieldsEnum::PASSWORD]);
         $client->save();
 
         return [

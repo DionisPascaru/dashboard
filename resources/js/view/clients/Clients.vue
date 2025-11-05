@@ -53,9 +53,9 @@
                         width="280">
                         <template slot-scope="scope">
                             <div class="d-flex flex-gap">
-<!--                                <router-link :to="{ name: 'UserUpdateView', params: { id: scope.row.id }}">-->
-<!--                                    <el-button class="btn btn-info" type="info" icon="el-icon-edit"></el-button>-->
-<!--                                </router-link>-->
+                                <router-link :to="{ name: 'ClientUpdateView', params: { id: scope.row.id }}">
+                                    <el-button class="btn btn-info" type="info" icon="el-icon-edit"></el-button>
+                                </router-link>
                                 <el-button class="btn btn-danger" type="danger" @click="deleteClient(scope.row)">
                                     Delete
                                 </el-button>
