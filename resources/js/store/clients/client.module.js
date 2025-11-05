@@ -45,9 +45,10 @@ const actions = {
             throw e;
         }
     },
-    async updateClient({commit}, {id, client}) {
+    async updateClient({commit}, {client}) {
         try {
-            await updateClient(id, client);
+            console.log(client);
+            await updateClient(client.id, client);
         } catch (e) {
             throw e;
         }

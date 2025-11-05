@@ -10,6 +10,7 @@ import ProjectUpdateView from "../view/projects/ProjectUpdateView.vue";
 import ProfileView from "../view/profile/ProfileView.vue";
 import Error from '../view/Error';
 import Clients from "../view/clients/Clients.vue";
+import ClientUpdateView from "../view/clients/ClientUpdateView.vue";
 
 export default [
     {
@@ -104,6 +105,14 @@ export default [
                     guard: 'auth'
                 }
             },
+            {
+                path: '/clients/:id/edit',
+                component: ClientUpdateView,
+                name: 'ClientUpdateView',
+                meta: {
+                    guard: 'auth'
+                },
+            }
         ]
     },
     {
