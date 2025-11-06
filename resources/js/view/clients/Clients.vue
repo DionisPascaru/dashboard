@@ -1,10 +1,5 @@
 <template>
     <div class="view-content">
-        <div class="ds-block bg-light view-title">
-            <h1>Clients</h1>
-            <client-create-modal-component></client-create-modal-component>
-        </div>
-
         <div class="ds-block bg-light">
             <client-search-filter-component
                 @search-filters="handleSearch"

@@ -18,12 +18,23 @@ h1 {
 h4 {
     margin: 3px 0;
 }
+
+.view-container {
+    width: calc(100% - 40px);
+    margin-left: 300px;
+    padding: 20px;
+}
+
 .view-content {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    width: calc(100% - 40px);
-    padding: 20px;
+}
+
+.view-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .view-title {
@@ -72,4 +83,9 @@ h4 {
             color: $dark-color;
         }
     }
+}
+
+.ds-page-options {
+    display: flex;
+    gap: 20px;
 }

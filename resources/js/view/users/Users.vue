@@ -1,10 +1,5 @@
 <template>
     <div class="view-content">
-        <div class="ds-block bg-light view-title">
-            <h1>Users</h1>
-            <user-create-component></user-create-component>
-        </div>
-
         <div class="ds-block bg-light">
             <users-search-component @search-filters="handleSearch" :options="options"></users-search-component>
         </div>
