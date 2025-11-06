@@ -1,44 +1,28 @@
 import Login from '../view/auth/Login';
 import Register from '../view/auth/Register.vue';
 import Dashboard from '../view/Dashboard';
-import Home from '../view/Home';
-import Users from '../view/users/Users';
-import UserUpdateView from '../view/users/UserUpdateView.vue';
-import Projects from '../view/projects/Projects';
-import ProjectCreateView from '../view/projects/ProjectCreateView.vue';
-import ProjectUpdateView from "../view/projects/ProjectUpdateView.vue";
-import ProfileView from "../view/profile/ProfileView.vue";
 import Error from '../view/Error';
-import Clients from "../view/clients/Clients.vue";
-import ClientUpdateView from "../view/clients/ClientUpdateView.vue";
+import clientRoutes from "./clients/client.routes";
+import userRoutes from "./users/user.routes";
+import projectRoutes from "./projects/project.routes";
+import profileRoutes from "./profile/profile.routes";
 
 export default [
     {
-        path: '/',
-        name: 'Home',
-        redirect: { name: 'Login' },
-        component: Home,
+        path: '/login',
+        component: Login,
+        name: 'Login',
         meta: {
-            guard: "guest"
-        },
-        children: [
-            {
-                path: '/login',
-                component: Login,
-                name: 'Login',
-                meta: {
-                    guard: 'guest'
-                }
-            },
-            {
-                path: '/register',
-                component: Register,
-                name: 'Register',
-                meta: {
-                    guard: 'guest'
-                }
-            },
-        ]
+            guard: 'guest'
+        }
+    },
+    {
+        path: '/register',
+        component: Register,
+        name: 'Register',
+        meta: {
+            guard: 'guest'
+        }
     },
     {
         path: '/',
@@ -49,70 +33,11 @@ export default [
             guard: 'auth'
         },
         children: [
-            {
-                path: '/users',
-                component: Users,
-                name: 'Users',
-                meta: {
-                    guard: 'auth'
-                }
-            },
-            {
-                path: '/user/:id/update',
-                component: UserUpdateView,
-                name: 'UserUpdateView',
-                meta: {
-                    guard: 'auth'
-                }
-            },
-            {
-                path: '/projects',
-                component: Projects,
-                name: 'Projects',
-                meta: {
-                    guard: 'auth'
-                }
-            },
-            {
-                path: '/projects/create',
-                component: ProjectCreateView,
-                name: 'ProjectCreateView',
-                meta: {
-                    guard: 'auth'
-                }
-            },
-            {
-                path: '/projects/:id/update',
-                component: ProjectUpdateView,
-                name: 'ProjectUpdateView',
-                meta: {
-                    guard: 'auth'
-                }
-            },
-            {
-                path: '/profile',
-                component: ProfileView,
-                name: 'ProfileView',
-                meta: {
-                    guard: 'auth'
-                }
-            },
-            {
-                path: '/clients',
-                component: Clients,
-                name: 'Clients',
-                meta: {
-                    guard: 'auth'
-                }
-            },
-            {
-                path: '/clients/:id/edit',
-                component: ClientUpdateView,
-                name: 'ClientUpdateView',
-                meta: {
-                    guard: 'auth'
-                },
-            }
+            ...userRoutes,
+            ...projectRoutes,
+            ...clientRoutes,
+            ...profileRoutes,
+
         ]
     },
     {

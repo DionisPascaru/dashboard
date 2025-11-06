@@ -1,9 +1,5 @@
 <template>
     <div class="view-content">
-        <div class="ds-block bg-light view-title">
-            <h1>Profile info</h1>
-        </div>
-
         <div class="ds-block bg-light">
             <el-row>
                 <el-col :md="12">

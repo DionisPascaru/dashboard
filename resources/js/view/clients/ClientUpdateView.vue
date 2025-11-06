@@ -1,9 +1,5 @@
 <template>
     <div class="view-content">
-        <div class="ds-block bg-light view-title">
-            <h1>Update client</h1>
-        </div>
-
         <div class="ds-block bg-light">
             <el-form :model="client">
                 <el-form-item label="Name">

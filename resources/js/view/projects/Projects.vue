@@ -1,12 +1,5 @@
 <template>
     <div class="view-content">
-        <div class="ds-block bg-light view-title">
-            <h1>Projects</h1>
-            <router-link :to="{ name: 'ProjectCreateView'}">
-                <el-button class="btn btn-primary" type="primary">Add project</el-button>
-            </router-link>
-        </div>
-
         <div class="ds-block bg-light">
             <projects-search-component @search-filters="handleSearch" :options="options"></projects-search-component>
         </div>

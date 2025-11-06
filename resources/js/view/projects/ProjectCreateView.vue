@@ -1,9 +1,5 @@
 <template>
     <div class="view-content">
-        <div class="ds-block bg-light view-title">
-            <h1>Create project</h1>
-        </div>
-
         <div class="ds-block bg-light">
             <el-form :model="project" :rules="rules" ref="createProjectForm">
                 <el-row :gutter="20">

@@ -20,12 +20,22 @@ h4 {
   margin: 3px 0;
 }
 
+.view-container {
+  width: calc(100% - 40px);
+  margin-left: 300px;
+  padding: 20px;
+}
+
 .view-content {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  width: calc(100% - 40px);
-  padding: 20px;
+}
+
+.view-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .view-title {
@@ -72,6 +82,11 @@ h4 {
   text-decoration: none;
   font-weight: 600;
   color: #0A1931;
+}
+
+.ds-page-options {
+  display: flex;
+  gap: 20px;
 }
 
 .el-aside {
