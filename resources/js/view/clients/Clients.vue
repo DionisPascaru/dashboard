@@ -44,6 +44,14 @@
                         label="Updated">
                     </el-table-column>
                     <el-table-column
+                        label="Status">
+                        <template slot-scope="scope">
+                            <div class="ds-status" :class="`ds-status-${scope.row.status.value}`">
+                                {{ scope.row.status.name }}
+                            </div>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
                         label="Actions"
                         width="280">
                         <template slot-scope="scope">

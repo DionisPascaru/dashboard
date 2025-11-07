@@ -8007,6 +8007,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'ClientUpdateView',
@@ -8049,6 +8075,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _components_clients_ClientSearchFilterComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/clients/ClientSearchFilterComponent.vue */ "./resources/js/components/clients/ClientSearchFilterComponent.vue");
 /* harmony import */ var _components_clients_ClientCreateModalComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/clients/ClientCreateModalComponent.vue */ "./resources/js/components/clients/ClientCreateModalComponent.vue");
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -99229,42 +99263,152 @@ var render = function () {
       { staticClass: "ds-block bg-light" },
       [
         _c(
-          "el-form",
-          { attrs: { model: _vm.client } },
+          "el-row",
+          { attrs: { gutter: 20 } },
           [
             _c(
-              "el-form-item",
-              { attrs: { label: "Name" } },
+              "el-col",
+              { attrs: { md: 12 } },
               [
-                _c("el-input", {
-                  model: {
-                    value: _vm.client.name,
-                    callback: function ($$v) {
-                      _vm.$set(_vm.client, "name", $$v)
-                    },
-                    expression: "client.name",
-                  },
-                }),
+                _c(
+                  "el-form",
+                  { attrs: { model: _vm.client } },
+                  [
+                    _c(
+                      "el-row",
+                      { attrs: { gutter: 20 } },
+                      [
+                        _c(
+                          "el-col",
+                          { attrs: { md: 12 } },
+                          [
+                            _c(
+                              "el-form-item",
+                              { attrs: { label: "Name" } },
+                              [
+                                _c("el-input", {
+                                  model: {
+                                    value: _vm.client.name,
+                                    callback: function ($$v) {
+                                      _vm.$set(_vm.client, "name", $$v)
+                                    },
+                                    expression: "client.name",
+                                  },
+                                }),
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "el-form-item",
+                              { attrs: { label: "Email" } },
+                              [
+                                _c("el-input", {
+                                  model: {
+                                    value: _vm.client.email,
+                                    callback: function ($$v) {
+                                      _vm.$set(_vm.client, "email", $$v)
+                                    },
+                                    expression: "client.email",
+                                  },
+                                }),
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "el-form-item",
+                              { attrs: { label: "Created" } },
+                              [
+                                _c("el-input", {
+                                  attrs: { disabled: true },
+                                  model: {
+                                    value: _vm.client.created_at,
+                                    callback: function ($$v) {
+                                      _vm.$set(_vm.client, "created_at", $$v)
+                                    },
+                                    expression: "client.created_at",
+                                  },
+                                }),
+                              ],
+                              1
+                            ),
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "el-col",
+                          { attrs: { md: 12 } },
+                          [
+                            _c(
+                              "el-form-item",
+                              { attrs: { label: "Phone" } },
+                              [
+                                _c("el-input", {
+                                  model: {
+                                    value: _vm.client.phone,
+                                    callback: function ($$v) {
+                                      _vm.$set(_vm.client, "phone", $$v)
+                                    },
+                                    expression: "client.phone",
+                                  },
+                                }),
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c("el-form-item", { attrs: { label: "Status" } }, [
+                              _vm.client.status
+                                ? _c(
+                                    "div",
+                                    {
+                                      staticClass: "ds-status",
+                                      class:
+                                        "ds-status-" + _vm.client.status.value,
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(_vm.client.status.name) +
+                                          "\n                                "
+                                      ),
+                                    ]
+                                  )
+                                : _vm._e(),
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "el-form-item",
+                              { attrs: { label: "Updated" } },
+                              [
+                                _c("el-input", {
+                                  attrs: { disabled: true },
+                                  model: {
+                                    value: _vm.client.updated_at,
+                                    callback: function ($$v) {
+                                      _vm.$set(_vm.client, "updated_at", $$v)
+                                    },
+                                    expression: "client.updated_at",
+                                  },
+                                }),
+                              ],
+                              1
+                            ),
+                          ],
+                          1
+                        ),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
               ],
               1
             ),
             _vm._v(" "),
-            _c(
-              "el-form-item",
-              { attrs: { label: "Email" } },
-              [
-                _c("el-input", {
-                  model: {
-                    value: _vm.client.email,
-                    callback: function ($$v) {
-                      _vm.$set(_vm.client, "email", $$v)
-                    },
-                    expression: "client.email",
-                  },
-                }),
-              ],
-              1
-            ),
+            _c("el-col", { attrs: { md: 12 } }),
           ],
           1
         ),
@@ -99379,6 +99523,33 @@ var render = function () {
               _vm._v(" "),
               _c("el-table-column", {
                 attrs: { prop: "updated_at", label: "Updated" },
+              }),
+              _vm._v(" "),
+              _c("el-table-column", {
+                attrs: { label: "Status" },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function (scope) {
+                      return [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "ds-status",
+                            class: "ds-status-" + scope.row.status.value,
+                          },
+                          [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(scope.row.status.name) +
+                                "\n                        "
+                            ),
+                          ]
+                        ),
+                      ]
+                    },
+                  },
+                ]),
               }),
               _vm._v(" "),
               _c("el-table-column", {
