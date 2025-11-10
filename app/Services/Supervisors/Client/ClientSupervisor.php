@@ -4,7 +4,9 @@ namespace App\Services\Supervisors\Client;
 
 use App\Enums\Client\ClientFieldsEnum;
 use App\Enums\Client\ClientStatusEnum;
+use App\Enums\Organization\OrganizationFieldsEnum;
 use App\Models\Client;
+use App\Models\Organization;
 use Illuminate\Support\Facades\Hash;
 
 /**
@@ -84,5 +86,27 @@ class ClientSupervisor
     public function delete(Client $client): void
     {
         $client->delete();
+    }
+
+    /**
+     * Read organizations.
+     *
+     * @param Client $client
+     *
+     * @return array
+     */
+    public function readOrganizations(Client $client): array
+    {
+        $organizations = $client->organizations;
+
+        return \array_map(function ($organization) {
+            return [
+                'id' => $organization[OrganizationFieldsEnum::ID],
+                'name' => $organization[OrganizationFieldsEnum::NAME],
+                'address' => $organization[OrganizationFieldsEnum::ADDRESS],
+                'phone' => $organization[OrganizationFieldsEnum::PHONE],
+                'email' => $organization[OrganizationFieldsEnum::EMAIL],
+            ];
+        }, $organizations->toArray());
     }
 }

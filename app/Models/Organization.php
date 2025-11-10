@@ -21,11 +21,17 @@ class Organization extends Model
         'logo',
     ];
 
+    /**
+     * @return BelongsTo
+     */
     public function owner(): BelongsTo
     {
         return $this->belongsTo(Client::class, 'owner_id');
     }
 
+    /**
+     * @return HasMany
+     */
     public function venues(): HasMany
     {
         return $this->hasMany(Venue::class);

@@ -137,4 +137,24 @@ class ClientController
             return $this->restResponseFactory->serverError($exception);
         }
     }
+
+    /**
+     * Read organizations.
+     *
+     * @param Client $client
+     *
+     * @return JsonResponse
+     */
+    public function readOrganizations(Client $client): JsonResponse
+    {
+        try {
+            return $this->restResponseFactory->ok(
+                $this->clientSupervisor->readOrganizations($client)
+            );
+        } catch (Exception $exception) {
+            $this->logger->error($exception->getMessage(), ['exception' => $exception]);
+
+            return $this->restResponseFactory->serverError($exception);
+        }
+    }
 }
