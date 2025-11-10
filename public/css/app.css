@@ -89,6 +89,29 @@ h4 {
   gap: 20px;
 }
 
+.ds-status {
+  width: 100px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #1A3d63;
+  border-radius: 8px;
+  border: 1px solid #BACCD9;
+}
+.ds-status-active {
+  border-color: #0C969C;
+}
+.ds-status-inactive {
+  border-color: #BACCD9;
+}
+.ds-status-pending {
+  border-color: #FDA481;
+}
+.ds-status-blocked {
+  border-color: #C51F5D;
+}
+
 .el-aside {
   overflow: unset !important;
 }

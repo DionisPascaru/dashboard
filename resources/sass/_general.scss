@@ -89,3 +89,27 @@ h4 {
     display: flex;
     gap: 20px;
 }
+
+.ds-status {
+    width: 100px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $primary-color;
+    border-radius: 8px;
+    border: 1px solid $grey-color;
+
+    &-active {
+        border-color: $success-color;
+    }
+    &-inactive {
+        border-color: $grey-color;
+    }
+    &-pending {
+        border-color: $warning-color;
+    }
+    &-blocked {
+        border-color: $danger-color;
+    }
+}

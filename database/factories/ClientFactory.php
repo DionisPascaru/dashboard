@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\Client\ClientStatusEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +21,7 @@ class ClientFactory extends Factory
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'phone' => $this->faker->phoneNumber(),
-            'status' => null,
+            'status' => $this->faker->randomElement(ClientStatusEnum::cases()),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'created_at' => now(),
             'updated_at' => now(),

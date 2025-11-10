@@ -60,5 +60,10 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::put('/{client}', [ClientController::class, 'update']);
         Route::get('/{client}', [ClientController::class, 'read']);
         Route::delete('/{client}', [ClientController::class, 'delete']);
+
+        // Owned organizations
+        Route::group(['prefix' => '{client}/organizations'], function () {
+            Route::get('/', [ClientController::class, 'readOrganizations']);
+        });
     });
 });
