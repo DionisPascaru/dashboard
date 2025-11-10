@@ -3,12 +3,15 @@ import {
     readClient,
     createClient,
     updateClient,
-    deleteClient
+    deleteClient,
+    readOwnedOrganizations,
 } from "../../services/clients/client.service";
+import {commit} from "lodash/seq";
 
 const state = () => ({
     clients: [],
     client: {},
+    organizations: [],
 })
 
 const getters = {
@@ -18,6 +21,9 @@ const getters = {
     getClient(state) {
         return state.client;
     },
+    getOrganizations(state) {
+        return state.organizations;
+    }
 }
 
 const actions = {
@@ -47,7 +53,6 @@ const actions = {
     },
     async updateClient({commit}, {client}) {
         try {
-            console.log(client);
             await updateClient(client.id, client);
         } catch (e) {
             throw e;
@@ -61,6 +66,14 @@ const actions = {
             throw e;
         }
     },
+    async readOwnedOrganizations({commit}, clientId) {
+        try {
+            const response = await readOwnedOrganizations(clientId);
+            commit('READ_OWNED_ORGANIZATIONS', response);
+        } catch (e) {
+            throw e;
+        }
+    }
 }
 
 const mutations = {
@@ -80,6 +93,9 @@ const mutations = {
             state.clients.items.slice(index, 1);
         }
     },
+    READ_OWNED_ORGANIZATIONS(state, organizations) {
+        state.organizations = organizations;
+    }
 }
 
 export default {

@@ -97,16 +97,18 @@ class ClientSupervisor
      */
     public function readOrganizations(Client $client): array
     {
-        $organizations = $client->organizations;
-
-        return \array_map(function ($organization) {
-            return [
-                'id' => $organization[OrganizationFieldsEnum::ID],
-                'name' => $organization[OrganizationFieldsEnum::NAME],
-                'address' => $organization[OrganizationFieldsEnum::ADDRESS],
-                'phone' => $organization[OrganizationFieldsEnum::PHONE],
-                'email' => $organization[OrganizationFieldsEnum::EMAIL],
-            ];
-        }, $organizations->toArray());
+        return $client->organizations
+            ->map(function ($organization) {
+                return [
+                    'id' => $organization->id,
+                    'owner' => $organization->owner->name,
+                    'name' => $organization->name,
+                    'description' => $organization->description,
+                    'address' => $organization->address,
+                    'phone' => $organization->phone,
+                    'email' => $organization->email,
+                ];
+            })
+            ->toArray();
     }
 }

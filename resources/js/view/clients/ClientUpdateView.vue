@@ -38,19 +38,42 @@
             </el-row>
             <el-button class="btn btn-primary" type="primary" @click="update()">Update</el-button>
         </div>
+
+        <div class="ds-block bg-light">
+            <el-row :gutter="20">
+                <el-col :md="8" v-for="organization in organizations" :key="organization">
+                    <organization-cart-component :organization="organization"></organization-cart-component>
+                </el-col>
+                <el-col v-if="!organizations.length">
+                    <span>No organizations</span>
+                </el-col>
+            </el-row>
+        </div>
     </div>
 </template>
 
 <script>
+import OrganizationCartComponent from "../../components/organizations/OrganizationCartComponent.vue";
+
 export default {
     name: 'ClientUpdateView',
+    components: {OrganizationCartComponent},
+    data() {
+      return {
+          clientId: this.$route.params.id,
+      }
+    },
     computed: {
         client() {
             return this.$store.getters['client/getClient'];
         },
+        organizations() {
+            return this.$store.getters['client/getOrganizations'];
+        }
     },
     mounted() {
-        this.$store.dispatch('client/readClient', this.$route.params.id);
+        this.$store.dispatch('client/readClient', this.clientId);
+        this.$store.dispatch('client/readOwnedOrganizations', this.clientId);
     },
     methods: {
         update() {

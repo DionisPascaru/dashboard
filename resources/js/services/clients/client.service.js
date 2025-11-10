@@ -20,10 +20,15 @@ const deleteClient = (id) => {
     return httpRequest.delete(`/clients/${id}`);
 }
 
+const readOwnedOrganizations = (id) => {
+    return httpRequest.get(`/clients/${id}/organizations`);
+}
+
 export {
     searchClients,
     readClient,
     createClient,
     updateClient,
     deleteClient,
+    readOwnedOrganizations,
 }
