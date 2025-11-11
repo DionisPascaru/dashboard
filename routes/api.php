@@ -71,5 +71,6 @@ Route::middleware('auth:sanctum')->group( function () {
     // Organizations
     Route::group(['prefix' => 'organizations'], function () {
         Route::post('/search', [OrganizationController::class, 'search']);
+        Route::post('/', [OrganizationController::class, 'create']);
     });
 });
