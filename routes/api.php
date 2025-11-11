@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\Admin\Client\ClientController;
+use App\Http\Controllers\API\Admin\Organization\OrganizationController;
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\Project\ProjectCategoriesApiController;
 use App\Http\Controllers\API\Project\ProjectsApiController;
@@ -65,5 +66,10 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::group(['prefix' => '{client}/organizations'], function () {
             Route::get('/', [ClientController::class, 'readOrganizations']);
         });
+    });
+
+    // Organizations
+    Route::group(['prefix' => 'organizations'], function () {
+        Route::post('/search', [OrganizationController::class, 'search']);
     });
 });
