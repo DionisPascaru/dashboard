@@ -31,4 +31,34 @@ class OrganizationSupervisor
 
         return ['id' => $organization->id];
     }
+
+    /**
+     * Update.
+     *
+     * @param Organization $organization
+     * @param array $input
+     *
+     * @return array
+     */
+    public function update(Organization $organization, array $input): array
+    {
+        $organization->name = $input[OrganizationFieldsEnum::NAME];
+        $organization->description = $input[OrganizationFieldsEnum::DESCRIPTION] ?? null;
+        $organization->email = $input[OrganizationFieldsEnum::EMAIL];
+        $organization->phone = $input[OrganizationFieldsEnum::PHONE] ?? null;
+        $organization->address = $input[OrganizationFieldsEnum::ADDRESS] ?? null;
+        $organization->logo = $input[OrganizationFieldsEnum::LOGO] ?? null;
+        $organization->save();
+
+        return [
+            OrganizationFieldsEnum::ID => $organization->id,
+            OrganizationFieldsEnum::OWNER => $organization->owner->name,
+            OrganizationFieldsEnum::NAME => $organization->name,
+            OrganizationFieldsEnum::DESCRIPTION => $organization->description,
+            OrganizationFieldsEnum::EMAIL => $organization->email,
+            OrganizationFieldsEnum::PHONE => $organization->phone,
+            OrganizationFieldsEnum::ADDRESS => $organization->address,
+            OrganizationFieldsEnum::LOGO => $organization->logo,
+        ];
+    }
 }

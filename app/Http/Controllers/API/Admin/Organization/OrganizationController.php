@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API\Admin\Organization;
 use App\Http\Controllers\API\RestResponseFactory;
 use App\Http\Requests\Admin\Organization\OrganizationCreateRequest;
 use App\Http\Requests\Admin\Organization\OrganizationsSearchRequest;
+use App\Http\Requests\Admin\Organization\OrganizationUpdateRequest;
+use App\Models\Organization;
 use App\Services\Searcher\Organization\OrganizationsSearcher;
 use App\Services\Supervisors\Organization\OrganizationSupervisor;
 use Exception;
@@ -68,6 +70,29 @@ class OrganizationController
 
             return $this->restResponseFactory->created(
                 $this->organizationSupervisor->create($input),
+            );
+        } catch (Exception $exception) {
+            $this->logger->error($exception->getMessage(), ['exception' => $exception]);
+
+            return $this->restResponseFactory->serverError($exception);
+        }
+    }
+
+    /**
+     * Update.
+     *
+     * @param Organization $organization
+     * @param OrganizationUpdateRequest $request
+     *
+     * @return JsonResponse
+     */
+    public function update(Organization $organization, OrganizationUpdateRequest $request): JsonResponse
+    {
+        try {
+            $input = $request->validated();
+
+            return $this->restResponseFactory->ok(
+                $this->organizationSupervisor->update($organization, $input),
             );
         } catch (Exception $exception) {
             $this->logger->error($exception->getMessage(), ['exception' => $exception]);
