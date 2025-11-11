@@ -120,4 +120,24 @@ class OrganizationController
             return $this->restResponseFactory->serverError($exception);
         }
     }
+
+    /**
+     * Delete.
+     *
+     * @param Organization $organization
+     *
+     * @return JsonResponse
+     */
+    public function delete(Organization $organization): JsonResponse
+    {
+        try {
+            $this->organizationSupervisor->delete($organization);
+
+            return $this->restResponseFactory->noContent();
+        } catch (Exception $exception) {
+            $this->logger->error($exception->getMessage(), ['exception' => $exception]);
+
+            return $this->restResponseFactory->serverError($exception);
+        }
+    }
 }

@@ -74,5 +74,6 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::post('/', [OrganizationController::class, 'create']);
         Route::put('/{organization}', [OrganizationController::class, 'update']);
         Route::get('/{organization}', [OrganizationController::class, 'read']);
+        Route::delete('/{organization}', [OrganizationController::class, 'delete']);
     });
 });

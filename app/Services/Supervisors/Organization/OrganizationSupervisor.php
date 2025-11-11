@@ -82,4 +82,14 @@ class OrganizationSupervisor
             OrganizationFieldsEnum::LOGO => $organization->logo,
         ];
     }
+
+    /**
+     * Delete.
+     *
+     * @param Organization $organization
+     */
+    public function delete(Organization $organization): void
+    {
+        $organization->delete();
+    }
 }
