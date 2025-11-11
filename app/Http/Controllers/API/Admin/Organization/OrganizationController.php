@@ -100,4 +100,24 @@ class OrganizationController
             return $this->restResponseFactory->serverError($exception);
         }
     }
+
+    /**
+     * Read.
+     *
+     * @param Organization $organization
+     *
+     * @return JsonResponse
+     */
+    public function read(Organization $organization): JsonResponse
+    {
+        try {
+            return $this->restResponseFactory->ok(
+                $this->organizationSupervisor->read($organization),
+            );
+        } catch (Exception $exception) {
+            $this->logger->error($exception->getMessage(), ['exception' => $exception]);
+
+            return $this->restResponseFactory->serverError($exception);
+        }
+    }
 }

@@ -61,4 +61,25 @@ class OrganizationSupervisor
             OrganizationFieldsEnum::LOGO => $organization->logo,
         ];
     }
+
+    /**
+     * Read.
+     *
+     * @param Organization $organization
+     *
+     * @return array
+     */
+    public function read(Organization $organization): array
+    {
+        return [
+            OrganizationFieldsEnum::ID => $organization->id,
+            OrganizationFieldsEnum::OWNER => $organization->owner->name,
+            OrganizationFieldsEnum::NAME => $organization->name,
+            OrganizationFieldsEnum::DESCRIPTION => $organization->description,
+            OrganizationFieldsEnum::EMAIL => $organization->email,
+            OrganizationFieldsEnum::PHONE => $organization->phone,
+            OrganizationFieldsEnum::ADDRESS => $organization->address,
+            OrganizationFieldsEnum::LOGO => $organization->logo,
+        ];
+    }
 }
