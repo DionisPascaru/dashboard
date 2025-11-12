@@ -20,6 +20,10 @@
                     <i class="el-icon-s-grid"></i>
                     <span>Clients</span>
                 </el-menu-item>
+                <el-menu-item class="ds-sidebar-menu--item" index="Organizations" :route="{ name: 'Organizations' }">
+                    <i class="el-icon-s-grid"></i>
+                    <span>Organizations</span>
+                </el-menu-item>
             </el-menu>
         </div>
         <div>
