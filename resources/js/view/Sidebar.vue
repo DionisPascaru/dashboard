@@ -2,7 +2,7 @@
     <div class="ds-sidebar">
         <div>
             <div class="ds-logo">
-                LOGO
+                <img :src="getLogo" alt="logo">
             </div>
             <el-menu
                 :default-active="activeIndex"

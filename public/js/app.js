@@ -8393,6 +8393,106 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/view/organizations/OrganizationUpdateView.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/view/organizations/OrganizationUpdateView.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _components_organizations_OrganizationCartComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/organizations/OrganizationCartComponent.vue */ "./resources/js/components/organizations/OrganizationCartComponent.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "OrganizationUpdateView",
+  components: {
+    OrganizationCartComponent: _components_organizations_OrganizationCartComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      organizationId: this.$route.params.id
+    };
+  },
+  computed: {
+    organization: function organization() {
+      return this.$store.getters['organization/getOrganization'];
+    }
+  },
+  mounted: function mounted() {
+    this.$store.dispatch('organization/readOrganization', this.organizationId);
+  },
+  methods: {
+    update: function update() {
+      var _this = this;
+      this.$store.dispatch('organization/updateOrganization', {
+        organization: this.organization
+      }).then(function () {
+        _this.$notify({
+          title: 'Success',
+          type: 'success',
+          message: "The ".concat(_this.organization.name, " successfully updated!")
+        });
+      })["catch"](function () {});
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/view/organizations/Organizations.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/view/organizations/Organizations.vue?vue&type=script&lang=js& ***!
@@ -9645,6 +9745,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _view_organizations_Organizations_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../view/organizations/Organizations.vue */ "./resources/js/view/organizations/Organizations.vue");
+/* harmony import */ var _view_organizations_OrganizationUpdateView_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../view/organizations/OrganizationUpdateView.vue */ "./resources/js/view/organizations/OrganizationUpdateView.vue");
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ([{
   path: 'organizations',
@@ -9656,6 +9758,20 @@ __webpack_require__.r(__webpack_exports__);
     breadcrumbs: [{
       text: 'Organizations',
       name: 'Organizations'
+    }]
+  }
+}, {
+  path: 'organizations/:id/edit',
+  component: _view_organizations_OrganizationUpdateView_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+  name: 'OrganizationUpdateView',
+  meta: {
+    viewTitle: 'Edit organization',
+    breadcrumbs: [{
+      text: 'Organizations',
+      name: 'Organizations'
+    }, {
+      text: 'Edit organization',
+      name: null
     }]
   }
 }]);
@@ -76877,7 +76993,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/logo.svg?83ae5ade7c1127ed4fde678a787f3b7d");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/logo.svg?b2372921f8ae877af05175a5632ab9f3");
 
 /***/ }),
 
@@ -97264,6 +97380,45 @@ component.options.__file = "resources/js/view/clients/Clients.vue"
 
 /***/ }),
 
+/***/ "./resources/js/view/organizations/OrganizationUpdateView.vue":
+/*!********************************************************************!*\
+  !*** ./resources/js/view/organizations/OrganizationUpdateView.vue ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _OrganizationUpdateView_vue_vue_type_template_id_5633bca8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./OrganizationUpdateView.vue?vue&type=template&id=5633bca8& */ "./resources/js/view/organizations/OrganizationUpdateView.vue?vue&type=template&id=5633bca8&");
+/* harmony import */ var _OrganizationUpdateView_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./OrganizationUpdateView.vue?vue&type=script&lang=js& */ "./resources/js/view/organizations/OrganizationUpdateView.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _OrganizationUpdateView_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _OrganizationUpdateView_vue_vue_type_template_id_5633bca8___WEBPACK_IMPORTED_MODULE_0__.render,
+  _OrganizationUpdateView_vue_vue_type_template_id_5633bca8___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/view/organizations/OrganizationUpdateView.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/view/organizations/Organizations.vue":
 /*!***********************************************************!*\
   !*** ./resources/js/view/organizations/Organizations.vue ***!
@@ -97845,6 +98000,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/view/organizations/OrganizationUpdateView.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/view/organizations/OrganizationUpdateView.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_OrganizationUpdateView_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./OrganizationUpdateView.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/view/organizations/OrganizationUpdateView.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_OrganizationUpdateView_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/view/organizations/Organizations.vue?vue&type=script&lang=js&":
 /*!************************************************************************************!*\
   !*** ./resources/js/view/organizations/Organizations.vue?vue&type=script&lang=js& ***!
@@ -98341,6 +98512,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Clients_vue_vue_type_template_id_110a3916_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Clients_vue_vue_type_template_id_110a3916_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Clients.vue?vue&type=template&id=110a3916&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/view/clients/Clients.vue?vue&type=template&id=110a3916&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/view/organizations/OrganizationUpdateView.vue?vue&type=template&id=5633bca8&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/view/organizations/OrganizationUpdateView.vue?vue&type=template&id=5633bca8& ***!
+  \***************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OrganizationUpdateView_vue_vue_type_template_id_5633bca8___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OrganizationUpdateView_vue_vue_type_template_id_5633bca8___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OrganizationUpdateView_vue_vue_type_template_id_5633bca8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./OrganizationUpdateView.vue?vue&type=template&id=5633bca8& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/view/organizations/OrganizationUpdateView.vue?vue&type=template&id=5633bca8&");
 
 
 /***/ }),
@@ -99915,7 +100103,7 @@ var render = function () {
       "div",
       [
         _c("div", { staticClass: "ds-logo" }, [
-          _vm._v("\n            LOGO\n        "),
+          _c("img", { attrs: { src: _vm.getLogo, alt: "logo" } }),
         ]),
         _vm._v(" "),
         _c(
@@ -100816,6 +101004,230 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/view/organizations/OrganizationUpdateView.vue?vue&type=template&id=5633bca8&":
+/*!******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/view/organizations/OrganizationUpdateView.vue?vue&type=template&id=5633bca8& ***!
+  \******************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "view-content" }, [
+    _c(
+      "div",
+      { staticClass: "ds-block bg-light" },
+      [
+        _c(
+          "el-form",
+          { attrs: { model: _vm.organization } },
+          [
+            _c(
+              "el-row",
+              { attrs: { gutter: 20 } },
+              [
+                _c(
+                  "el-col",
+                  { attrs: { md: 6 } },
+                  [
+                    _c(
+                      "el-form-item",
+                      { attrs: { label: "Name" } },
+                      [
+                        _c("el-input", {
+                          model: {
+                            value: _vm.organization.name,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.organization, "name", $$v)
+                            },
+                            expression: "organization.name",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "el-col",
+                  { attrs: { md: 6 } },
+                  [
+                    _c(
+                      "el-form-item",
+                      { attrs: { label: "Email" } },
+                      [
+                        _c("el-input", {
+                          model: {
+                            value: _vm.organization.email,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.organization, "email", $$v)
+                            },
+                            expression: "organization.email",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "el-col",
+                  { attrs: { md: 6 } },
+                  [
+                    _c(
+                      "el-form-item",
+                      { attrs: { label: "Phone" } },
+                      [
+                        _c("el-input", {
+                          model: {
+                            value: _vm.organization.phone,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.organization, "phone", $$v)
+                            },
+                            expression: "organization.phone",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "el-col",
+                  { attrs: { md: 6 } },
+                  [
+                    _c(
+                      "el-form-item",
+                      { attrs: { label: "Owner" } },
+                      [
+                        _c("el-input", {
+                          attrs: { disabled: true },
+                          model: {
+                            value: _vm.organization.owner,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.organization, "owner", $$v)
+                            },
+                            expression: "organization.owner",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "el-row",
+              { attrs: { gutter: 20 } },
+              [
+                _c(
+                  "el-col",
+                  { attrs: { md: 6 } },
+                  [
+                    _c(
+                      "el-form-item",
+                      { attrs: { label: "Address" } },
+                      [
+                        _c("el-input", {
+                          model: {
+                            value: _vm.organization.address,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.organization, "address", $$v)
+                            },
+                            expression: "organization.address",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "el-row",
+              { attrs: { gutter: 20 } },
+              [
+                _c(
+                  "el-col",
+                  { attrs: { md: 24 } },
+                  [
+                    _c(
+                      "el-form-item",
+                      { attrs: { label: "Description" } },
+                      [
+                        _c("el-input", {
+                          attrs: {
+                            type: "textarea",
+                            rows: 2,
+                            placeholder: "Please input",
+                          },
+                          model: {
+                            value: _vm.organization.description,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.organization, "description", $$v)
+                            },
+                            expression: "organization.description",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+              ],
+              1
+            ),
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "el-button",
+          {
+            staticClass: "btn btn-primary",
+            attrs: { type: "primary" },
+            on: {
+              click: function ($event) {
+                return _vm.update()
+              },
+            },
+          },
+          [_vm._v("Update")]
+        ),
+      ],
+      1
+    ),
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/view/organizations/Organizations.vue?vue&type=template&id=8c0f7036&":
 /*!*********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/view/organizations/Organizations.vue?vue&type=template&id=8c0f7036& ***!
@@ -100915,6 +101327,25 @@ var render = function () {
                           { staticClass: "d-flex flex-gap" },
                           [
                             _c(
+                              "router-link",
+                              {
+                                attrs: {
+                                  to: {
+                                    name: "OrganizationUpdateView",
+                                    params: { id: scope.row.id },
+                                  },
+                                },
+                              },
+                              [
+                                _c("el-button", {
+                                  staticClass: "btn btn-info",
+                                  attrs: { type: "info", icon: "el-icon-edit" },
+                                }),
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
                               "el-button",
                               {
                                 staticClass: "btn btn-danger",
@@ -100927,7 +101358,7 @@ var render = function () {
                               },
                               [
                                 _vm._v(
-                                  "\n                                    Delete\n                                "
+                                  "\n                                Delete\n                            "
                                 ),
                               ]
                             ),
