@@ -6,7 +6,6 @@ import {
     deleteClient,
     readOwnedOrganizations,
 } from "../../services/clients/client.service";
-import {commit} from "lodash/seq";
 
 const state = () => ({
     clients: [],

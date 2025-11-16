@@ -6,6 +6,7 @@ import clientRoutes from "./clients/client.routes";
 import userRoutes from "./users/user.routes";
 import projectRoutes from "./projects/project.routes";
 import profileRoutes from "./profile/profile.routes";
+import organizationRoutes from "./organizations/organization.routes";
 
 export default [
     {
@@ -37,6 +38,7 @@ export default [
             ...projectRoutes,
             ...clientRoutes,
             ...profileRoutes,
+            ...organizationRoutes,
 
         ]
     },

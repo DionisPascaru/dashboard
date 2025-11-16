@@ -8,12 +8,12 @@ const readClient = (id) => {
     return httpRequest.get(`/clients/${id}`);
 }
 
-const createClient = (user) => {
-    return httpRequest.post('/clients', user);
+const createClient = (client) => {
+    return httpRequest.post('/clients', client);
 }
 
-const updateClient = (id, user) => {
-    return httpRequest.put(`/clients/${id}`, user);
+const updateClient = (id, client) => {
+    return httpRequest.put(`/clients/${id}`, client);
 }
 
 const deleteClient = (id) => {

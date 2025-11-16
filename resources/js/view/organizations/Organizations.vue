@@ -1,10 +1,9 @@
 <template>
     <div class="view-content">
         <div class="ds-block bg-light">
-            <client-search-filter-component
-                @search-filters="handleSearch"
-                :options="options">
-            </client-search-filter-component>
+            <organization-search-filter-component @search-filters="handleSearch"
+                                                  :options="options">
+            </organization-search-filter-component>
         </div>
 
         <div class="ds-block bg-light">
@@ -13,17 +12,17 @@
                     class="ds-pagination-buttons"
                     layout="prev, pager, next"
                     @current-change="handlePagination"
-                    :total="clients.total"
+                    :total="organizations.total"
                     :current-page="options.pageNum">
                 </el-pagination>
                 <div>
-                    <h4>Totals: {{ clients.total }}</h4>
+                    <h4>Totals: {{ organizations.total }}</h4>
                 </div>
             </div>
             <div class="view-content">
                 <el-table
                     class="table"
-                    :data="clients.items"
+                    :data="organizations.items"
                     v-loading="loading"
                     style="width: 100%">
                     <el-table-column
@@ -44,22 +43,14 @@
                         label="Updated">
                     </el-table-column>
                     <el-table-column
-                        label="Status">
-                        <template slot-scope="scope">
-                            <div class="ds-status" :class="`ds-status-${scope.row.status.value}`">
-                                {{ scope.row.status.name }}
-                            </div>
-                        </template>
-                    </el-table-column>
-                    <el-table-column
                         label="Actions"
                         width="280">
                         <template slot-scope="scope">
                             <div class="d-flex flex-gap">
-                                <router-link :to="{ name: 'ClientUpdateView', params: { id: scope.row.id }}">
+                                <router-link :to="{ name: 'OrganizationUpdateView', params: { id: scope.row.id }}">
                                     <el-button class="btn btn-info" type="info" icon="el-icon-edit"></el-button>
                                 </router-link>
-                                <el-button class="btn btn-danger" type="danger" @click="deleteClient(scope.row)">
+                                <el-button class="btn btn-danger" type="danger" @click="deleteOrganization(scope.row)">
                                     Delete
                                 </el-button>
                             </div>
@@ -72,11 +63,11 @@
                     class="ds-pagination-buttons"
                     layout="prev, pager, next"
                     @current-change="handlePagination"
-                    :total="clients.total"
+                    :total="organizations.total"
                     :current-page="options.pageNum">
                 </el-pagination>
                 <div>
-                    <h4>Totals: {{ clients.total }}</h4>
+                    <h4>Totals: {{ organizations.total }}</h4>
                 </div>
             </div>
         </div>
@@ -84,15 +75,11 @@
 </template>
 
 <script>
-import ClientSearchFilterComponent from "../../components/clients/ClientSearchFilterComponent.vue";
-import ClientCreateModalComponent from "../../components/clients/ClientCreateModalComponent.vue";
+import OrganizationSearchFilterComponent from "../../components/organizations/OrganizationSearchFilterComponent.vue";
 
 export default {
-    name: 'Clients',
-    components: {
-        ClientCreateModalComponent,
-        ClientSearchFilterComponent
-    },
+    name: 'Organizations',
+    components: {OrganizationSearchFilterComponent},
     data() {
         return {
             loading: true,
@@ -109,8 +96,8 @@ export default {
         }
     },
     computed: {
-        clients() {
-            return this.$store.getters['client/getClients'];
+        organizations() {
+            return this.$store.getters['organization/getOrganizations'];
         }
     },
     mounted() {
@@ -130,7 +117,7 @@ export default {
         search() {
             this.loading = true;
 
-            this.$store.dispatch('client/searchClients', this.options)
+            this.$store.dispatch('organization/searchOrganizations', this.options)
                 .then(() => {})
                 .catch((e) => {
                     this.$notify.error({
@@ -142,22 +129,22 @@ export default {
                     this.loading = false;
                 })
         },
-        deleteClient(client) {
+        deleteOrganization(organization) {
             this.$confirm(
-                `Are you sure you want to delete client ${client.name}?`,
+                `Are you sure you want to delete organization ${organization.name}?`,
                 {
-                    title: 'Delete client',
+                    title: 'Delete organization',
                     confirmButtonText: "OK",
                     cancelButtonText: "Cancel",
                     type: "warning"
                 }
             ).then(() => {
-                this.$store.dispatch('client/deleteClient', client.id)
+                this.$store.dispatch('organization/deleteOrganization', organization.id)
                     .then(() => {
                         this.$notify({
                             title: 'Success',
                             type: 'success',
-                            message: `The ${client.name} successfully deleted!`
+                            message: `The ${organization.name} successfully deleted!`
                         });
                         this.search();
                     })
@@ -172,7 +159,3 @@ export default {
     }
 }
 </script>
-
-<style scoped lang="scss">
-
-</style>

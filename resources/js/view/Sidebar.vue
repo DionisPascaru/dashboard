@@ -2,7 +2,7 @@
     <div class="ds-sidebar">
         <div>
             <div class="ds-logo">
-                LOGO
+                <img :src="getLogo" alt="logo">
             </div>
             <el-menu
                 :default-active="activeIndex"
@@ -19,6 +19,10 @@
                 <el-menu-item class="ds-sidebar-menu--item" index="Clients" :route="{ name: 'Clients' }">
                     <i class="el-icon-s-grid"></i>
                     <span>Clients</span>
+                </el-menu-item>
+                <el-menu-item class="ds-sidebar-menu--item" index="Organizations" :route="{ name: 'Organizations' }">
+                    <i class="el-icon-s-grid"></i>
+                    <span>Organizations</span>
                 </el-menu-item>
             </el-menu>
         </div>
