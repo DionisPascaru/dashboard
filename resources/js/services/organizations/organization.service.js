@@ -8,12 +8,12 @@ const readOrganization = (id) => {
     return httpRequest.get(`/organizations/${id}`);
 }
 
-const createOrganization = (user) => {
-    return httpRequest.post('/organizations', user);
+const createOrganization = (organization) => {
+    return httpRequest.post('/organizations', organization);
 }
 
-const updateOrganization = (id, user) => {
-    return httpRequest.put(`/organizations/${id}`, user);
+const updateOrganization = (id, organization) => {
+    return httpRequest.put(`/organizations/${id}`, organization);
 }
 
 const deleteOrganization = (id) => {

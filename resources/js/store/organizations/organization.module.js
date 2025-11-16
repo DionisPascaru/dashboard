@@ -38,8 +38,7 @@ const actions = {
     },
     async createOrganization({commit}, organization) {
         try {
-            const response = await createOrganization(organization);
-            commit('CREATE_ORGANIZATION', response);
+            await createOrganization(organization);
         } catch (e) {
             throw e;
         }
@@ -67,9 +66,6 @@ const mutations = {
     },
     READ_ORGANIZATION(state, organization) {
         state.organization = organization;
-    },
-    CREATE_ORGANIZATION(state, organization) {
-        state.organizations.items.push(organization);
     },
     REMOVE_ORGANIZATION(state, organizationId) {
         const index = state.organizations.items.findIndex(organization => organization.id === organizationId);

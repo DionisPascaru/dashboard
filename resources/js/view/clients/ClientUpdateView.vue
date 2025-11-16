@@ -41,7 +41,12 @@
 
         <div class="ds-block bg-light">
             <el-row :gutter="20">
-                <el-col :md="8" v-for="organization in organizations" :key="organization">
+                <el-col :md="24">
+                    <organization-create-modal-component></organization-create-modal-component>
+                </el-col>
+            </el-row>
+            <el-row :gutter="20">
+                <el-col :md="8" v-for="organization in organizations" :key="organization.id">
                     <organization-cart-component :organization="organization"></organization-cart-component>
                 </el-col>
                 <el-col v-if="!organizations.length">
@@ -54,10 +59,11 @@
 
 <script>
 import OrganizationCartComponent from "../../components/organizations/OrganizationCartComponent.vue";
+import OrganizationCreateModalComponent from "../../components/organizations/OrganizationCreateModalComponent.vue";
 
 export default {
     name: 'ClientUpdateView',
-    components: {OrganizationCartComponent},
+    components: {OrganizationCreateModalComponent, OrganizationCartComponent},
     data() {
       return {
           clientId: this.$route.params.id,
